@@ -13,5 +13,8 @@
     "cors": "^2.8.4",
     "express": "^4.15.4",
     "mongoose": "^4.11.7"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
   }
 }

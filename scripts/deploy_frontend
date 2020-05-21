@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+echo "
+----------------------
+  Deploying front end to AWS
+----------------------
+"
+BASEDIR=$(dirname "$0")
+
+ssh -i ~/workspace/reader-aws-key.pem \
+ubuntu@ec2-54-67-40-86.us-west-1.compute.amazonaws.com \
+'rm -rf /opt/frontend/*'
+
+cd "$BASEDIR" && cd ../frontend
+npm run build
+scp -i ~/workspace/reader-aws-key.pem \
+-r ~/workspace/reader/frontend/dist/* \
+ubuntu@ec2-54-67-40-86.us-west-1.compute.amazonaws.com:/opt/frontend
