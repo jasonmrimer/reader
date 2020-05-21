@@ -24,7 +24,7 @@ export class ContactsComponent implements OnInit {
       lastName : this.lastName,
       phone : this.phone
     }
-    
+
     this.firstName = '';
     this.lastName = '';
     this.phone = '';
@@ -38,7 +38,7 @@ export class ContactsComponent implements OnInit {
   deleteContact(id){
     this._contactsService.deleteContact(id)
       .subscribe( data => { //deleting the contact from local variable, so update would be instant
-        if(data.n==1){
+        if(data){
           for(let i=0; i<this.contacts.length;i++){
             if(this.contacts[i]._id == id){
               this.contacts.splice(i, 1);

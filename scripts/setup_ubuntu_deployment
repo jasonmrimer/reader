@@ -1,0 +1,22 @@
+# login LOCAL
+ssh -i ~/workspace/reader-aws-key.pem ubuntu@ec2-204-236-172-128.us-west-1.compute.amazonaws.com
+
+# clear directories UBUNTU
+rm -rf /opt/front-end/*
+rm -rf /opt/back-end/*
+
+# push back end LOCAL
+scp -i ~/workspace/reader-aws-key.pem -r ~/workspace/reader/index.js ubuntu@ec2-204-236-172-128.us-west-1.compute.amazonaws.com:/opt/back-end
+scp -i ~/workspace/reader-aws-key.pem -r ~/workspace/reader/package.json ubuntu@ec2-204-236-172-128.us-west-1.compute.amazonaws.com:/opt/back-end
+scp -i ~/workspace/reader-aws-key.pem -r ~/workspace/reader/routes ubuntu@ec2-204-236-172-128.us-west-1.compute.amazonaws.com:/opt/back-end
+scp -i ~/workspace/reader-aws-key.pem -r ~/workspace/reader/models ubuntu@ec2-204-236-172-128.us-west-1.compute.amazonaws.com:/opt/back-end
+scp -i ~/workspace/reader-aws-key.pem -r ~/workspace/reader/public ubuntu@ec2-204-236-172-128.us-west-1.compute.amazonaws.com:/opt/back-end
+
+# deploy backend UBUNTU
+cd /opt/back-end && sudo npm install
+udo pm2 start index.js
+
+# build and deploy front end LOCAL
+cd ~/workspace/reader/frontend/ && npm run build
+scp -i ~/workspace/reader-aws-key.pem -r ~/workspace/reader/frontend/dist/* ubuntu@ec2-204-236-172-128.us-west-1.compute.amazonaws.com:/opt/front-end
+
