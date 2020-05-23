@@ -5,12 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PassageComponent } from './passage/passage.component';
-import { ContactsComponent } from './contacts/contacts.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ContactsComponent,
     PassageComponent
   ],
   imports: [
@@ -22,4 +20,5 @@ import { ContactsComponent } from './contacts/contacts.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

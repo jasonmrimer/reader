@@ -1,5 +1,5 @@
 import { FrontendPage } from './app.po';
-import { browser, by, element } from 'protractor';
+import { by, element } from 'protractor';
 
 describe('frontend App', () => {
   let page: FrontendPage;
