@@ -4,9 +4,9 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 var path = require('path');
 
-var routes = require('./routes/router.js');
+var routes = require('./routes/router');
 
-const port = 3000;
+const port = 4000;
 
 var app = express();
 

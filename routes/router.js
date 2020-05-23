@@ -5,7 +5,7 @@ const contact = require('../models/contactSchema.js');
 
 //retrieving contacts
 router.get('/contacts', (req, res, next) => {
-    contact.find((err, contacts)=>{
+    contact.find((err, contacts) => {
         res.json(contacts);
     })
 });
@@ -20,10 +20,10 @@ router.post('/contacts', (req, res, next) => {
 
     console.log(newContact);
 
-    newContact.save((err, contact)=>{
-        if(err){
+    newContact.save((err, contact) => {
+        if (err) {
             res.send(err);
-        }else{
+        } else {
             res.send(contact);
         }
     });
@@ -31,10 +31,10 @@ router.post('/contacts', (req, res, next) => {
 
 //deleting a contact
 router.delete('/contact/:id', (req, res, next) => {
-    contact.remove({_id: req.params.id}, (err, result)=>{
-        if(err){
+    contact.remove({_id: req.params.id}, (err, result) => {
+        if (err) {
             res.send(err);
-        }else{
+        } else {
             res.json(result);
         }
     });
