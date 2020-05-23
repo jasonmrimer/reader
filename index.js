@@ -11,7 +11,7 @@ const port = 4000;
 var app = express();
 
 //connect to mongodb
-mongoose.connection.openUri('mongodb://localhost:27017/contactlist');
+mongoose.connection.openUri('mongodb://localhost:27017/reader');
 mongoose.connection.on('connected', ()=>{
     console.log("Connected to DB");
 });

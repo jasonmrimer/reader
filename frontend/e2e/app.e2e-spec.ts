@@ -8,25 +8,10 @@ describe('frontend App', () => {
     page = new FrontendPage();
   });
 
-  it('should display welcome message', () => {
+  it('should fetch and display a passage', function () {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Insert Contact');
-  });
-
-  it('should add and delete a new contact', function () {
-    const timestamp = Date();
-    page.navigateTo();
-    expect(page.getParagraphText()).not.toContain(timestamp);
-    element(by.name('firstName')).sendKeys(timestamp);
-    element(by.name('lastName')).sendKeys(timestamp);
-    element(by.name('phone')).sendKeys(timestamp);
-    element(by.cssContainingText('.btn', 'Add')).click();
-
-    page.navigateTo();
-    let contact = element(by.cssContainingText('.row', timestamp));
-    expect(contact).toBeDefined();
-
-    contact.element(by.className('btn')).click();
-    expect(page.getParagraphText()).not.toContain(timestamp);
+    expect(element(by.id('passage-title')).getText()).toEqual('For SpaceX, Third Launch is Charm');
+    expect(element(by.id('passage-content')).getText()).toContain('Following a pair of last-second');
+    expect(element(by.id('passage-content')).getText()).toContain('launch at least one SpaceX rocket every week');
   });
 });

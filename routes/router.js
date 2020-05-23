@@ -2,11 +2,19 @@ const express = require('express');
 const router = express.Router();
 
 const contact = require('../models/contactSchema.js');
+const passage = require('../models/passage.js');
 
 //retrieving contacts
 router.get('/contacts', (req, res, next) => {
     contact.find((err, contacts) => {
         res.json(contacts);
+    })
+});
+
+//retrieving passages
+router.get('/passages', (request, response, next) => {
+    passage.find((err, passages) => {
+        response.json(passages);
     })
 });
 

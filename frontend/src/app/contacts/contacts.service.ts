@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { HttpClient } from '@angular/common/http';
-import { Contacts } from './contacts/contacts';
-import { environment } from '../environments/environment';
+import { Contacts } from './contacts';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class ContactsService {

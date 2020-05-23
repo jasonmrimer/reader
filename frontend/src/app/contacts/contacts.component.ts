@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ContactsService } from '../contacts.service';
+import { ContactsService } from './contacts.service';
 import { Contacts } from './contacts';
 
 @Component({
-  selector: 'app-contacts',
+  selector: 'app-passages',
   templateUrl: './contacts.component.html',
   styleUrls: ['./contacts.component.css'],
   providers: [ ContactsService ]
