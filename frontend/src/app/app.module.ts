@@ -5,17 +5,21 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PassageComponent } from './passage/passage.component';
+import { AppRoutingModule } from './app-routing.module';
+import { BasicRSVPComponent } from './basic-rsvp/basic-rsvp.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PassageComponent
+    PassageComponent,
+    BasicRSVPComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
