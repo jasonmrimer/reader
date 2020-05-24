@@ -1,4 +1,7 @@
 export class Passage {
-  title: string;
-  content: string;
+  constructor(
+    public title: string = '',
+    public content: string = ''
+  ) {
+  }
 }

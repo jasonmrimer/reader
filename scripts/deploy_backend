@@ -41,7 +41,7 @@ scp -i ~/workspace/reader-aws-key.pem \
 -r ~/workspace/reader/routes \
 ubuntu@ec2-54-67-40-86.us-west-1.compute.amazonaws.com:/opt/backend
 scp -i ~/workspace/reader-aws-key.pem \
--r ~/workspace/reader/webpack.config.js \
+-r ~/workspace/reader/scripts/ \
 ubuntu@ec2-54-67-40-86.us-west-1.compute.amazonaws.com:/opt/backend
 
 
@@ -53,6 +53,18 @@ echo "
 ssh -i ~/workspace/reader-aws-key.pem \
 ubuntu@ec2-54-67-40-86.us-west-1.compute.amazonaws.com \
 'cd /opt/backend && npm install'
+
+echo "
+----------------------
+  Clearing and Seeding database
+----------------------
+"
+ssh -i ~/workspace/reader-aws-key.pem \
+ubuntu@ec2-54-67-40-86.us-west-1.compute.amazonaws.com \
+"mongo /opt/backend/scripts/truncate_db.js"
+ssh -i ~/workspace/reader-aws-key.pem \
+ubuntu@ec2-54-67-40-86.us-west-1.compute.amazonaws.com \
+"mongo /opt/backend/scripts/seed_db.js"
 
 echo "
 ----------------------
