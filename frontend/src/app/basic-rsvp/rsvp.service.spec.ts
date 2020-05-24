@@ -3,9 +3,7 @@ import { getTestBed, inject, TestBed } from '@angular/core/testing';
 import { RSVPService } from './rsvp.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Passage } from '../passage/passage';
-
-let passage = new Passage('title01', 'One two three. Four five six seven eight.\nNine ten eleven.');
-let passagesStub = [passage];
+import { passagesStub, passageStub } from './PassageStub';
 
 describe('RSVPService', () => {
   let injector: TestBed;
@@ -42,8 +40,8 @@ describe('RSVPService', () => {
   });
 
   it('should transform passage content into RSVP shape', function () {
-    expect(service.transformToRSVP(passage.content)).toEqual([
-      'One', 'two', 'three.', 'Four', 'five', 'six', 'seven', 'eight.', 'Nine', 'ten', 'eleven.'
+    expect(service.transformToRSVP(passageStub.content)).toEqual([
+      'One', 'two.', 'Three.', 'Four', 'five', 'six.', 'Seven', 'eight.'
     ]);
   });
 });

@@ -1,37 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { Passage } from '../passage/passage';
-import { PassageService } from '../passage/passage.service';
-import { interval } from 'rxjs/observable/interval';
+import { RSVPService } from './rsvp.service';
 
 @Component({
   selector: 'app-basic-rsvp',
   templateUrl: './basic-rsvp.component.html',
   styleUrls: ['./basic-rsvp.component.css'],
-  providers: [PassageService]
+  providers: [RSVPService]
 })
 export class BasicRSVPComponent implements OnInit {
   passage: Passage = new Passage();
-  reader: string[] = [''];
-  index: number = 0;
+  readerContent: string[] = [''];
 
-  constructor(private _passageService: PassageService) {
+  constructor(private _rsvpService: RSVPService) {
   }
 
   ngOnInit() {
-    this._passageService.getPassages()
+    this._rsvpService.getPassages()
       .subscribe(passages => {
         this.passage = passages[0];
-        this.reader = this.passage.content.split(' ');
+        this.readerContent = this._rsvpService.transformToRSVP(this.passage.content);
       });
-  }
-
-  playReader() {
-    interval(100).subscribe(x => {
-      this.moveAhead();
-    })
-  }
-
-  moveAhead() {
-    this.index++;
   }
 }

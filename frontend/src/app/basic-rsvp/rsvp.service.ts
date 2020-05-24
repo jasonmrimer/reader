@@ -14,6 +14,10 @@ export class RSVPService {
   }
 
   transformToRSVP(content: string) {
-    return content.replace(/\n/g, ' ').split(' ');
+    content = content.replace(/\n/g, ' ');
+    while (content.includes('  ')) {
+      content = content.replace('  ', ' ');
+    }
+    return content.split(' ');
   }
 }
