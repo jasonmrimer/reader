@@ -1,0 +1,45 @@
+#reader {
+  display: flex;
+  flex-direction: column;
+}
+
+#passage-title {
+  font-family: Roboto, sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: #fafafa;
+  padding-top: 16px;
+}
+
+#passage-content {
+  display: flex;
+  align-items: center;
+  width: 160px;
+  height: 32px;
+  margin-left: 16px;
+  margin-top: 16px;
+
+  background: #ebebeb;
+  border-radius: 4px;
+
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #000000;
+  padding: 8px;
+  white-space: pre-line;
+}
+
+#play-button {
+  margin-top: 8px;
+  margin-left: 16px;
+  background: #A1E8AF;
+  height: 64px;
+  width: 160px;
+  color: #000000;
+  border-radius: 64px;
+}
+
+#play-button:hover {
+  border: 2px solid #fafafa;
+}

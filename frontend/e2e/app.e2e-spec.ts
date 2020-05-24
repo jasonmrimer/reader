@@ -14,4 +14,6 @@ describe('frontend App', () => {
     expect(element(by.id('passage-content')).getText()).toContain('Following a pair of last-second');
     expect(element(by.id('passage-content')).getText()).toContain('launch at least one SpaceX rocket every week');
   });
+
+  //todo create a test to watch the play feature
 });

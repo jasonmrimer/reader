@@ -18,10 +18,7 @@ export class PassageComponent implements OnInit {
     this._passageService.getPassages()
       .subscribe(passages => {
         this.passage = passages[0]
-        console.log(this.passage.content);
-
       });
-
   }
 
 }
