@@ -63,7 +63,6 @@ describe('BasicRSVPComponent', () => {
   });
 
   it('should parse the content into a string array', function () {
-    console.log(component.passage.content.split(' '));
     expect(component.reader.length).toBe(4);
     expect(component.reader[0]).toBe('one');
     expect(component.reader[3]).toBe('four');
