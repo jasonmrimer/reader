@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+html, body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* modern clearfix */
+.cf:before,
+.cf:after {
+  content:"";
+  display:table;
+  line-height:0;
+}
+.cf:after {
+  clear:both;
+}

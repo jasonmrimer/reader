@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+echo "
++++++
+  Deploying app to AWS
++++++
+"
+
+~/workspace/reader/scripts/deploy_backend
+~/workspace/reader/scripts/deploy_frontend

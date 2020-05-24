@@ -16,7 +16,12 @@ export class PassageComponent implements OnInit {
 
   ngOnInit() {
     this._passageService.getPassages()
-      .subscribe(passages => this.passage = passages[0]);
+      .subscribe(passages => {
+        this.passage = passages[0]
+        console.log(this.passage.content);
+
+      });
+
   }
 
 }
