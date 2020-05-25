@@ -1,30 +1,31 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, NgZone } from '@angular/core';
-import { HttpModule } from '@angular/http';
-import { FormsModule } from '@angular/forms';
-import { AppComponent } from './app.component';
+import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { AppComponent } from './app.component';
 import { PassageComponent } from './passage/passage.component';
 import { AppRoutingModule } from './app-routing.module';
-import { BasicRSVPComponent } from './basic-rsvp/basic-rsvp.component';
+import { RsvpBasicComponent } from './rsvp-basic/rsvp-basic.component';
 import { ReaderComponent } from './reader/reader.component';
+import { RsvpProgressBarComponent } from './rsvp-progress-bar/rsvp-progress-bar.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
     AppComponent,
     PassageComponent,
-    BasicRSVPComponent,
-    ReaderComponent
+    RsvpBasicComponent,
+    ReaderComponent,
+    RsvpProgressBarComponent
   ],
   imports: [
     BrowserModule,
-    HttpModule,
-    FormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
+
 export class AppModule {
 }

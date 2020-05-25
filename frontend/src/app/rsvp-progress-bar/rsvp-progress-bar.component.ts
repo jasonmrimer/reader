@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Passage } from '../passage/passage';
-import { RSVPService } from './rsvp.service';
+import { RSVPService } from '../rsvp-basic/rsvp.service';
 
 @Component({
-  selector: 'app-basic-rsvp',
-  templateUrl: './basic-rsvp.component.html',
-  styleUrls: ['./basic-rsvp.component.css'],
-  providers: [RSVPService]
+  selector: 'app-rsvp-progress-bar',
+  templateUrl: './rsvp-progress-bar.component.html',
+  styleUrls: ['./rsvp-progress-bar.component.css']
 })
-export class BasicRSVPComponent implements OnInit {
+export class RsvpProgressBarComponent implements OnInit {
   passage: Passage = new Passage();
   readerContent: string[] = [''];
 

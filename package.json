@@ -1,7 +1,7 @@
 {
   "name": "edureka-mean-cl",
   "version": "1.0.0",
-  "description": "Edureka Nodejs MEAN stack tutorial app",
+  "description": "Rapid reader interafces for spatial memory",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
