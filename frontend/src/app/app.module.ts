@@ -8,6 +8,8 @@ import { RsvpBasicComponent } from './rsvp-basic/rsvp-basic.component';
 import { ReaderComponent } from './reader/reader.component';
 import { RsvpProgressBarComponent } from './rsvp-progress-bar/rsvp-progress-bar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -15,13 +17,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     PassageComponent,
     RsvpBasicComponent,
     ReaderComponent,
-    RsvpProgressBarComponent
+    RsvpProgressBarComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatProgressBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
