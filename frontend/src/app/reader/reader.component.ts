@@ -1,4 +1,5 @@
 import { Component, Input, NgZone, OnInit } from '@angular/core';
+import { ReaderService } from './reader.service';
 
 @Component({
   selector: 'app-reader',
@@ -10,7 +11,8 @@ export class ReaderComponent implements OnInit {
   title: string;
   @Input()
   content: string[];
-  index: number = 0;
+  @Input()
+  readerService: ReaderService;
 
   constructor(private ngZone: NgZone) {
   }
@@ -22,9 +24,13 @@ export class ReaderComponent implements OnInit {
     this.ngZone.runOutsideAngular(() => {
       setInterval(() => {
         this.ngZone.run(() => {
-          this.index++;
+          this.readerService.moveAhead();
         })
       }, 100);
     });
+  }
+
+  currentWord() {
+    return this.content[this.readerService.index()];
   }
 }

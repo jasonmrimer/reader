@@ -20,5 +20,4 @@ export class PassageComponent implements OnInit {
         this.passage = passages[0]
       });
   }
-
 }

@@ -1,18 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { Passage } from '../passage/passage';
 import { RSVPService } from './rsvp.service';
+import { ReaderService } from '../reader/reader.service';
 
 @Component({
   selector: 'app-basic-rsvp',
-  templateUrl: './basic-rsvp.component.html',
-  styleUrls: ['./basic-rsvp.component.css'],
-  providers: [RSVPService]
+  templateUrl: './rsvp-basic.component.html',
+  styleUrls: ['./rsvp-basic.component.css'],
+  providers: [RSVPService, ReaderService]
 })
-export class BasicRSVPComponent implements OnInit {
+export class RsvpBasicComponent implements OnInit {
   passage: Passage = new Passage();
   readerContent: string[] = [''];
+  readerService: ReaderService;
 
-  constructor(private _rsvpService: RSVPService) {
+  constructor(private _rsvpService: RSVPService, public _readerService: ReaderService) {
+    this.readerService = _readerService;
   }
 
   ngOnInit() {
