@@ -24,6 +24,7 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
+    usePolling: true,
     browsers: ['ChromeHeadless'],
     singleRun: false
   });
