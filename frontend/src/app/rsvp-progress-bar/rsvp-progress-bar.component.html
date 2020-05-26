@@ -1,10 +1,9 @@
 <div id="reader-container">
-  <div>HEEEEEE</div>
   <app-reader
     [title]="passage.title"
     [content]="readerContent"
-    [readerService]="_readerService"
+    [readerService]="readerService"
   >
   </app-reader>
-  <mat-progress-bar mode="determinate" value="{{percentComplete()}}"></mat-progress-bar>
+  <mat-progress-bar id="progress-bar" mode="determinate" value="{{percentComplete()}}"></mat-progress-bar>
 </div>

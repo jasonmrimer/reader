@@ -12,8 +12,10 @@ import { ReaderService } from '../reader/reader.service';
 export class RsvpProgressBarComponent implements OnInit {
   passage: Passage = new Passage();
   readerContent: string[] = [''];
+  readerService: ReaderService;
 
   constructor(private _rsvpService: RSVPService, private _readerService: ReaderService) {
+    this.readerService = _readerService;
   }
 
   ngOnInit() {

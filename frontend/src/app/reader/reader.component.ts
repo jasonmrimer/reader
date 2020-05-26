@@ -29,4 +29,8 @@ export class ReaderComponent implements OnInit {
       }, 100);
     });
   }
+
+  currentWord() {
+    return this.content[this.readerService.index()];
+  }
 }

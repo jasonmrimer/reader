@@ -15,11 +15,9 @@ export class PassageComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('==============');
     this._passageService.getPassages()
       .subscribe(passages => {
         this.passage = passages[0]
       });
   }
-
 }

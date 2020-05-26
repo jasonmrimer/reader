@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RsvpProgressBarComponent } from './rsvp-progress-bar.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('RSVPProgressBarComponent', () => {
   let component: RsvpProgressBarComponent;
@@ -8,6 +9,7 @@ describe('RSVPProgressBarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
       declarations: [ RsvpProgressBarComponent ]
     })
     .compileComponents();

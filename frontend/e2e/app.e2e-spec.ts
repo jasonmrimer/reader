@@ -28,12 +28,12 @@ describe('Reader App', () => {
   });
 
   it('should present basic RSVP one word at a time', () => {
-    page.navigateTo();
+    browser.get('/rsvp-basic');
     verifyRSVPWorks();
   });
 
   it('should present RSVP with a completion bar', () => {
-    browser.get('/progress-bar');
+    browser.get('/rsvp-progress-bar');
     verifyRSVPWorks();
     expect(element(by.id('progress-bar'))).toBeDefined();
   });
