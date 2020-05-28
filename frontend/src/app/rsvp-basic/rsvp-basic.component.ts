@@ -22,7 +22,8 @@ export class RsvpBasicComponent implements OnInit {
     this._rsvpService.getPassages()
       .subscribe(passages => {
         this.passage = passages[0];
-        this.readerContent = this._rsvpService.transformToRSVP(this.passage.content);
+        this.readerContent = this._rsvpService
+          .transformToReadableContent(this.passage.content);
       });
   }
 }

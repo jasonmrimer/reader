@@ -1,0 +1,17 @@
+<app-reader
+  [content]="content"
+  [readerService]="readerService"
+  [title]="passage.title"
+>
+</app-reader>
+<mv-slider
+  *ngIf="ticks"
+  [value]="readerService.index()"
+  [min]="0"
+  [max]="content.length"
+  [ticks]="ticks"
+  [ticksPositions]="tickPositions"
+  step="1"
+  [ticksSnapBounds]="200"
+>
+</mv-slider>
