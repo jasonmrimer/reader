@@ -37,4 +37,11 @@ describe('Reader App', () => {
     verifyRSVPWorks();
     expect(element(by.id('progress-bar'))).toBeDefined();
   });
+
+  it('should present RSVP with a completion bar with markers', () => {
+    browser.get('/rsvp-section-marks');
+    verifyRSVPWorks();
+    expect(element(by.id('progress-bar'))).toBeDefined();
+    expect(element(by.id('progress-markers')).getSize()).toBe(5);
+  });
 });

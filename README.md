@@ -1,21 +1,34 @@
-### What is this repository for? ###
+Study to test digital reading interfaces for improved reading comprehension.
 
-This is code for Edureka Youtube tutorial MEAN - Contact List App - https://www.youtube.com/watch?v=wtIvu085uU0
+###Mongo
+Prepare the data model (takes some extra work on my machine) 
+```shell script
+sudo mongod --dbpath /Users/engineer/mongo-data --fork --syslog
+mongo
+```
+In a separate tab: 
+```shell script
+cd reader
+./scripts/truncate_db.js
+./scripts/seed_db.js
+```
+Database now initialized to run the app
 
-### How do I get set up? ###
 
-In root folder run,
-
+###Node
+Clone repository and then run node
+```
+cd reader
 npm install
+node index.js
+```
+accessible at: localhost:4000
 
-cd to frontend folder and run,
-
-npm install.
-
-Frontend folder contains the Angular part.
-
-Start MongoDB - mongod
-Start express - node index.js
-Start Angular - ng serve
-
-Open localhost:4200 to access the App
+###Angular
+Build and serve the frontend
+```shell script
+cd reader/frontend
+npm install
+ng serve
+```
+accessible at: localhost:4200
