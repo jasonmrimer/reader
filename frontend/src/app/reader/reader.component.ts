@@ -20,17 +20,19 @@ export class ReaderComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this._intervalService.setInterval(
+      100,
+      () => {
+        this.ngZone.run(() => {
+          this.readerService.moveAhead();
+        })
+      }
+    );
   }
 
   playReader() {
     this.ngZone.runOutsideAngular(() => {
-      this.rsvpPlayer = this._intervalService.setInterval(100,
-        () => {
-          this.ngZone.run(() => {
-            this.readerService.moveAhead();
-          })
-        });
+      this.rsvpPlayer = this._intervalService.runInterval();
     });
   }
 
