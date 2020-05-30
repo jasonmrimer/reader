@@ -6,7 +6,7 @@ import { ReaderComponent } from '../reader/reader.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { By } from '@angular/platform-browser';
 import { ReaderService } from '../reader/reader.service';
-import { passagesStub, passageStub } from '../rsvp-basic/PassageStub';
+import { passagesStub } from '../rsvp-basic/PassageStub';
 import { RSVPService } from '../rsvp-basic/rsvp.service';
 
 class ReaderServiceMock extends ReaderService {
