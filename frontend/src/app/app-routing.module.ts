@@ -4,12 +4,14 @@ import { PassageComponent } from './passage/passage.component';
 import { RsvpBasicComponent } from './rsvp-basic/rsvp-basic.component';
 import { RsvpProgressBarComponent } from './rsvp-progress-bar/rsvp-progress-bar.component';
 import { HomeComponent } from './home/home.component';
+import { RsvpSectionMarksComponent } from './rsvp-section-marks/rsvp-section-marks.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'baseline', component: PassageComponent},
   {path: 'rsvp-basic', component: RsvpBasicComponent},
-  {path: 'rsvp-progress-bar', component: RsvpProgressBarComponent}
+  {path: 'rsvp-progress-bar', component: RsvpProgressBarComponent},
+  {path: 'rsvp-section-mark', component: RsvpSectionMarksComponent}
 ];
 
 @NgModule({
