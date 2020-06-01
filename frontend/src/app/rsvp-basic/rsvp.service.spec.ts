@@ -40,8 +40,23 @@ describe('RSVPService', () => {
   });
 
   it('should transform passage content into RSVP shape', function () {
-    expect(service.transformToRSVP(passageStub.content)).toEqual([
+    expect(service.transformToRSVPWithoutSections(passageStub.content)).toEqual([
       'One', 'two.', 'Three.', 'Four', 'five', 'six.', 'Seven', 'eight.'
+    ]);
+  });
+
+  it('should transform passage content into RSVP shape and include section-markers', () => {
+    expect(service.transformToRSVPWithSections(passageStub.content)).toEqual([
+      '#section-marker',
+      'One',
+      'two.',
+      'Three.',
+      '#section-marker',
+      'Four',
+      'five',
+      'six.',
+      'Seven',
+      'eight.'
     ]);
   });
 });

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Passage } from '../passage/passage';
 import { RSVPService } from '../rsvp-basic/rsvp.service';
 import { ReaderService } from '../reader/reader.service';
-import { forEachComment } from 'tslint';
 
 @Component({
   selector: 'app-rsvp-progress-bar',
@@ -23,7 +22,7 @@ export class RsvpProgressBarComponent implements OnInit {
     this._rsvpService.getPassages()
       .subscribe(passages => {
         this.passage = passages[0];
-        this.readerContent = this._rsvpService.transformToRSVP(this.passage.content);
+        this.readerContent = this._rsvpService.transformToRSVPWithoutSections(this.passage.content);
       });
   }
 

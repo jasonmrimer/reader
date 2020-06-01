@@ -1,8 +1,6 @@
 import { async, ComponentFixture, getTestBed, TestBed } from '@angular/core/testing';
 
 import { RsvpSectionMarksComponent } from './rsvp-section-marks.component';
-import { by, element } from 'protractor';
-import { By } from '@angular/platform-browser';
 import { passagesStub, passageStub } from '../rsvp-basic/PassageStub';
 import { RSVPService } from '../rsvp-basic/rsvp.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';

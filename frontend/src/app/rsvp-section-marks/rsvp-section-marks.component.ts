@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Passage } from '../passage/passage';
-import { ReaderService } from '../reader/reader.service';
 import { RSVPService } from '../rsvp-basic/rsvp.service';
 
 @Component({
@@ -21,7 +20,7 @@ export class RsvpSectionMarksComponent implements OnInit {
       .subscribe(passages => {
         this.passage = passages[0];
       });
-    this.content = this.rsvpService.transformToRSVP(this.passage.content);
+    this.content = this.rsvpService.transformToRSVPWithSections(this.passage.content);
     this.tickPositions = this.calculateTickPositions(this.content);
   }
 
