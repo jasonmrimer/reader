@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { HomeComponent } from './home/home.component';
 import { RsvpSectionMarksComponent } from './rsvp-section-marks/rsvp-section-marks.component';
+import { NgxBootstrapSliderModule } from 'ngx-bootstrap-slider';
 
 @NgModule({
   declarations: [
@@ -20,14 +21,15 @@ import { RsvpSectionMarksComponent } from './rsvp-section-marks/rsvp-section-mar
     ReaderComponent,
     RsvpProgressBarComponent,
     HomeComponent,
-    RsvpSectionMarksComponent
+    RsvpSectionMarksComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    NgxBootstrapSliderModule
   ],
   providers: [],
   bootstrap: [AppComponent]
