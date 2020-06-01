@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Passage } from '../passage/passage';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { isNotNullOrUndefined } from 'codelyzer/util/isNotNullOrUndefined';
 
 @Injectable()
 export class RSVPService {
@@ -29,5 +30,16 @@ export class RSVPService {
       content = content.replace('  ', ' ');
     }
     return content.split(' ');
+  }
+
+  calculateSectionTicks(contentArray: string[]): number[] {
+    let tick = 0;
+    return contentArray
+      .map((word: string) => {
+        if (word === '#section-marker') {
+          return tick++;
+        }
+      })
+      .filter(isNotNullOrUndefined);
   }
 }

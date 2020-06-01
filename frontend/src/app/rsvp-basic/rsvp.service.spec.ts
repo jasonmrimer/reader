@@ -59,4 +59,9 @@ describe('RSVPService', () => {
       'eight.'
     ]);
   });
+
+  it('should output array of section marks', () => {
+    const transformedContent = service.transformToRSVPWithSections(passageStub.content);
+    expect(service.calculateSectionTicks(transformedContent)).toEqual([0, 1]);
+  });
 });

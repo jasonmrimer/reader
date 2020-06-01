@@ -49,4 +49,9 @@ describe('RsvpSectionMarksComponent', () => {
     expect(component.tickPositions).toEqual([0, 37.5]);
     mockGet();
   });
+
+  it('should calculate how many ticks need to display', () => {
+    expect(component.ticks).toEqual([0, 1]);
+    mockGet();
+  });
 });
