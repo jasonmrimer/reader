@@ -64,4 +64,9 @@ describe('RSVPService', () => {
     const transformedContent = service.transformToRSVPWithSections(passageStub.content);
     expect(service.calculateSectionTicks(transformedContent)).toEqual([0, 1]);
   });
+
+  it('should calculate the percentage position of ticks based placement of section-marker', () => {
+    const transformedContent = service.transformToRSVPWithSections(passageStub.content);
+    expect(service.calculateTickPositions(transformedContent)).toEqual([0, 37.5]);
+  });
 });

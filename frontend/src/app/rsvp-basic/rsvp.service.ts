@@ -14,27 +14,27 @@ export class RSVPService {
     return this._http.get<Passage[]>(`${environment.apiUrl}/passages`)
   }
 
-  transformToRSVPWithSections(content: string): string[] {
-    return this.removeLineBreaksAndArrayify(content);
+  transformToRSVPWithSections(unformedContent: string): string[] {
+    return this.removeLineBreaksAndArrayify(unformedContent);
   }
 
-  transformToRSVPWithoutSections(content: string): string[] {
-    content = content.replace(/#section-marker/g, '');
-    return this.removeLineBreaksAndArrayify(content);
+  transformToRSVPWithoutSections(unformedContent: string): string[] {
+    unformedContent = unformedContent.replace(/#section-marker/g, '');
+    return this.removeLineBreaksAndArrayify(unformedContent);
   }
 
-  private removeLineBreaksAndArrayify(content: string): string[] {
-    content = content.replace(/\n/g, ' ');
-    content = content.trim();
-    while (content.includes('  ')) {
-      content = content.replace('  ', ' ');
+  private removeLineBreaksAndArrayify(unformedContent: string): string[] {
+    unformedContent = unformedContent.replace(/\n/g, ' ');
+    unformedContent = unformedContent.trim();
+    while (unformedContent.includes('  ')) {
+      unformedContent = unformedContent.replace('  ', ' ');
     }
-    return content.split(' ');
+    return unformedContent.split(' ');
   }
 
-  calculateSectionTicks(contentArray: string[]): number[] {
+  calculateSectionTicks(content: string[]): number[] {
     let tick = 0;
-    return contentArray
+    return content
       .map((word: string) => {
         if (word === '#section-marker') {
           return tick++;
@@ -42,4 +42,17 @@ export class RSVPService {
       })
       .filter(isNotNullOrUndefined);
   }
-}
+
+  calculateTickPositions(content: string[]) {
+    let sectionCount = 0;
+    let sectionIndexes = content.map((word: string, index: number) => {
+      if (word === '#section-marker') {
+        sectionCount++;
+        return index - (sectionCount - 1);
+      }
+    }).filter((element) => element !== undefined);
+    content = content.filter((word) => word !== '#section-marker');
+    return sectionIndexes.map((index: number) => {
+      return index * 100 / content.length;
+    });
+  }}

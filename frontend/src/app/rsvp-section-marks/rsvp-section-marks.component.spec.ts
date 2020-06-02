@@ -44,14 +44,4 @@ describe('RsvpSectionMarksComponent', () => {
     expect(component).toBeTruthy();
     mockGet();
   });
-
-  it('should set percentage position of ticks based on section-mark in text', () => {
-    expect(component.tickPositions).toEqual([0, 37.5]);
-    mockGet();
-  });
-
-  it('should calculate how many ticks need to display', () => {
-    expect(component.ticks).toEqual([0, 1]);
-    mockGet();
-  });
 });
