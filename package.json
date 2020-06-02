@@ -9,7 +9,6 @@
   "author": "gowtham raj j",
   "license": "ISC",
   "dependencies": {
-    "angular-bootstrap-slider": "^0.1.29",
     "body-parser": "^1.17.2",
     "cors": "^2.8.4",
     "express": "^4.15.4",

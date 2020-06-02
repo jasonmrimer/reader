@@ -22,7 +22,6 @@
     "@angular/platform-browser": "^9.1.9",
     "@angular/platform-browser-dynamic": "^9.1.9",
     "@angular/router": "^9.1.9",
-    "angular-bootstrap-slider": "^0.1.29",
     "core-js": "^3.6.5",
     "ngx-bootstrap-slider": "^1.8.0",
     "rxjs": "^6.5.5",

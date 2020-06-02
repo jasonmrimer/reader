@@ -40,13 +40,13 @@ describe('RSVPService', () => {
   });
 
   it('should transform passage content into RSVP shape', function () {
-    expect(service.transformToRSVPWithoutSections(passageStub.content)).toEqual([
+    expect(service.transformToReadableContent(passageStub.content)).toEqual([
       'One', 'two.', 'Three.', 'Four', 'five', 'six.', 'Seven', 'eight.'
     ]);
   });
 
   it('should transform passage content into RSVP shape and include section-markers', () => {
-    expect(service.transformToRSVPWithSections(passageStub.content)).toEqual([
+    expect(service.transformToRSVPWithSectionMarkers(passageStub.content)).toEqual([
       '#section-marker',
       'One',
       'two.',
@@ -61,12 +61,13 @@ describe('RSVPService', () => {
   });
 
   it('should output array of section marks', () => {
-    const transformedContent = service.transformToRSVPWithSections(passageStub.content);
-    expect(service.calculateSectionTicks(transformedContent)).toEqual([0, 3]);
+    const transformedContent = service.transformToRSVPWithSectionMarkers(passageStub.content);
+    expect(service.calculateSectionMarkerIndexes(transformedContent)).toEqual([0, 3]);
   });
 
-  it('should calculate the percentage position of ticks based placement of section-marker', () => {
-    const transformedContent = service.transformToRSVPWithSections(passageStub.content);
-    expect(service.calculateTickPositions(transformedContent)).toEqual([0, 37.5]);
+  it('should calculate the percentage position of ticks based on index value within content', () => {
+    const indexes = [0, 3];
+    const contentLength = 8;
+    expect(service.calculateRelativePositionsOfIndexes(indexes, contentLength)).toEqual([0, 37.5]);
   });
 });

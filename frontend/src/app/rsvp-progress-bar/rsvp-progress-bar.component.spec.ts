@@ -13,6 +13,10 @@ class ReaderServiceMock extends ReaderService {
   index(): number {
     return 3;
   }
+
+  percentRead(): number {
+    return 25;
+  }
 }
 
 describe('RSVPProgressBarComponent', () => {
@@ -38,6 +42,7 @@ describe('RSVPProgressBarComponent', () => {
     })
       .compileComponents();
   }));
+
   beforeEach(() => {
     fixture = TestBed.createComponent(RsvpProgressBarComponent);
     component = fixture.componentInstance;
@@ -52,12 +57,16 @@ describe('RSVPProgressBarComponent', () => {
     httpMock.verify();
   })
 
-  it('should be created', async () => {
-    await expect(component).toBeTruthy();
-
+  function mockHttpGET() {
     const request = httpMock.expectOne('http://localhost:4000/api/passages');
     expect(request.request.method).toBe('GET');
     request.flush(passagesStub);
+  }
+
+  it('should be created', async () => {
+    await expect(component).toBeTruthy();
+
+    mockHttpGET();
   });
 
   it('should have a progress bar', async () => {
@@ -65,11 +74,9 @@ describe('RSVPProgressBarComponent', () => {
       fixture.detectChanges();
       let completionMeter = fixture.debugElement.query(By.css('#completion-meter'));
       expect(completionMeter).toBeTruthy();
-      expect(completionMeter.attributes['aria-valuenow']).toBe('37.5');
+      expect(completionMeter.attributes['aria-valuenow']).toBe('25');
     })
 
-    const request = httpMock.expectOne('http://localhost:4000/api/passages');
-    expect(request.request.method).toBe('GET');
-    request.flush(passagesStub);
+    mockHttpGET();
   });
 });

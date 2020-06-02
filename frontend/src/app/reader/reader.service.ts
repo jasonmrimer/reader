@@ -5,7 +5,10 @@ import { Injectable } from '@angular/core';
 })
 export class ReaderService {
   private _index = 0;
-  constructor() { }
+  private _contentLength = 0;
+
+  constructor() {
+  }
 
   index() {
     return this._index
@@ -13,5 +16,13 @@ export class ReaderService {
 
   moveAhead() {
     this._index++;
+  }
+
+  set contentLength(value: number) {
+    this._contentLength = value;
+  }
+
+  percentRead() {
+    return (this._index + 1) * 100 / this._contentLength;
   }
 }

@@ -5,5 +5,10 @@
     [readerService]="readerService"
   >
   </app-reader>
-  <mat-progress-bar id="completion-meter" mode="determinate" value="{{percentComplete()}}"></mat-progress-bar>
+  <mat-progress-bar
+    id="completion-meter"
+    mode="determinate"
+    value="{{readerService.percentRead()}}"
+  >
+  </mat-progress-bar>
 </div>

@@ -22,11 +22,8 @@ export class RsvpProgressBarComponent implements OnInit {
     this._rsvpService.getPassages()
       .subscribe(passages => {
         this.passage = passages[0];
-        this.readerContent = this._rsvpService.transformToRSVPWithoutSections(this.passage.content);
+        this.readerContent = this._rsvpService.transformToReadableContent(this.passage.content);
+        this.readerService.contentLength = this.readerContent.length;
       });
-  }
-
-  percentComplete() {
-    return this.readerService.index() * 100 / this.readerContent.length;
   }
 }

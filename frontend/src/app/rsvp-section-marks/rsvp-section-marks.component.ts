@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Passage } from '../passage/passage';
 import { RSVPService } from '../rsvp-basic/rsvp.service';
 import { ReaderService } from '../reader/reader.service';
@@ -24,11 +24,13 @@ export class RsvpSectionMarksComponent implements OnInit {
     this.rsvpService.getPassages()
       .subscribe(passages => {
         this.passage = passages[0];
-        let contentWithMarkers = this.rsvpService.transformToRSVPWithSections(this.passage.content);
-        this.ticks = this.rsvpService.calculateSectionTicks(contentWithMarkers);
-        this.tickPositions = this.rsvpService.calculateTickPositions(contentWithMarkers);
-        this.content = this.rsvpService.transformToRSVPWithoutSections(this.passage.content);
+        this.content = this.rsvpService.transformToReadableContent(this.passage.content);
+        let contentWithMarkers = this.rsvpService.transformToRSVPWithSectionMarkers(this.passage.content);
+        this.ticks = this.rsvpService.calculateSectionMarkerIndexes(contentWithMarkers);
+        this.tickPositions = this.rsvpService.calculateRelativePositionsOfIndexes(
+          this.ticks,
+          this.content.length
+        );
       });
   }
 }
-
