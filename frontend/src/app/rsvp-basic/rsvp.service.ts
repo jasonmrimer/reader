@@ -35,9 +35,9 @@ export class RSVPService {
   calculateSectionTicks(content: string[]): number[] {
     let tick = 0;
     return content
-      .map((word: string) => {
+      .map((word: string, index: number) => {
         if (word === '#section-marker') {
-          return tick++;
+          return index - tick++;
         }
       })
       .filter(isNotNullOrUndefined);

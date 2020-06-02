@@ -11,7 +11,7 @@ export class ReaderComponent implements OnInit {
   @Input()
   title: string;
   @Input()
-  content: string[];
+  content: string[] = [''];
   @Input()
   readerService: ReaderService;
   rsvpPlayer;

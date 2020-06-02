@@ -1,18 +1,13 @@
-<p>rsvp-section-marks</p>
-<!--<input-->
-<!--  id="ex23"-->
-<!--  type="text"-->
-<!--  data-provide="slider"-->
-<!--  data-slider-ticks="[0, 1, 2, 3, 4, 5]"-->
-<!--  data-slider-step="0.01"-->
-<!--  data-slider-ticks-snap-bounds="200"-->
-<!--  data-slider-ticks-tooltip="true"-->
-<!--  data-slider-ticks-positions="{{this.tickPositions}}"-->
-<!--/>-->
+<app-reader
+  [content]="content"
+  [readerService]="readerService"
+  [title]="passage.title"
+>
+</app-reader>
 <mv-slider
   *ngIf="ticks"
-  [value]="2"
-  [min]="1"
+  [value]="readerService.index()"
+  [min]="0"
   [max]="content.length"
   [ticks]="ticks"
   [ticksPositions]="tickPositions"

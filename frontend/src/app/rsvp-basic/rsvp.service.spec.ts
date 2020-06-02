@@ -62,7 +62,7 @@ describe('RSVPService', () => {
 
   it('should output array of section marks', () => {
     const transformedContent = service.transformToRSVPWithSections(passageStub.content);
-    expect(service.calculateSectionTicks(transformedContent)).toEqual([0, 1]);
+    expect(service.calculateSectionTicks(transformedContent)).toEqual([0, 3]);
   });
 
   it('should calculate the percentage position of ticks based placement of section-marker', () => {

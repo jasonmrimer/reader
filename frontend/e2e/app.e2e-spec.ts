@@ -1,9 +1,12 @@
 import { FrontendPage } from './app.po';
-import { browser, by, element } from 'protractor';
+import { browser, by, element, protractor } from 'protractor';
+import { count } from 'rxjs/operators';
 
 require('inspector');
 
 function verifyRSVPWorks() {
+  var until = protractor.ExpectedConditions;
+  browser.wait(until.presenceOf(element(by.id('passage-title'))), 5000, 'Passage Title taking too long to appear in the DOM');
   expect(element(by.id('passage-title')).getText()).toEqual('For SpaceX, Third Launch is Charm');
 
   let content = element(by.id('passage-content'));
@@ -39,9 +42,9 @@ describe('Reader App', () => {
   });
 
   it('should present RSVP with a completion bar with markers', () => {
-    browser.get('/rsvp-section-marks');
+    browser.get('/rsvp-section-mark');
     verifyRSVPWorks();
     expect(element(by.id('completion-meter'))).toBeDefined();
-    expect(element(by.className('slider-ticks')).getSize()).toBe(5);
+    expect(element.all(by.className('slider-tick')).count()).toBe(4);
   });
 });
