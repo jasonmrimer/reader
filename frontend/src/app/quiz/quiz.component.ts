@@ -9,7 +9,7 @@ import { Question, Quiz } from './Quiz';
   styleUrls: ['./quiz.component.css']
 })
 export class QuizComponent implements OnInit {
-  private quiz: Quiz;
+  quiz: Quiz;
 
   constructor(private quizService: QuizService) {
   }
@@ -18,8 +18,6 @@ export class QuizComponent implements OnInit {
     this.quizService.getQuizzes()
       .subscribe(quizzes => {
         this.quiz = quizzes[0];
-        console.log(this.quiz);
-
         const questions = this.quiz.questions.map((question: Question) => {
           const answers = question.answers.map((answer) => {
             return answer.answer
@@ -33,7 +31,6 @@ export class QuizComponent implements OnInit {
             choices: answers
           }
         });
-        console.log(questions);
 
         var json = {
           questions: questions

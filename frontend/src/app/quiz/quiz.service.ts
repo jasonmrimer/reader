@@ -10,6 +10,9 @@ export class QuizService {
 
   constructor(private _http: HttpClient) { }
 
+  check() {
+    return 'real';
+  }
   getQuizzes() {
     return this._http.get<Quiz[]>(`${environment.apiUrl}/quizzes`);
   }
