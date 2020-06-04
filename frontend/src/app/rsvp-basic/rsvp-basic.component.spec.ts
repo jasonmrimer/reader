@@ -1,28 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { RsvpSectionMarksComponent } from './rsvp-section-marks.component';
-import { RSVPService } from '../rsvp-utils/rsvp.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReaderComponent } from '../reader/reader.component';
+import { RsvpBasicComponent } from './rsvp-basic.component';
 
-describe('RsvpSectionMarksComponent', () => {
-  let component: RsvpSectionMarksComponent;
-  let fixture: ComponentFixture<RsvpSectionMarksComponent>;
+describe('RSVPBasicComponent', () => {
+  let component: RsvpBasicComponent;
+  let fixture: ComponentFixture<RsvpBasicComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      declarations: [
-        RsvpSectionMarksComponent,
-        ReaderComponent,
-      ],
-      providers: [RSVPService]
+      declarations: [ReaderComponent,],
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RsvpSectionMarksComponent);
+    fixture = TestBed.createComponent(RsvpBasicComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

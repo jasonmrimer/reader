@@ -1,19 +1,18 @@
 import { Component, Input, NgZone, OnInit } from '@angular/core';
-import { ReaderService } from './reader.service';
 import { IntervalService } from './interval.service';
+import { Subscription } from 'rxjs';
+import { skip } from 'rxjs/operators';
+import { RSVPService } from '../rsvp-utils/rsvp.service';
 
 @Component({
   selector: 'app-reader',
   templateUrl: './reader.component.html',
-  styleUrls: ['./reader.component.css']
+  styleUrls: ['./reader.component.css'],
 })
 export class ReaderComponent implements OnInit {
   @Input()
-  title: string;
-  @Input()
-  content: string[] = [''];
-  @Input()
-  readerService: ReaderService;
+  rsvpService: RSVPService;
+  subscription: Subscription;
   rsvpPlayer;
 
   constructor(private ngZone: NgZone, private _intervalService: IntervalService) {
@@ -21,13 +20,21 @@ export class ReaderComponent implements OnInit {
 
   ngOnInit() {
     this._intervalService.setInterval(
-      100,
+      1,
       () => {
         this.ngZone.run(() => {
-          this.readerService.moveAhead();
+          this.rsvpService.moveAhead();
         })
       }
     );
+
+    this.subscription = this.rsvpService.isComplete$
+      .pipe(skip(1))
+      .subscribe(this.finishReading);
+  }
+
+  private finishReading = () => {
+    this._intervalService.clearInterval();
   }
 
   playReader() {
@@ -38,9 +45,5 @@ export class ReaderComponent implements OnInit {
 
   pauseReader() {
     this._intervalService.clearInterval();
-  }
-
-  currentWord() {
-    return this.content[this.readerService.index()];
   }
 }

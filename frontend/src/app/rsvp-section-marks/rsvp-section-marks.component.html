@@ -1,16 +1,14 @@
 <app-reader
-  [content]="content"
-  [readerService]="readerService"
-  [title]="passage.title"
+  [rsvpService]="rsvpService"
 >
 </app-reader>
 <mv-slider
-  *ngIf="ticks"
-  [value]="readerService.index()"
+  *ngIf="rsvpService.sectionMarkerIndexes"
+  [value]="rsvpService.index"
   [min]="0"
-  [max]="content.length"
-  [ticks]="ticks"
-  [ticksPositions]="tickPositions"
+  [max]="rsvpService.contentLength"
+  [ticks]="rsvpService.sectionMarkerIndexes"
+  [ticksPositions]="rsvpService.sectionMarkerPositions"
   step="1"
   [ticksSnapBounds]="200"
 >

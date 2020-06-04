@@ -12,6 +12,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { HomeComponent } from './home/home.component';
 import { RsvpSectionMarksComponent } from './rsvp-section-marks/rsvp-section-marks.component';
 import { NgxBootstrapSliderModule } from 'ngx-bootstrap-slider';
+import { QuizComponent } from './quiz/quiz.component';
+import { MetricsComponent } from './metrics/metrics.component';
+import { RsvpComponent } from './rsvp-utils/rsvp.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +25,9 @@ import { NgxBootstrapSliderModule } from 'ngx-bootstrap-slider';
     RsvpProgressBarComponent,
     HomeComponent,
     RsvpSectionMarksComponent,
+    QuizComponent,
+    MetricsComponent,
+    RsvpComponent,
   ],
   imports: [
     BrowserModule,
