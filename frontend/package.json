@@ -25,6 +25,7 @@
     "core-js": "^3.6.5",
     "ngx-bootstrap-slider": "^1.8.0",
     "rxjs": "^6.5.5",
+    "survey-angular": "^1.7.10",
     "tslib": "^2.0.0",
     "zone.js": "^0.10.3"
   },
