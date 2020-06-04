@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ReactSurveyModel, Survey, SurveyNG } from 'survey-angular';
+import { ReactSurveyModel, SurveyNG } from 'survey-angular';
+import { QuizService } from './quiz.service';
+import { Question, Quiz } from './Quiz';
 
 @Component({
   selector: 'app-quiz',
@@ -7,17 +9,39 @@ import { ReactSurveyModel, Survey, SurveyNG } from 'survey-angular';
   styleUrls: ['./quiz.component.css']
 })
 export class QuizComponent implements OnInit {
+  private quiz: Quiz;
 
-  constructor() { }
+  constructor(private quizService: QuizService) {
+  }
 
   ngOnInit() {
-    var json = { questions: [
-        { type: "radiogroup", name: "car", title: "What car are you driving?", isRequired: true,
-          colCount: 4, choices: ["None", "Ford", "Vauxhall", "Volkswagen", "Nissan", "Audi", "Mercedes-Benz", "BMW", "Peugeot", "Toyota", "Citroen"] }
-      ]};
+    this.quizService.getQuizzes()
+      .subscribe(quizzes => {
+        this.quiz = quizzes[0];
+        console.log(this.quiz);
+
+        const questions = this.quiz.questions.map((question: Question) => {
+          const answers = question.answers.map((answer) => {
+            return answer.answer
+          });
+          return {
+            type: "radiogroup",
+            name: "car",
+            title: question.question,
+            isRequired: true,
+            colCount: 4,
+            choices: answers
+          }
+        });
+        console.log(questions);
+
+        var json = {
+          questions: questions
+        };
 
 
-    var model = new ReactSurveyModel(json);
-    SurveyNG.render('surveyContainer', { model: model });
+        var model = new ReactSurveyModel(json);
+        SurveyNG.render('surveyContainer', {model: model});
+      });
   }
 }
