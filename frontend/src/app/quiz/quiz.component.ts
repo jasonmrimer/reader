@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ReactSurveyModel, SurveyNG } from 'survey-angular';
+import { ReactSurveyModel, Survey, SurveyModel, SurveyNG, SurveyWindowNG } from 'survey-angular';
 import { QuizService } from './quiz.service';
 import { Question, Quiz } from './Quiz';
+
+
+SurveyNG.apply({theme: 'modern'});
 
 @Component({
   selector: 'app-quiz',
@@ -18,24 +21,28 @@ export class QuizComponent implements OnInit {
     this.quizService.getQuizzes()
       .subscribe(quizzes => {
         this.quiz = quizzes[0];
-        const questions = this.quiz.questions.map((question: Question) => {
-          const answers = question.answers.map((answer) => {
-            return answer.answer
+        const questions = this.quiz.questions
+          .map((question: Question, index: number) => {
+            const answers = question.answers.map((answer) => {
+              return answer.answer
+            });
+            return {
+              type: "radiogroup",
+              name: `question${index}`,
+              title: question.question,
+              isRequired: true,
+              colCount: 4,
+              choices: answers
+            }
           });
-          return {
-            type: "radiogroup",
-            name: "car",
-            title: question.question,
-            isRequired: true,
-            colCount: 4,
-            choices: answers
-          }
-        });
 
         var json = {
           questions: questions
         };
 
+        // var survey = new Survey.Model(surveyJSON);
+        // survey.onComplete.add(sendDataToServer);
+        // Survey.SurveyWindowNG.render("surveyElement", {model:survey});
 
         var model = new ReactSurveyModel(json);
         SurveyNG.render('surveyContainer', {model: model});

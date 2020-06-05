@@ -24,6 +24,7 @@ describe('QuizComponent', () => {
   const quizServiceSpy = jasmine.createSpyObj('QuizService', ['getQuizzes', 'check']);
   quizServiceSpy.getQuizzes.and.returnValue(of([quizStub]));
   quizServiceSpy.check.and.returnValue('spy');
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
@@ -47,8 +48,13 @@ describe('QuizComponent', () => {
   });
 
   it('should display questions and answers', async () => {
-    console.log(document);
     await expect(fixture.debugElement.queryAll(By.css('.sv_q_title')).length).toBe(2);
     await expect(fixture.debugElement.queryAll(By.css('.sv_q_radiogroup_control_item')).length).toBe(8);
+  });
+
+  it('should submit a set of answers', () => {
+  //  select answers
+  //  click submit
+  //  spy on service?
   });
 });
