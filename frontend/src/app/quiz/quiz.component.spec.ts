@@ -1,29 +1,17 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QuizComponent } from './quiz.component';
-import { Quiz, quizStub } from './Quiz';
+import { quizStub } from './Quiz';
 import { By } from '@angular/platform-browser';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { QuizService } from './quiz.service';
-import { Observable, of } from 'rxjs';
-import { Injectable } from '@angular/core';
-
-@Injectable()
-class QuizServiceMock extends QuizService {
-  check() {
-    return 'fake';
-  }
-  getQuizzes(): Observable<Quiz[]> {
-    return of([quizStub]);
-  }
-}
+import { of } from 'rxjs';
 
 describe('QuizComponent', () => {
   let component: QuizComponent;
   let fixture: ComponentFixture<QuizComponent>;
-  const quizServiceSpy = jasmine.createSpyObj('QuizService', ['getQuizzes', 'check']);
+  const quizServiceSpy = jasmine.createSpyObj('QuizService', ['getQuizzes', 'submitAnswers']);
   quizServiceSpy.getQuizzes.and.returnValue(of([quizStub]));
-  quizServiceSpy.check.and.returnValue('spy');
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -31,9 +19,9 @@ describe('QuizComponent', () => {
       providers: [
         {provide: QuizService, useValue: quizServiceSpy}
       ],
-      declarations: [ QuizComponent ]
+      declarations: [QuizComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -47,14 +35,23 @@ describe('QuizComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display questions and answers', async () => {
-    await expect(fixture.debugElement.queryAll(By.css('.sv_q_title')).length).toBe(2);
-    await expect(fixture.debugElement.queryAll(By.css('.sv_q_radiogroup_control_item')).length).toBe(8);
+  it('should display questions and answers', () => {
+    expect(fixture.debugElement.queryAll(By.css('.sv_q_title')).length).toBe(2);
+    expect(fixture.debugElement.queryAll(By.css('.sv_q_radiogroup_control_item')).length).toBe(8);
   });
 
   it('should submit a set of answers', () => {
-  //  select answers
-  //  click submit
-  //  spy on service?
+    let choices = fixture.debugElement.queryAll(By.css('input[type=radio]'));
+    choices.map((choice) => {
+      if (
+        choice.nativeElement.value === 'answer1.1'
+        || choice.nativeElement.value === 'answer2.2') {
+        choice.nativeElement.click();
+      }
+    })
+    let completeButton = fixture.debugElement.query(By.css("input[type=button][value='Complete']"));
+    expect(completeButton).toBeTruthy();
+    completeButton.nativeElement.click();
+    expect(quizServiceSpy.submitAnswers).toHaveBeenCalled();
   });
 });

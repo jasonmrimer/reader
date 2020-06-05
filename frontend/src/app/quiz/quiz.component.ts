@@ -41,11 +41,11 @@ export class QuizComponent implements OnInit {
         };
 
         // var survey = new Survey.Model(surveyJSON);
-        // survey.onComplete.add(sendDataToServer);
         // Survey.SurveyWindowNG.render("surveyElement", {model:survey});
 
-        var model = new ReactSurveyModel(json);
-        SurveyNG.render('surveyContainer', {model: model});
+        var surveyModel = new ReactSurveyModel(json);
+        surveyModel.onComplete.add(this.quizService.submitAnswers);
+        SurveyNG.render('surveyContainer', {model: surveyModel});
       });
   }
 }
