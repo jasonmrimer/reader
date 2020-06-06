@@ -10,8 +10,9 @@ import { of } from 'rxjs';
 describe('QuizComponent', () => {
   let component: QuizComponent;
   let fixture: ComponentFixture<QuizComponent>;
-  const quizServiceSpy = jasmine.createSpyObj('QuizService', ['getQuizzes', 'submitAnswers']);
+  const quizServiceSpy = jasmine.createSpyObj('QuizService', ['getQuizzes', 'postAnswers', 'check']);
   quizServiceSpy.getQuizzes.and.returnValue(of([quizStub]));
+  quizServiceSpy.check.and.returnValue('spy');
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -52,6 +53,14 @@ describe('QuizComponent', () => {
     let completeButton = fixture.debugElement.query(By.css("input[type=button][value='Complete']"));
     expect(completeButton).toBeTruthy();
     completeButton.nativeElement.click();
-    expect(quizServiceSpy.submitAnswers).toHaveBeenCalled();
+    expect(quizServiceSpy.postAnswers).toHaveBeenCalledWith(
+      {
+        quizId: 1,
+        answers: [
+          {'question1': 'answer1.1'},
+          {'question2': 'answer2.2'},
+        ]
+      }
+    );
   });
 });

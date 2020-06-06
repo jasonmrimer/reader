@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ReactSurveyModel, Survey, SurveyModel, SurveyNG, SurveyWindowNG } from 'survey-angular';
+import { ReactSurveyModel, SurveyModel, SurveyNG } from 'survey-angular';
 import { QuizService } from './quiz.service';
-import { Question, Quiz } from './Quiz';
+import { Answer, Question, Quiz } from './Quiz';
+import { QuizSubmission } from './QuizSubmission';
 
 
 SurveyNG.apply({theme: 'modern'});
@@ -9,12 +10,14 @@ SurveyNG.apply({theme: 'modern'});
 @Component({
   selector: 'app-quiz',
   templateUrl: './quiz.component.html',
-  styleUrls: ['./quiz.component.css']
+  styleUrls: ['./quiz.component.css'],
 })
 export class QuizComponent implements OnInit {
   quiz: Quiz;
+  private quizService: QuizService;
 
-  constructor(private quizService: QuizService) {
+  constructor(private _quizService: QuizService) {
+    this.quizService = _quizService;
   }
 
   ngOnInit() {
@@ -30,7 +33,7 @@ export class QuizComponent implements OnInit {
 
   private createSurveyComponent(surveyJSON: { questions: { isRequired: boolean; name: string; colCount: number; type: string; title: string; choices: string[] }[] }) {
     const surveyModel = new ReactSurveyModel(surveyJSON);
-    surveyModel.onComplete.add(this.quizService.submitAnswers);
+    surveyModel.onComplete.add(this.submitAnswers);
     SurveyNG.render('surveyContainer', {model: surveyModel});
   }
 
@@ -57,5 +60,14 @@ export class QuizComponent implements OnInit {
     return question.answers.map((answer) => {
       return answer.answer
     });
+  }
+
+  private submitAnswers = (surveyModel: SurveyModel) => {
+    const surveyData = JSON.stringify(surveyModel.data);
+    const quizSubmission = new QuizSubmission(
+      this.quiz.quizId,
+      surveyModel.data
+    )
+    // this.quizService.postAnswers(quizSubmission);
   }
 }
