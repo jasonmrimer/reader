@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Quiz } from './Quiz';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { SurveyModel } from 'survey-angular';
+import { QuizSubmission } from './QuizSubmission';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class QuizService {
     return this._http.get<Quiz[]>(`${environment.apiUrl}/quizzes`);
   }
 
-  postAnswers(quizId: string, surveyModel: any) {
-    const resultsAsString = JSON.stringify(surveyModel.data);
+  postAnswers(quizSubmission: QuizSubmission) {
+    console.log('posting quiz submission');
   }
 }

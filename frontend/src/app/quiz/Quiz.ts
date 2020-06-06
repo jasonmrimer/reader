@@ -8,15 +8,15 @@ export class Quiz {
 export class Question {
   constructor(
     public question: string,
-    public answers: Answer[]
+    public answers: Choice[]
   ) {
   }
 }
 
-export class Answer {
+export class Choice {
   constructor(
-    public answer: string,
-    public correct: boolean
+    public choice: string,
+    public isCorrect: boolean
   ) {
   }
 }
@@ -24,20 +24,20 @@ export class Answer {
 let question1 = new Question(
   'question1',
   [
-    new Answer('answer1.1', true),
-    new Answer('answer1.2', false),
-    new Answer('answer1.3', false),
-    new Answer('answer1.4', false)
+    new Choice('answer1.1', true),
+    new Choice('answer1.2', false),
+    new Choice('answer1.3', false),
+    new Choice('answer1.4', false)
   ]
 );
 
 let question2 = new Question(
   'question2',
   [
-    new Answer('answer2.1', false),
-    new Answer('answer2.2', true),
-    new Answer('answer2.3', false),
-    new Answer('answer2.4', false)
+    new Choice('answer2.1', false),
+    new Choice('answer2.2', true),
+    new Choice('answer2.3', false),
+    new Choice('answer2.4', false)
   ]
 );
 

@@ -53,14 +53,20 @@ describe('QuizComponent', () => {
     let completeButton = fixture.debugElement.query(By.css("input[type=button][value='Complete']"));
     expect(completeButton).toBeTruthy();
     completeButton.nativeElement.click();
-    expect(quizServiceSpy.postAnswers).toHaveBeenCalledWith(
+    expect(quizServiceSpy.postAnswers).toHaveBeenCalledWith(jasmine.objectContaining(
       {
-        quizId: 1,
+        quizId: 'id1',
         answers: [
-          {'question1': 'answer1.1'},
-          {'question2': 'answer2.2'},
+          {
+            question: 'question1',
+            answer: 'answer1.1'
+          },
+          {
+            question: 'question2',
+            answer: 'answer2.2'
+          },
         ]
-      }
+      })
     );
   });
 });

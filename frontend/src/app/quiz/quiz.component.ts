@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ReactSurveyModel, SurveyModel, SurveyNG } from 'survey-angular';
 import { QuizService } from './quiz.service';
-import { Answer, Question, Quiz } from './Quiz';
+import { Question, Quiz } from './Quiz';
 import { QuizSubmission } from './QuizSubmission';
 
 
@@ -38,17 +38,16 @@ export class QuizComponent implements OnInit {
   }
 
   private convertToSurvey(questions: Question[]) {
-    return questions.map(
-      (question: Question, index: number) => {
-        const answers = this.getAnswers(question);
-        return this.questionJSON(index, question, answers)
-      });
+    return questions.map((question: Question) => {
+      const answers = QuizComponent.getAnswers(question);
+      return QuizComponent.questionJSON(question, answers)
+    });
   }
 
-  private questionJSON(index: number, question: Question, answers: string[]) {
+  private static questionJSON(question: Question, answers: string[]) {
     return {
       type: "radiogroup",
-      name: `question${index}`,
+      name: question.question,
       title: question.question,
       isRequired: true,
       colCount: 4,
@@ -56,18 +55,17 @@ export class QuizComponent implements OnInit {
     };
   }
 
-  private getAnswers(question: Question) {
+  private static getAnswers(question: Question) {
     return question.answers.map((answer) => {
-      return answer.answer
+      return answer.choice
     });
   }
 
   private submitAnswers = (surveyModel: SurveyModel) => {
-    const surveyData = JSON.stringify(surveyModel.data);
     const quizSubmission = new QuizSubmission(
       this.quiz.quizId,
       surveyModel.data
     )
-    // this.quizService.postAnswers(quizSubmission);
+    this.quizService.postAnswers(quizSubmission);
   }
 }

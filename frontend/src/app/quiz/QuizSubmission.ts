@@ -5,15 +5,16 @@ export class QuizSubmission {
     public quizId: string,
     surveyData: any
   ) {
+    console.log(surveyData);
     this.answers = this.convertDataToAnswers(surveyData);
   }
 
   private convertDataToAnswers(surveyData: any) {
-    return surveyData.map((obj) => {
-      let key = Object.keys(obj)[0];
+    let keys = Object.keys(surveyData);
+    return keys.map((key: string) => {
       return {
         question: key,
-        answer: obj[key]
+        answer: surveyData[key]
       }
     })
   }
