@@ -45,3 +45,5 @@ export const quizStub = new Quiz(
   'id1',
   [question1, question2]
 )
+
+export const quizzesStub = [quizStub];

@@ -1,13 +1,9 @@
-import { getTestBed, TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { QuizService } from './quiz.service';
-import { ReactSurveyModel } from 'survey-angular';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-
-const surveyModelStub = new ReactSurveyModel({
-  name: 'questionName',
-
-});
+import { QuizSubmission } from './QuizSubmission';
+import { Quiz, quizzesStub } from './Quiz';
 
 describe('QuizService', () => {
   let service: QuizService;
@@ -29,13 +25,41 @@ describe('QuizService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should post answers from a survey', () => {
-  //  setup a survey stub
+  it('should get quizzes', () => {
+    service.getQuizzes().subscribe((response: Quiz[]) => {
+      expect(response).toEqual(quizzesStub);
+    })
 
-  //  call the submission
-  //  verify the http mock got hit with the right shape on a POST
-    const request = httpMock.expectOne('http://localhost:4000/api/passages');
-    expect(request.request.method).toBe('POST');
-    expect(request.request.body).toEqual({}); //todo
+    const request = httpMock.expectOne('http://localhost:4000/api/quizzes');
+    expect(request.request.method).toBe('GET');
+    request.flush(quizzesStub);
   });
+
+  it('should post answers from a survey', fakeAsync(() => {
+    const quizSubmission = new QuizSubmission(
+      'quizId',
+      {
+        question1: 'answer1',
+        question2: 'answer2',
+        question3: 'answer3',
+      }
+    )
+
+    service
+      .postAnswers(quizSubmission)
+      .subscribe(() => {
+      });
+
+    const request = httpMock.expectOne('http://localhost:4000/api/quizzes');
+    expect(request.request.method).toBe('POST');
+    expect(request.request.body).toEqual(jasmine.objectContaining({
+      quizId: 'quizId',
+      answers: [
+        {question: 'question1', answer: 'answer1'},
+        {question: 'question2', answer: 'answer2'},
+        {question: 'question3', answer: 'answer3'},
+      ]
+    }));
+    request.flush({});
+  }));
 });
