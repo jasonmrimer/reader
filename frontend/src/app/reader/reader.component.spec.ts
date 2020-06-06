@@ -6,15 +6,6 @@ import { ReaderService } from './reader.service';
 import { IntervalService } from './interval.service';
 import { IntervalServiceMock } from './interval.service.mock.spec';
 
-class ReaderServiceMock extends ReaderService {
-  index(): number {
-    return 2;
-  }
-
-  moveAhead(): void {
-  }
-}
-
 describe('ReaderComponent', () => {
   let component: ReaderComponent;
   let fixture: ComponentFixture<ReaderComponent>;

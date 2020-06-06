@@ -6,7 +6,6 @@ import { Passage } from '../passage/passage';
 import { passagesStub, passageStub } from './PassageStub';
 
 describe('RSVPService', () => {
-  let injector: TestBed;
   let service: RSVPService;
   let httpMock: HttpTestingController;
 
@@ -16,9 +15,8 @@ describe('RSVPService', () => {
       providers: [RSVPService]
     });
 
-    injector = getTestBed();
-    service = injector.get(RSVPService);
-    httpMock = injector.get(HttpTestingController);
+    service = TestBed.inject(RSVPService);
+    httpMock = TestBed.inject(HttpTestingController);
   });
 
   afterEach(() => {
