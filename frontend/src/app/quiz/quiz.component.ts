@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ReactSurveyModel, SurveyModel, SurveyNG } from 'survey-angular';
 import { QuizService } from './quiz.service';
-import { Question, Quiz } from './Quiz';
+import { Choice, Question, Quiz } from './Quiz';
 import { QuizSubmission } from './QuizSubmission';
 
 
@@ -24,46 +24,52 @@ export class QuizComponent implements OnInit {
     this.quizService.getQuizzes()
       .subscribe(quizzes => {
         this.quiz = quizzes[0];
+        console.log(this.quiz);
         const surveyJSON = {
-          questions: this.convertToSurvey(this.quiz.questions)
+          questions: this.convertToSurveyQuestions(this.quiz.questions)
         };
         this.createSurveyComponent(surveyJSON);
       });
   }
 
-  private createSurveyComponent(surveyJSON: { questions: { isRequired: boolean; name: string; colCount: number; type: string; title: string; choices: string[] }[] }) {
+  private createSurveyComponent(surveyJSON: any) {
+    console.log('========1');
+    console.log(this.quiz);
     const surveyModel = new ReactSurveyModel(surveyJSON);
+    console.log('========2');
     surveyModel.onComplete.add(this.submitAnswers);
     SurveyNG.render('surveyContainer', {model: surveyModel});
   }
 
-  private convertToSurvey(questions: Question[]) {
+  private convertToSurveyQuestions(questions: Question[]) {
+    console.log('conversion');
+    console.log(questions);
     return questions.map((question: Question) => {
-      const answers = QuizComponent.getAnswers(question);
-      return QuizComponent.questionJSON(question, answers)
+      const choicesText = this.extractChoiceTextFrom(question);
+      return this.questionJSON(question, choicesText)
     });
   }
 
-  private static questionJSON(question: Question, answers: string[]) {
+  private questionJSON(question: Question, choices: string[]) {
     return {
-      type: "radiogroup",
+      type: 'radiogroup',
       name: question.question,
       title: question.question,
       isRequired: true,
       colCount: 4,
-      choices: answers
+      choices: choices
     };
   }
 
-  private static getAnswers(question: Question) {
-    return question.answers.map((answer) => {
-      return answer.choice
+  private extractChoiceTextFrom(question: Question) {
+    return question.choices.map((choice: Choice) => {
+      return choice.text
     });
   }
 
   private submitAnswers = (surveyModel: SurveyModel) => {
     const quizSubmission = new QuizSubmission(
-      this.quiz.quizId,
+      this.quiz.passage,
       surveyModel.data
     )
     this.quizService.postAnswers(quizSubmission);

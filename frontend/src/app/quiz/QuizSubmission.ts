@@ -2,10 +2,9 @@ export class QuizSubmission {
   public answers: any;
 
   constructor(
-    public quizId: string,
+    public passage: string,
     surveyData: any
   ) {
-    console.log(surveyData);
     this.answers = this.convertDataToAnswers(surveyData);
   }
 

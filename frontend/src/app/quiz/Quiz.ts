@@ -1,6 +1,6 @@
 export class Quiz {
   constructor(
-    public quizId: string,
+    public passage: string,
     public questions: Question[]) {
   }
 }
@@ -8,15 +8,15 @@ export class Quiz {
 export class Question {
   constructor(
     public question: string,
-    public answers: Choice[]
+    public choices: Choice[]
   ) {
   }
 }
 
 export class Choice {
   constructor(
-    public choice: string,
-    public isCorrect: boolean
+    public text: string,
+    public correct: boolean
   ) {
   }
 }

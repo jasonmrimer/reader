@@ -36,12 +36,12 @@ describe('QuizComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display questions and answers', () => {
+  it('should display questions and choices', () => {
     expect(fixture.debugElement.queryAll(By.css('.sv_q_title')).length).toBe(2);
     expect(fixture.debugElement.queryAll(By.css('.sv_q_radiogroup_control_item')).length).toBe(8);
   });
 
-  it('should submit a set of answers', () => {
+  it('should submit a set of choices', () => {
     let choices = fixture.debugElement.queryAll(By.css('input[type=radio]'));
     choices.map((choice) => {
       if (

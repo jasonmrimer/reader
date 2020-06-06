@@ -1,7 +1,7 @@
 import { QuizSubmission } from './QuizSubmission';
 
 describe('QuizSubmission', () => {
-  it('should receive survey data and transform into answers for db', () => {
+  it('should receive survey data and transform into choices for db', () => {
     const surveyData =
       {
         q1: 'a1',
