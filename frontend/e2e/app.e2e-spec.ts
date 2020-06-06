@@ -47,4 +47,8 @@ describe('Reader App', () => {
     expect(element(by.id('completion-meter'))).toBeDefined();
     expect(element.all(by.className('slider-tick')).count()).toBe(4);
   });
+
+  it('should take a quiz', () => {
+    expect(false).toBeTruthy();
+  });
 });

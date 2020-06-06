@@ -16,7 +16,9 @@ export class QuizService {
   getQuizzes() {
     return this._http.get<Quiz[]>(`${environment.apiUrl}/quizzes`);
   }
-  submitAnswers(answers: any) {
-    const resultsAsString = JSON.stringify(answers.data);
+  submitAnswers(surveyModel: any) {
+    console.log(surveyModel);
+    const resultsAsString = JSON.stringify(surveyModel.data);
+
   }
 }

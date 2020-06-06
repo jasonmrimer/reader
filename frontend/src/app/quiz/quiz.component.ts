@@ -21,31 +21,41 @@ export class QuizComponent implements OnInit {
     this.quizService.getQuizzes()
       .subscribe(quizzes => {
         this.quiz = quizzes[0];
-        const questions = this.quiz.questions
-          .map((question: Question, index: number) => {
-            const answers = question.answers.map((answer) => {
-              return answer.answer
-            });
-            return {
-              type: "radiogroup",
-              name: `question${index}`,
-              title: question.question,
-              isRequired: true,
-              colCount: 4,
-              choices: answers
-            }
-          });
-
-        var json = {
-          questions: questions
+        const surveyJSON = {
+          questions: this.convertToSurvey(this.quiz.questions)
         };
-
-        // var survey = new Survey.Model(surveyJSON);
-        // Survey.SurveyWindowNG.render("surveyElement", {model:survey});
-
-        var surveyModel = new ReactSurveyModel(json);
-        surveyModel.onComplete.add(this.quizService.submitAnswers);
-        SurveyNG.render('surveyContainer', {model: surveyModel});
+        this.createSurveyComponent(surveyJSON);
       });
+  }
+
+  private createSurveyComponent(surveyJSON: { questions: { isRequired: boolean; name: string; colCount: number; type: string; title: string; choices: string[] }[] }) {
+    const surveyModel = new ReactSurveyModel(surveyJSON);
+    surveyModel.onComplete.add(this.quizService.submitAnswers);
+    SurveyNG.render('surveyContainer', {model: surveyModel});
+  }
+
+  private convertToSurvey(questions: Question[]) {
+    return questions.map(
+      (question: Question, index: number) => {
+        const answers = this.getAnswers(question);
+        return this.questionJSON(index, question, answers)
+      });
+  }
+
+  private questionJSON(index: number, question: Question, answers: string[]) {
+    return {
+      type: "radiogroup",
+      name: `question${index}`,
+      title: question.question,
+      isRequired: true,
+      colCount: 4,
+      choices: answers
+    };
+  }
+
+  private getAnswers(question: Question) {
+    return question.answers.map((answer) => {
+      return answer.answer
+    });
   }
 }
