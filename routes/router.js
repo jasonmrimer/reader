@@ -16,9 +16,10 @@ router.get('/quizzes', (request, response, next) => {
         response.json(quizzes);
     })
 });
+
 router.post('/quizzes', (request, response, next) => {
     let newSubmission  = new submission({
-        quizId: request.body.quizId,
+        quizId: request.body.passage,
         answers: request.body.answers
       }
     )

@@ -72,6 +72,7 @@ export class QuizComponent implements OnInit {
       this.quiz.passage,
       surveyModel.data
     )
-    this.quizService.postAnswers(quizSubmission);
+    this.quizService.postAnswers(quizSubmission)
+      .subscribe();
   }
 }
