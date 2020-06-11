@@ -18,6 +18,10 @@ export class ReaderService {
     this._index++;
   }
 
+  get isComplete(): boolean {
+    return this._index + 1 >= this._contentLength;
+  }
+
   set contentLength(value: number) {
     this._contentLength = value;
   }
