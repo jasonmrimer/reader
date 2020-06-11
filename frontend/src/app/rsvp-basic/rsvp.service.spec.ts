@@ -7,35 +7,18 @@ import { passagesStub, passageStub } from './PassageStub';
 
 describe('RSVPService', () => {
   let service: RSVPService;
-  let httpMock: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
       providers: [RSVPService]
     });
 
     service = TestBed.inject(RSVPService);
-    httpMock = TestBed.inject(HttpTestingController);
   });
-
-  afterEach(() => {
-    httpMock.verify();
-  })
 
   it('should be created', inject([RSVPService], (service: RSVPService) => {
     expect(service).toBeTruthy();
   }));
-
-  it('should return a passage', function () {
-    service.getPassages().subscribe((response: Passage[]) => {
-      expect(response).toEqual(passagesStub);
-    })
-
-    const request = httpMock.expectOne('http://localhost:4000/api/passages');
-    expect(request.request.method).toBe('GET');
-    request.flush(passagesStub);
-  });
 
   it('should transform passage content into RSVP shape', function () {
     expect(service.transformToReadableContent(passageStub.content)).toEqual([

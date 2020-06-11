@@ -7,11 +7,7 @@ import { isNotNullOrUndefined } from 'codelyzer/util/isNotNullOrUndefined';
 @Injectable()
 export class RSVPService {
 
-  constructor(private _http: HttpClient) {
-  }
-
-  getPassages() {
-    return this._http.get<Passage[]>(`${environment.apiUrl}/passages`)
+  constructor() {
   }
 
   transformToRSVPWithSectionMarkers(unformedContent: string): string[] {
