@@ -12,12 +12,6 @@ router.get('/passages', (request, response, next) => {
     })
 });
 
-router.get('/metrics', (request, response, next) => {
-    passage.find((err, metrics) => {
-        response.json(metrics);
-    })
-});
-
 router.get('/quizzes', (request, response, next) => {
     quiz.find((err, quizzes) => {
         response.json(quizzes);
@@ -38,5 +32,22 @@ router.post('/quizzes', (request, response, next) => {
         }
     })
 });
+
+router.get('/metrics', (request, response, next) => {
+    metric.find((err, metrics) => {
+        response.json(metrics);
+    })
+});
+
+router.post('/metrics', (request, response, next) => {
+    metric.findOneAndUpdate(
+      request,
+      {upsert: true},
+      function(err, doc) {
+          if (err) return res.send(500, {error: err});
+          return res.send('Successfully saved.');
+      }
+    )
+})
 
 module.exports = router;
