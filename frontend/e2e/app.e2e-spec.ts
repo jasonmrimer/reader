@@ -12,7 +12,7 @@ function verifyRSVPWorks() {
   let content = element(by.id('passage-content'));
   expect(content.getText()).toBe('Following');
   element(by.id('play-button')).click();
-  browser.sleep(100);
+  browser.sleep(400);
   expect(content.getText()).not.toBe('Following');
 }
 
@@ -48,7 +48,23 @@ describe('Reader App', () => {
     expect(element.all(by.className('slider-tick')).count()).toBe(4);
   });
 
-  it('should take a quiz', () => {
+  xit('should take a quiz', () => {
     expect(false).toBeTruthy();
+  });
+
+  it('should add a new read count to the metrics page after completing a passage', () => {
+    // capture count
+    let count: number = 0;
+    browser.get('/metrics');
+    element(by.id('count-rsvp-basic')).getText().then((text) =>
+      count = Number.parseInt(text, 10)
+    );
+    browser.get('/rsvp-basic');
+    verifyRSVPWorks();
+    browser.get('/metrics');
+    expect(element(by.id('count-rsvp-basic')).getText()).toBe(count + 1);
+    //  wait for Passage Complete
+    //  go to metrics
+    //  check count for rsvp-basic is count + 1
   });
 });

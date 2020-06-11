@@ -13,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { RsvpSectionMarksComponent } from './rsvp-section-marks/rsvp-section-marks.component';
 import { NgxBootstrapSliderModule } from 'ngx-bootstrap-slider';
 import { QuizComponent } from './quiz/quiz.component';
+import { MetricsComponent } from './metrics/metrics.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { QuizComponent } from './quiz/quiz.component';
     HomeComponent,
     RsvpSectionMarksComponent,
     QuizComponent,
+    MetricsComponent,
   ],
   imports: [
     BrowserModule,
