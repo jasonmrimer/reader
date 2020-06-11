@@ -7,7 +7,6 @@ import { environment } from '../../environments/environment';
 export class PassageService {
 
   constructor(private _http: HttpClient) {
-
   }
 
   getPassages() {

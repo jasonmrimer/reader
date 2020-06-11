@@ -13,20 +13,19 @@ import { PassageService } from '../passage/passage.service';
 export class RsvpBasicComponent implements OnInit {
   passage: Passage = new Passage();
   readerContent: string[] = [''];
-  readerService: ReaderService;
 
   constructor(
     private passageService: PassageService,
-    private _rsvpService: RSVPService,
-    public _readerService: ReaderService) {
-    this.readerService = _readerService;
+    private rsvpService: RSVPService,
+    public readerService: ReaderService
+  ) {
   }
 
   ngOnInit() {
     this.passageService.getPassages()
       .subscribe(passages => {
         this.passage = passages[0];
-        this.readerContent = this._rsvpService
+        this.readerContent = this.rsvpService
           .transformToReadableContent(this.passage.content);
       });
   }
