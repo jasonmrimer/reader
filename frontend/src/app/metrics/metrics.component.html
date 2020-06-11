@@ -1,1 +1,8 @@
-<p>metrics works!</p>
+<table class="metrics-table">
+<th>Interface</th>
+<th>Completion Count</th>
+     <tr *ngFor="let row of rows" class="metrics-row">
+       <td class="interface-name">{{row.interfaceName}}</td>
+       <td class="completion-count">{{row.completionCount}}</td>
+     </tr>
+</table>

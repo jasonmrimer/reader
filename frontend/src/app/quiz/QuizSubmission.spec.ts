@@ -10,7 +10,7 @@ describe('QuizSubmission', () => {
 
     const quizSubmission = new QuizSubmission('qId', surveyData);
 
-    expect(quizSubmission.quizId).toEqual('qId');
+    expect(quizSubmission.passage).toEqual('qId');
     expect(quizSubmission.answers).toEqual([
       {question: 'q1', answer: 'a1'},
       {question: 'q2', answer: 'a2'},
