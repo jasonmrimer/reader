@@ -24,7 +24,6 @@ export class QuizComponent implements OnInit {
     this.quizService.getQuizzes()
       .subscribe(quizzes => {
         this.quiz = quizzes[0];
-        console.log(this.quiz);
         const surveyJSON = {
           questions: this.convertToSurveyQuestions(this.quiz.questions)
         };
@@ -33,17 +32,12 @@ export class QuizComponent implements OnInit {
   }
 
   private createSurveyComponent(surveyJSON: any) {
-    console.log('========1');
-    console.log(this.quiz);
     const surveyModel = new ReactSurveyModel(surveyJSON);
-    console.log('========2');
     surveyModel.onComplete.add(this.submitAnswers);
     SurveyNG.render('surveyContainer', {model: surveyModel});
   }
 
   private convertToSurveyQuestions(questions: Question[]) {
-    console.log('conversion');
-    console.log(questions);
     return questions.map((question: Question) => {
       const choicesText = this.extractChoiceTextFrom(question);
       return this.questionJSON(question, choicesText)

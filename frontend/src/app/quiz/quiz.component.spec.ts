@@ -28,7 +28,6 @@ describe('QuizComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(QuizComponent);
     component = fixture.componentInstance;
-    component.quiz = quizStub;
     fixture.detectChanges();
   });
 
@@ -55,7 +54,7 @@ describe('QuizComponent', () => {
     completeButton.nativeElement.click();
     expect(quizServiceSpy.postAnswers).toHaveBeenCalledWith(jasmine.objectContaining(
       {
-        quizId: 'id1',
+        passage: 'id1',
         answers: [
           {
             question: 'question1',

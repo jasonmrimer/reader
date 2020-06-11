@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MetricsService } from '../metrics.service';
+import { Metric } from '../metric';
 
 class Row {
   constructor(
@@ -12,20 +14,24 @@ class Row {
 @Component({
   selector: 'app-metrics',
   templateUrl: './metrics.component.html',
-  styleUrls: ['./metrics.component.css']
+  styleUrls: ['./metrics.component.css'],
 })
 export class MetricsComponent implements OnInit {
-  rows: Row[] = [
-    new Row('Baseline', 0),
-    new Row('RSVP Basic', 0),
-    new Row('RSVP Completion Meter', 0),
-    new Row('RSVP Section Marker', 0),
-  ];
+  rows: Row[] = [];
+  private metricsService: MetricsService;
 
-  constructor() {
+  constructor(private _metricsService: MetricsService) {
+    this.metricsService = _metricsService;
   }
 
   ngOnInit(): void {
+    this.metricsService.fetchMetrics()
+      .subscribe((metrics: Metric[]) => {
+          metrics.map((metric) => {
+            this.rows.push(new Row(metric.interfaceName, metric.completionCount))
+          })
+        }
+      )
   }
 
 }
