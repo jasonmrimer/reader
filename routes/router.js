@@ -4,10 +4,17 @@ const router = express.Router();
 const passage = require('../models/passage.js');
 const quiz = require('../models/quiz.js');
 const submission = require('../models/submission.js');
+const metric = require('../models/metric.js');
 
 router.get('/passages', (request, response, next) => {
     passage.find((err, passages) => {
         response.json(passages);
+    })
+});
+
+router.get('/metrics', (request, response, next) => {
+    passage.find((err, metrics) => {
+        response.json(metrics);
     })
 });
 
