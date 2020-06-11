@@ -41,7 +41,8 @@ router.get('/metrics', (request, response, next) => {
 
 router.post('/metrics', (request, response, next) => {
     metric.findOneAndUpdate(
-      request,
+      request.interfaceName,
+      request.completionCount,
       {upsert: true},
       function(err, doc) {
           if (err) return res.send(500, {error: err});

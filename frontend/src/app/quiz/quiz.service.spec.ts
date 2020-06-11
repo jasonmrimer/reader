@@ -53,7 +53,7 @@ describe('QuizService', () => {
     const request = httpMock.expectOne('http://localhost:4000/api/quizzes');
     expect(request.request.method).toBe('POST');
     expect(request.request.body).toEqual(jasmine.objectContaining({
-      quizId: 'quizId',
+      passage: 'quizId',
       answers: [
         {question: 'question1', answer: 'answer1'},
         {question: 'question2', answer: 'answer2'},

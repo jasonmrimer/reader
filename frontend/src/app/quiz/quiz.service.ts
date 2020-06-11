@@ -21,8 +21,6 @@ export class QuizService {
   }
 
   postAnswers(quizSubmission: QuizSubmission) {
-    console.log('posting quiz submission');
-    console.log(quizSubmission);
     return this._http.post(
       `${environment.apiUrl}/quizzes`,
       quizSubmission
