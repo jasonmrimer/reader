@@ -1,6 +1,6 @@
 import { RsvpProgressBarComponent } from '../rsvp-progress-bar/rsvp-progress-bar.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReaderComponent } from '../reader/reader.component';
 import { RSVPService } from './rsvp.service';
 import { RsvpBasicComponent } from './rsvp-basic.component';

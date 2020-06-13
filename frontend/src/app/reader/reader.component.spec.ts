@@ -32,6 +32,7 @@ describe('ReaderComponent', () => {
     component.title = 'fake title';
     component.content = ['one', 'two', 'three'];
     component.readerService = new ReaderService();
+    component.readerService.contentLength = 4;
     fixture.detectChanges();
 
     titleBox = fixture.debugElement.query(By.css('#passage-title'));
@@ -58,5 +59,14 @@ describe('ReaderComponent', () => {
     const pauseButton = fixture.debugElement.query(By.css('#pause-button'));
     pauseButton.nativeElement.click();
     expect(intervalServiceMock.clearInterval).toHaveBeenCalled();
+  });
+
+  it('should display a completion message at finish', () => {
+    expect(fixture.debugElement.query(By.css('.completion-message'))).toBeFalsy();
+    while (!component.readerService.isComplete) {
+      component.readerService.moveAhead();
+    }
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css('.completion-message'))).toBeTruthy();
   });
 });

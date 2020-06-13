@@ -26,6 +26,5 @@ describe('ReaderService', () => {
     expect(service.isComplete).toBeFalse();
     service.moveAhead();
     expect(service.isComplete).toBeTrue();
-
   });
 });
