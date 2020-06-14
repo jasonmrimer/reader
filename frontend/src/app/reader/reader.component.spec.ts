@@ -57,6 +57,14 @@ describe('ReaderComponent', () => {
     expect(contentBox.nativeElement.textContent).toBe('two');
   });
 
+  it('should stop  moving ahead on completion', () => {
+    component.playReader();
+    while (!component.readerService.isComplete) {
+      intervalServiceMock.tick();
+    }
+    expect(intervalServiceMock.clearInterval).toHaveBeenCalled();
+  });
+
   it('should pause the display', () => {
     const pauseButton = fixture.debugElement.query(By.css('#pause-button'));
     pauseButton.nativeElement.click();

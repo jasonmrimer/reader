@@ -2,11 +2,12 @@ import { Component, Input, NgZone, OnInit } from '@angular/core';
 import { ReaderService } from './reader.service';
 import { IntervalService } from './interval.service';
 import { Subscription } from 'rxjs';
+import { skip } from 'rxjs/operators';
 
 @Component({
   selector: 'app-reader',
   templateUrl: './reader.component.html',
-  styleUrls: ['./reader.component.css']
+  styleUrls: ['./reader.component.css'],
 })
 export class ReaderComponent implements OnInit {
   @Input()
@@ -15,6 +16,7 @@ export class ReaderComponent implements OnInit {
   content: string[] = [''];
   @Input()
   readerService: ReaderService;
+  subscription: Subscription;
   rsvpPlayer;
 
   constructor(private ngZone: NgZone, private _intervalService: IntervalService) {
@@ -30,6 +32,13 @@ export class ReaderComponent implements OnInit {
       }
     );
 
+    this.subscription = this.readerService.isComplete$
+      .pipe(skip(1))
+      .subscribe(this.finishReading);
+  }
+
+  private finishReading = () => {
+    this._intervalService.clearInterval();
   }
 
   playReader() {
