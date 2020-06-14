@@ -6,6 +6,10 @@ import { RSVPService } from './rsvp.service';
 import { RsvpBasicComponent } from './rsvp-basic.component';
 import { PassageService } from '../passage/passage.service';
 import { PassageServiceStub } from '../passage/passage-stub.service';
+import { ReaderService } from '../reader/reader.service';
+import { MetricsService } from '../metrics.service';
+import { MetricsServiceStub } from '../metrics-stub.service';
+import { MetricInterface } from '../metric';
 
 describe('RSVPBasicComponent', () => {
   let component: RsvpBasicComponent;
@@ -20,7 +24,9 @@ describe('RSVPBasicComponent', () => {
       ],
       providers: [
         RSVPService,
-        {provide: PassageService, useValue: new PassageServiceStub()}
+        ReaderService,
+        {provide: PassageService, useValue: new PassageServiceStub()},
+        {provide: MetricsService, useValue: new MetricsServiceStub()}
       ]
     })
       .compileComponents();
@@ -39,4 +45,15 @@ describe('RSVPBasicComponent', () => {
   it('should control an reader component', () => {
     expect(fixture.nativeElement.querySelector('app-reader')).not.toBe(null);
   });
+
+  it('should fire a metrics post on passage complete', () => {
+    component.metricsService.postPassageCompletion = jasmine.createSpy();
+    component.readerService.contentLength = 2;
+    expect(component.readerService.isComplete).toBeFalsy();
+    component.readerService.moveAhead();
+    component.readerService.moveAhead();
+    expect(component.readerService.isComplete).toBeTrue();
+    expect(component.metricsService.postPassageCompletion).toHaveBeenCalledWith(MetricInterface.RSVP_BASIC);
+  });
+
 });

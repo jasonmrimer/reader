@@ -1,6 +1,7 @@
 import { Component, Input, NgZone, OnInit } from '@angular/core';
 import { ReaderService } from './reader.service';
 import { IntervalService } from './interval.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-reader',
@@ -21,13 +22,14 @@ export class ReaderComponent implements OnInit {
 
   ngOnInit() {
     this._intervalService.setInterval(
-      100,
+      1,
       () => {
         this.ngZone.run(() => {
           this.readerService.moveAhead();
         })
       }
     );
+
   }
 
   playReader() {

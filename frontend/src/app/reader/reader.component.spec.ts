@@ -12,17 +12,19 @@ describe('ReaderComponent', () => {
   let titleBox;
   let contentBox;
   let intervalServiceMock: IntervalServiceMock;
+  let readerService;
 
   beforeEach(async(() => {
   }));
 
   beforeEach(() => {
     intervalServiceMock = new IntervalServiceMock();
+    readerService = new ReaderService();
 
     TestBed.configureTestingModule({
       declarations: [ReaderComponent],
       providers: [
-        {provide: IntervalService, useValue: intervalServiceMock}
+        {provide: IntervalService, useValue: intervalServiceMock},
       ]
     })
       .compileComponents();
@@ -31,8 +33,8 @@ describe('ReaderComponent', () => {
 
     component.title = 'fake title';
     component.content = ['one', 'two', 'three'];
-    component.readerService = new ReaderService();
-    component.readerService.contentLength = 4;
+    component.readerService = readerService;
+    readerService.contentLength = 4;
     fixture.detectChanges();
 
     titleBox = fixture.debugElement.query(By.css('#passage-title'));
@@ -69,4 +71,5 @@ describe('ReaderComponent', () => {
     fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('.completion-message'))).toBeTruthy();
   });
+
 });

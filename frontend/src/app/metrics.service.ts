@@ -16,7 +16,7 @@ export class MetricsService  {
     return this._http.get<Metric[]>(`${environment.apiUrl}/metrics`);
   }
 
-  updateCompletionCountFor(metricInterface: MetricInterface) {
+  postPassageCompletion(metricInterface: MetricInterface) {
     return this._http.post(
       `${environment.apiUrl}/metrics`,
       {interfaceName: metricInterface}

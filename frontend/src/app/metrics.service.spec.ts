@@ -31,7 +31,7 @@ describe('MetricsService', () => {
   });
 
   it('should update a metric', () => {
-    service.updateCompletionCountFor(MetricInterface.RSVP_BASIC)
+    service.postPassageCompletion(MetricInterface.RSVP_BASIC)
       .subscribe(()=>{});
     const request = httpMock.expectOne('http://localhost:4000/api/metrics');
     expect(request.request.method).toBe('POST');

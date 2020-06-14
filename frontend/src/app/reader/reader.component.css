@@ -45,3 +45,7 @@
   color: #fafafa;
   font-weight: bold;
 }
+
+.completion-message {
+  color: #ebebeb;
+}
