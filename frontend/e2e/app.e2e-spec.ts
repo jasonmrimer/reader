@@ -1,12 +1,15 @@
 import { FrontendPage } from './app.po';
-import { browser, by, element, protractor } from 'protractor';
-import { count } from 'rxjs/operators';
+import { browser, by, element, ElementArrayFinder, protractor } from 'protractor';
 
 require('inspector');
 
 function verifyRSVPWorks() {
   var until = protractor.ExpectedConditions;
-  browser.wait(until.presenceOf(element(by.id('passage-title'))), 5000, 'Passage Title taking too long to appear in the DOM');
+  browser.wait(
+    until.presenceOf(element(by.id('passage-title'))),
+    5000,
+    'Passage Title taking too long to appear in the DOM'
+  );
   expect(element(by.id('passage-title')).getText()).toEqual('For SpaceX, Third Launch is Charm');
 
   let content = element(by.id('passage-content'));
@@ -14,6 +17,11 @@ function verifyRSVPWorks() {
   element(by.id('play-button')).click();
   browser.sleep(400);
   expect(content.getText()).not.toBe('Following');
+  browser.wait(
+    until.presenceOf(element(by.className('completion-message'))),
+    5000,
+    'Passage Completion message taking too long to appear'
+  );
 }
 
 describe('Reader App', () => {
@@ -52,17 +60,45 @@ describe('Reader App', () => {
     expect(false).toBeTruthy();
   });
 
-  it('should add a new read count to the metrics page after completing a passage', () => {
+  function getRsvpBasicRow(rows: ElementArrayFinder) {
+    return rows.filter(row => {
+      let interfaceName = row.element(by.className('interface-name'));
+      return interfaceName.getText().then(text => text === 'RSVP Basic');
+    });
+  }
+
+  it('should add a new read count to the metrics page after completing a passage', async () => {
     // capture count
-    let count: number = 0;
+    let rsvpBasicStartingCount: number = 0;
+    let rsvpBasicUpdatedCount: number = 0;
     browser.get('/metrics');
-    element(by.id('count-rsvp-basic')).getText().then((text) =>
-      count = Number.parseInt(text, 10)
+
+    let rows = element.all(by.className('metrics-row'));
+    console.log('==========');
+    rows.map((row) => {
+      console.log('fudge' + row);
+    })
+    let rsvpBasicRow = getRsvpBasicRow(rows);
+    rsvpBasicRow.get(0).element(by.className('completion-count'))
+      .getText().then((text) => {
+        console.log('++++++++++++==========');
+        rsvpBasicStartingCount = Number.parseInt(text, 10)
+        console.log(rsvpBasicStartingCount);
+      }
     );
     browser.get('/rsvp-basic');
     verifyRSVPWorks();
     browser.get('/metrics');
-    expect(element(by.id('count-rsvp-basic')).getText()).toBe(count + 1);
+    rows = element.all(by.className('metrics-row'));
+    rsvpBasicRow = getRsvpBasicRow(rows);
+    await rsvpBasicRow.get(0).element(by.className('completion-count'))
+      .getText().then((text) => {
+        rsvpBasicUpdatedCount = Number.parseInt(text, 10)
+        console.log(rsvpBasicUpdatedCount);
+      }
+    );
+
+    expect(rsvpBasicUpdatedCount).toBe(rsvpBasicStartingCount + 1);
     //  wait for Passage Complete
     //  go to metrics
     //  check count for rsvp-basic is count + 1

@@ -31,6 +31,7 @@ export class RsvpSectionMarksComponent implements OnInit {
         this.passage = passages[0];
         this.content = this.rsvpService.transformToReadableContent(this.passage.content);
         let contentWithMarkers = this.rsvpService.transformToRSVPWithSectionMarkers(this.passage.content);
+        this.readerService.contentLength = contentWithMarkers.length;
         this.ticks = this.rsvpService.calculateSectionMarkerIndexes(contentWithMarkers);
         this.tickPositions = this.rsvpService.calculateRelativePositionsOfIndexes(
           this.ticks,
