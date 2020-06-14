@@ -10,9 +10,8 @@ import { of } from 'rxjs';
 describe('QuizComponent', () => {
   let component: QuizComponent;
   let fixture: ComponentFixture<QuizComponent>;
-  const quizServiceSpy = jasmine.createSpyObj('QuizService', ['getQuizzes', 'postAnswers', 'check']);
+  const quizServiceSpy = jasmine.createSpyObj('QuizService', ['getQuizzes', 'postAnswers']);
   quizServiceSpy.getQuizzes.and.returnValue(of([quizStub]));
-  quizServiceSpy.check.and.returnValue('spy');
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

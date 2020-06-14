@@ -17,6 +17,7 @@ export class MetricsService  {
   }
 
   postPassageCompletion(metricInterface: MetricInterface) {
+    console.log('metric post');
     return this._http.post(
       `${environment.apiUrl}/metrics`,
       {interfaceName: metricInterface}

@@ -44,7 +44,7 @@ export class RsvpBasicComponent implements OnInit {
 
   }
 
-  private postMetric() {
+  private postMetric = () => {
     console.log('you fuckin ded et!');
     this.metricsService.postPassageCompletion(MetricInterface.RSVP_BASIC);
     this.subscription.unsubscribe();
