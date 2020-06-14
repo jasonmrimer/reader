@@ -38,15 +38,14 @@ export class RsvpBasicComponent implements OnInit {
 
     this.subscription = this.readerService.isComplete$
       .pipe(skip(1))
-      .subscribe(() =>
-        this.postMetric()
-      );
+      .subscribe(this.postMetric);
 
   }
 
   private postMetric = () => {
     console.log('you fuckin ded et!');
-    this.metricsService.postPassageCompletion(MetricInterface.RSVP_BASIC);
+    this.metricsService.postPassageCompletion(MetricInterface.RSVP_BASIC)
+      .subscribe();
     this.subscription.unsubscribe();
   }
 }
