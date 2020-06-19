@@ -1,8 +1,8 @@
 import { Component, Input, NgZone, OnInit } from '@angular/core';
-import { ReaderService } from './reader.service';
 import { IntervalService } from './interval.service';
 import { Subscription } from 'rxjs';
 import { skip } from 'rxjs/operators';
+import { RSVPService } from '../rsvp-basic/rsvp.service';
 
 @Component({
   selector: 'app-reader',
@@ -15,7 +15,7 @@ export class ReaderComponent implements OnInit {
   @Input()
   content: string[] = [''];
   @Input()
-  readerService: ReaderService;
+  rsvpService: RSVPService;
   subscription: Subscription;
   rsvpPlayer;
 
@@ -27,12 +27,12 @@ export class ReaderComponent implements OnInit {
       1,
       () => {
         this.ngZone.run(() => {
-          this.readerService.moveAhead();
+          this.rsvpService.moveAhead();
         })
       }
     );
 
-    this.subscription = this.readerService.isComplete$
+    this.subscription = this.rsvpService.isComplete$
       .pipe(skip(1))
       .subscribe(this.finishReading);
   }
@@ -52,6 +52,6 @@ export class ReaderComponent implements OnInit {
   }
 
   currentWord() {
-    return this.content[this.readerService.index()];
+    return this.content[this.rsvpService.index()];
   }
 }

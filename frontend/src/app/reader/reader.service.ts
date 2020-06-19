@@ -20,7 +20,6 @@ export class ReaderService {
   moveAhead() {
     this._index++;
     if (this._index + 1 >= this._contentLength) {
-      console.log('readerservce');
       this._isComplete.next(true);
     }
   }
