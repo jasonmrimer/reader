@@ -24,7 +24,6 @@ describe('RSVPBasicComponent', () => {
       ],
       providers: [
         RSVPService,
-        ReaderService,
         {provide: PassageService, useValue: new PassageServiceStub()},
         {provide: MetricsService, useValue: new MetricsServiceStub()}
       ]
@@ -48,11 +47,11 @@ describe('RSVPBasicComponent', () => {
 
   it('should fire a metrics post on passage complete', () => {
     component.metricsService.postPassageCompletion = jasmine.createSpy();
-    component.readerService.contentLength = 2;
-    expect(component.readerService.isComplete).toBeFalsy();
-    component.readerService.moveAhead();
-    component.readerService.moveAhead();
-    expect(component.readerService.isComplete).toBeTrue();
+    component.rsvpService.contentLength = 2;
+    expect(component.rsvpService.isComplete).toBeFalsy();
+    component.rsvpService.moveAhead();
+    component.rsvpService.moveAhead();
+    expect(component.rsvpService.isComplete).toBeTrue();
     expect(component.metricsService.postPassageCompletion).toHaveBeenCalledWith(MetricInterface.RSVP_BASIC);
   });
 

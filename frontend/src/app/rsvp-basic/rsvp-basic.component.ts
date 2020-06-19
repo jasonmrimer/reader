@@ -12,7 +12,7 @@ import { skip } from 'rxjs/operators';
   selector: 'app-basic-rsvp',
   templateUrl: './rsvp-basic.component.html',
   styleUrls: ['./rsvp-basic.component.css'],
-  providers: [MetricsService, PassageService, ReaderService, RSVPService]
+  providers: [MetricsService, PassageService, RSVPService]
 })
 export class RsvpBasicComponent implements OnInit {
   passage: Passage = new Passage();
@@ -22,8 +22,7 @@ export class RsvpBasicComponent implements OnInit {
   constructor(
     public metricsService: MetricsService,
     private passageService: PassageService,
-    public readerService: ReaderService,
-    private rsvpService: RSVPService
+    public rsvpService: RSVPService
   ) {
   }
 
@@ -33,17 +32,16 @@ export class RsvpBasicComponent implements OnInit {
         this.passage = passages[0];
         this.readerContent = this.rsvpService
           .transformToReadableContent(this.passage.content);
-        this.readerService.contentLength = this.readerContent.length;
+        this.rsvpService.contentLength = this.readerContent.length;
       });
 
-    this.subscription = this.readerService.isComplete$
+    this.subscription = this.rsvpService.isComplete$
       .pipe(skip(1))
       .subscribe(this.postMetric);
 
   }
 
   private postMetric = () => {
-    console.log('you fuckin ded et!');
     this.metricsService.postPassageCompletion(MetricInterface.RSVP_BASIC)
       .subscribe();
     this.subscription.unsubscribe();
