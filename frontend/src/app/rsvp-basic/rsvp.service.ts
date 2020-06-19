@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Passage } from '../passage/passage';
-import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
 import { isNotNullOrUndefined } from 'codelyzer/util/isNotNullOrUndefined';
 import { BehaviorSubject } from 'rxjs';
 
@@ -18,8 +16,10 @@ export class RSVPService {
   private _title: string;
   private _sectionMarkerIndexes: number[];
   private _sectionMarkerPositions: number[];
+
   constructor() {
   }
+
   hydrate(passage: Passage) {
     this.passage = passage;
     this._readableContent =

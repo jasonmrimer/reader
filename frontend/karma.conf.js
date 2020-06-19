@@ -15,6 +15,9 @@ module.exports = function (config) {
     client:{
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
+    jasmine: {
+      random: true
+    },
     coverageIstanbulReporter: {
       dir: require('path').join(__dirname, 'coverage'), reports: [ 'html', 'lcovonly' ],
       fixWebpackSourcePaths: true
@@ -24,7 +27,6 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    usePolling: true,
     browsers: ['ChromeHeadless'],
     singleRun: false
   });

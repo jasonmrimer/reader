@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RSVPService } from '../rsvp-basic/rsvp.service';
 import { PassageService } from '../passage/passage.service';
-import { RsvpContainerComponent } from '../rsvp-container/rsvp-container.component';
+import { RsvpComponent } from '../rsvp-container/rsvp.component';
 import { MetricInterface } from '../metric';
 
 @Component({
@@ -10,7 +10,7 @@ import { MetricInterface } from '../metric';
   styleUrls: ['./rsvp-section-marks.component.css'],
   providers: [PassageService, RSVPService]
 })
-export class RsvpSectionMarksComponent extends RsvpContainerComponent {
+export class RsvpSectionMarksComponent extends RsvpComponent {
   ngOnInit(): void {
     super.ngOnInit();
     this.rsvpType = MetricInterface.RSVP_SECTION_MARK;

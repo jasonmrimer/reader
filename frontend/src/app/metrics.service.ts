@@ -3,7 +3,6 @@ import { environment } from '../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Metric, MetricInterface } from './metric';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -20,14 +19,7 @@ export class MetricsService  {
   postPassageCompletion(metricInterface: MetricInterface) {
     return this._http.post(
       `${environment.apiUrl}/metrics`,
-      {interfaceName: metricInterface},
-      {responseType: 'json'}
+      {interfaceName: metricInterface}
     )
-  }
-
-  private handleError(error: string) {
-    return function (p1: any, p2: Observable<Object>) {
-      return undefined;
-    };
   }
 }

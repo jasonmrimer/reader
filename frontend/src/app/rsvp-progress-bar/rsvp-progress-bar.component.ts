@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { PassageService } from '../passage/passage.service';
-import { RsvpContainerComponent } from '../rsvp-container/rsvp-container.component';
+import { RsvpComponent } from '../rsvp-container/rsvp.component';
 import { MetricInterface } from '../metric';
 
 @Component({
@@ -9,9 +9,9 @@ import { MetricInterface } from '../metric';
   styleUrls: ['./rsvp-progress-bar.component.css'],
   providers: [PassageService]
 })
-export class RsvpProgressBarComponent extends RsvpContainerComponent {
+export class RsvpProgressBarComponent extends RsvpComponent {
   ngOnInit() {
     super.ngOnInit();
-    this.rsvpType = MetricInterface.RSVP_PROGRESS_BAR
+    this.rsvpType = MetricInterface.RSVP_PROGRESS_BAR;
   }
 }

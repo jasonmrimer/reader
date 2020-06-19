@@ -1,22 +1,24 @@
-import { async, ComponentFixture, getTestBed, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RsvpProgressBarComponent } from './rsvp-progress-bar.component';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReaderComponent } from '../reader/reader.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { By } from '@angular/platform-browser';
-import { passagesStub } from '../rsvp-basic/PassageStub';
 import { RSVPService } from '../rsvp-basic/rsvp.service';
-import { RSVPServiceStub } from '../rsvp-basic/rsvp-stub.service';
+import { PassageService } from '../passage/passage.service';
+import { PassageServiceStub } from '../passage/passage-stub.service';
+import { passageStub } from '../rsvp-basic/PassageStub';
 
 describe('RSVPProgressBarComponent', () => {
   let component: RsvpProgressBarComponent;
   let fixture: ComponentFixture<RsvpProgressBarComponent>;
-
-  let injector: TestBed;
-  let httpMock: HttpTestingController;
+  let rsvpService;
 
   beforeEach(async(() => {
+    rsvpService = new RSVPService();
+    rsvpService.hydrate(passageStub);
+
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
@@ -27,7 +29,8 @@ describe('RSVPProgressBarComponent', () => {
         ReaderComponent,
       ],
       providers: [
-        {provide: RSVPService, useValue: new RSVPServiceStub()}
+        {provide: PassageService, useValue: new PassageServiceStub()},
+        {provide: RSVPService, useValue: rsvpService}
       ]
     })
       .compileComponents();
@@ -37,25 +40,10 @@ describe('RSVPProgressBarComponent', () => {
     fixture = TestBed.createComponent(RsvpProgressBarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-
-    injector = getTestBed();
-    httpMock = injector.get(HttpTestingController);
   });
-
-  afterEach(() => {
-    httpMock.verify();
-  })
-
-  function mockHttpGET() {
-    const request = httpMock.expectOne('http://localhost:4000/api/passages');
-    expect(request.request.method).toBe('GET');
-    request.flush(passagesStub);
-  }
 
   it('should be created', async () => {
     await expect(component).toBeTruthy();
-
-    mockHttpGET();
   });
 
   it('should have a progress bar', async () => {
@@ -63,9 +51,7 @@ describe('RSVPProgressBarComponent', () => {
       fixture.detectChanges();
       let completionMeter = fixture.debugElement.query(By.css('#completion-meter'));
       expect(completionMeter).toBeTruthy();
-      expect(completionMeter.attributes['aria-valuenow']).toBe('25');
+      expect(completionMeter.attributes['aria-valuenow']).toBe('12.5');
     })
-
-    mockHttpGET();
   });
 });

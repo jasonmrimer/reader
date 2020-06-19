@@ -46,8 +46,4 @@ export class ReaderComponent implements OnInit {
   pauseReader() {
     this._intervalService.clearInterval();
   }
-
-  currentWord() {
-    return this.rsvpService.currentWord;
-  }
 }

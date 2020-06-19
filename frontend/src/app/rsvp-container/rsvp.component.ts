@@ -8,20 +8,19 @@ import { skip } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-rsvp-container',
-  templateUrl: './rsvp-container.component.html',
-  styleUrls: ['./rsvp-container.component.css'],
+  selector: 'app-rsvp-component',
+  templateUrl: './rsvp.component.html',
+  styleUrls: ['./rsvp.component.css'],
 })
-export class RsvpContainerComponent implements OnInit {
+export class RsvpComponent implements OnInit {
   rsvpType: MetricInterface;
   private subscription: Subscription;
 
   constructor(
+    private metricsService: MetricsService,
     private passageService: PassageService,
-    public rsvpService: RSVPService,
-    public metricsService: MetricsService
+    private rsvpService: RSVPService
   ) {
-
   }
 
   ngOnInit() {
