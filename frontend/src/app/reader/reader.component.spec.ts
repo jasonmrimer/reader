@@ -2,9 +2,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ReaderComponent } from './reader.component';
 import { By } from '@angular/platform-browser';
-import { ReaderService } from './reader.service';
 import { IntervalService } from './interval.service';
 import { IntervalServiceMock } from './interval.service.mock.spec';
+import { RSVPService } from '../rsvp-utils/rsvp.service';
+import { passageStub } from '../rsvp-utils/PassageStub';
 
 describe('ReaderComponent', () => {
   let component: ReaderComponent;
@@ -12,14 +13,12 @@ describe('ReaderComponent', () => {
   let titleBox;
   let contentBox;
   let intervalServiceMock: IntervalServiceMock;
-  let readerService;
+  let rsvpService;
 
   beforeEach(async(() => {
-  }));
-
-  beforeEach(() => {
     intervalServiceMock = new IntervalServiceMock();
-    readerService = new ReaderService();
+    rsvpService = new RSVPService();
+    rsvpService.hydrate(passageStub);
 
     TestBed.configureTestingModule({
       declarations: [ReaderComponent],
@@ -28,13 +27,12 @@ describe('ReaderComponent', () => {
       ]
     })
       .compileComponents();
+  }));
+
+  beforeEach(() => {
     fixture = TestBed.createComponent(ReaderComponent);
     component = fixture.componentInstance;
-
-    component.title = 'fake title';
-    component.content = ['one', 'two', 'three'];
-    component.readerService = readerService;
-    readerService.contentLength = 4;
+    component.rsvpService = rsvpService;
     fixture.detectChanges();
 
     titleBox = fixture.debugElement.query(By.css('#passage-title'));
@@ -46,20 +44,20 @@ describe('ReaderComponent', () => {
   });
 
   it('should display a title for a passage', function () {
-    expect(titleBox.nativeElement.textContent).toBe('fake title');
+    expect(titleBox.nativeElement.textContent).toBe('title01');
   });
 
   it('should move to the next word as the interval ticks', () => {
-    expect(contentBox.nativeElement.textContent).toBe('one');
+    expect(contentBox.nativeElement.textContent).toBe('One');
     const playButton = fixture.debugElement.query(By.css('#play-button'));
     playButton.nativeElement.click();
     fixture.detectChanges();
-    expect(contentBox.nativeElement.textContent).toBe('two');
+    expect(contentBox.nativeElement.textContent).toBe('two.');
   });
 
   it('should stop  moving ahead on completion', () => {
     component.playReader();
-    while (!component.readerService.isComplete) {
+    while (!component.rsvpService.isComplete) {
       intervalServiceMock.tick();
     }
     expect(intervalServiceMock.clearInterval).toHaveBeenCalled();
@@ -73,8 +71,8 @@ describe('ReaderComponent', () => {
 
   it('should display a completion message at finish', () => {
     expect(fixture.debugElement.query(By.css('.completion-message'))).toBeFalsy();
-    while (!component.readerService.isComplete) {
-      component.readerService.moveAhead();
+    while (!component.rsvpService.isComplete) {
+      component.rsvpService.moveAhead();
     }
     fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('.completion-message'))).toBeTruthy();

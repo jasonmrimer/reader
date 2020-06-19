@@ -8,7 +8,7 @@ export class Metric {
 export enum MetricInterface {
   BASELINE = 'Baseline',
   RSVP_BASIC = 'RSVP Basic',
-  RSVP_COMPLETION_METER = 'RSVP Completion Meter',
+  RSVP_PROGRESS_BAR = 'RSVP Progress Bar',
   RSVP_SECTION_MARK = 'RSVP Section Mark',
 }
 const metricStub1 = new Metric('int1', 1);

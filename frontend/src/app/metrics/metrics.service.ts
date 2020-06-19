@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../environments/environment';
+import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Metric, MetricInterface } from './metric';
 import { Observable } from 'rxjs';
@@ -17,7 +17,6 @@ export class MetricsService  {
   }
 
   postPassageCompletion(metricInterface: MetricInterface) {
-    console.log('metric post');
     return this._http.post(
       `${environment.apiUrl}/metrics`,
       {interfaceName: metricInterface}

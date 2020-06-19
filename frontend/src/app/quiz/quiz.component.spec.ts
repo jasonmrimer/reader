@@ -34,6 +34,10 @@ describe('QuizComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should fetch a quiz', () => {
+    expect(component.quiz).toEqual(quizStub);
+  });
+
   it('should display questions and choices', () => {
     expect(fixture.debugElement.queryAll(By.css('.sv_q_title')).length).toBe(2);
     expect(fixture.debugElement.queryAll(By.css('.sv_q_radiogroup_control_item')).length).toBe(8);

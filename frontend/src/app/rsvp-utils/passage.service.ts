@@ -3,7 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Passage } from './passage';
 import { environment } from '../../environments/environment';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class PassageService {
 
   constructor(private _http: HttpClient) {

@@ -1,8 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RsvpSectionMarksComponent } from './rsvp-section-marks.component';
-import { RSVPService } from '../rsvp-basic/rsvp.service';
+import { RSVPService } from '../rsvp-utils/rsvp.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ReaderComponent } from '../reader/reader.component';
 
 describe('RsvpSectionMarksComponent', () => {
   let component: RsvpSectionMarksComponent;
@@ -11,7 +12,10 @@ describe('RsvpSectionMarksComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      declarations: [RsvpSectionMarksComponent],
+      declarations: [
+        RsvpSectionMarksComponent,
+        ReaderComponent,
+      ],
       providers: [RSVPService]
     })
       .compileComponents();

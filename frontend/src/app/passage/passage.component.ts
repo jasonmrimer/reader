@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PassageService } from './passage.service';
-import { Passage } from './passage';
+import { PassageService } from '../rsvp-utils/passage.service';
+import { Passage } from '../rsvp-utils/passage';
 
 @Component({
   selector: 'app-passage',
