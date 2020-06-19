@@ -13,8 +13,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./rsvp-container.component.css'],
 })
 export class RsvpContainerComponent implements OnInit {
-  passage: Passage;
-  @Input() rsvpType: MetricInterface;
+  rsvpType: MetricInterface;
   private subscription: Subscription;
 
   constructor(
@@ -30,7 +29,6 @@ export class RsvpContainerComponent implements OnInit {
       .getPassages()
       .subscribe(passages => {
         this.rsvpService.hydrate(passages[0]);
-        this.passage = passages[0];
       })
 
     this.subscription = this.rsvpService.isComplete$
@@ -39,7 +37,7 @@ export class RsvpContainerComponent implements OnInit {
   }
 
   private postMetric = () => {
-    this.metricsService.postPassageCompletion(MetricInterface.RSVP_BASIC)
+    this.metricsService.postPassageCompletion(this.rsvpType)
       .subscribe();
     this.subscription.unsubscribe();
   }

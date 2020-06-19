@@ -11,10 +11,6 @@ import { RSVPService } from '../rsvp-basic/rsvp.service';
 })
 export class ReaderComponent implements OnInit {
   @Input()
-  title: string;
-  @Input()
-  content: string[] = [''];
-  @Input()
   rsvpService: RSVPService;
   subscription: Subscription;
   rsvpPlayer;
@@ -52,6 +48,6 @@ export class ReaderComponent implements OnInit {
   }
 
   currentWord() {
-    return this.content[this.rsvpService.index()];
+    return this.rsvpService.currentWord;
   }
 }

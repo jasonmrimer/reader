@@ -7,16 +7,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { By } from '@angular/platform-browser';
 import { passagesStub } from '../rsvp-basic/PassageStub';
 import { RSVPService } from '../rsvp-basic/rsvp.service';
-
-class RSVPServiceMock extends RSVPService {
-  index(): number {
-    return 3;
-  }
-
-  percentRead(): number {
-    return 25;
-  }
-}
+import { RSVPServiceStub } from '../rsvp-basic/rsvp-stub.service';
 
 describe('RSVPProgressBarComponent', () => {
   let component: RsvpProgressBarComponent;
@@ -36,7 +27,7 @@ describe('RSVPProgressBarComponent', () => {
         ReaderComponent,
       ],
       providers: [
-        RSVPService
+        {provide: RSVPService, useValue: new RSVPServiceStub()}
       ]
     })
       .compileComponents();
@@ -45,7 +36,6 @@ describe('RSVPProgressBarComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RsvpProgressBarComponent);
     component = fixture.componentInstance;
-    component.rsvpService = new RSVPServiceMock();
     fixture.detectChanges();
 
     injector = getTestBed();

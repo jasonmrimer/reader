@@ -43,11 +43,11 @@ router.post('/metrics', (request, response, next) => {
     let interfaceName = request.body.interfaceName;
     metric.findOneAndUpdate(
       interfaceName,
-      {$inc: {'completionCount': 1}, interfaceName: interfaceName},
+      {$inc: {'completionCount': 1}},
       {upsert: true, new: true},
       function(err, doc) {
           if (err) return response.send(500, {error: err});
-          return response.send('Successfully saved.');
+          return response.send({message: 'Successfully saved.'});
       }
     )
 })

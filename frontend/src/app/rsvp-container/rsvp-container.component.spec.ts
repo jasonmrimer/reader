@@ -42,10 +42,6 @@ describe('RsvpContainerComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should fetch a passage on construction', () => {
-    expect(component.passage).toEqual(passageStub);
-  });
-
   it('should hydrate the rsvp service', () => {
     expect(component.rsvpService.hydrate).toHaveBeenCalledWith(passageStub);
   });

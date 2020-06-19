@@ -1,32 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { Passage } from '../passage/passage';
-import { RSVPService } from '../rsvp-basic/rsvp.service';
+import { Component } from '@angular/core';
 import { PassageService } from '../passage/passage.service';
+import { RsvpContainerComponent } from '../rsvp-container/rsvp-container.component';
+import { MetricInterface } from '../metric';
 
 @Component({
   selector: 'app-rsvp-progress-bar',
   templateUrl: './rsvp-progress-bar.component.html',
   styleUrls: ['./rsvp-progress-bar.component.css'],
-  providers: [PassageService, RSVPService]
+  providers: [PassageService]
 })
-export class RsvpProgressBarComponent implements OnInit {
-  passage: Passage = new Passage();
-  readerContent: string[] = [''];
-  rsvpService: RSVPService;
-
-  constructor(
-    private passageService: PassageService,
-    private _rsvpService: RSVPService,
-  ) {
-    this.rsvpService = _rsvpService;
-  }
-
+export class RsvpProgressBarComponent extends RsvpContainerComponent {
   ngOnInit() {
-    this.passageService.getPassages()
-      .subscribe(passages => {
-        this.passage = passages[0];
-        this.readerContent = this._rsvpService.transformToReadableContent(this.passage.content);
-        this.rsvpService.contentLength = this.readerContent.length;
-      });
+    super.ngOnInit();
+    this.rsvpType = MetricInterface.RSVP_PROGRESS_BAR
   }
 }

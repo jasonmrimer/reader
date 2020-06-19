@@ -31,8 +31,6 @@ describe('ReaderComponent', () => {
     fixture = TestBed.createComponent(ReaderComponent);
     component = fixture.componentInstance;
 
-    component.title = 'fake title';
-    component.content = ['one', 'two', 'three'];
     component.rsvpService = rsvpService;
     rsvpService.contentLength = 4;
     fixture.detectChanges();

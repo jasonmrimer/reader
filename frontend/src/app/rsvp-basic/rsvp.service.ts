@@ -14,15 +14,25 @@ export class RSVPService {
   private _isComplete = new BehaviorSubject<boolean>(false);
   private passage: Passage;
   isComplete$ = this._isComplete.asObservable();
-  readableContent: string[];
+  private _readableContent: string[];
+  private _title: string;
+  private _sectionMarkerIndexes: number[];
+  private _sectionMarkerPositions: number[];
   constructor() {
   }
-
   hydrate(passage: Passage) {
     this.passage = passage;
-    this.readableContent =
+    this._readableContent =
       this.transformToReadableContent(passage.content);
     this._contentLength = this.readableContent.length;
+    this._title = passage.title;
+    this._sectionMarkerIndexes = this.calculateSectionMarkerIndexes(
+      this.transformToRSVPWithSectionMarkers(passage.content)
+    );
+    this._sectionMarkerPositions = this.calculateRelativePositionsOfIndexes(
+      this._sectionMarkerIndexes,
+      this._contentLength
+    );
   }
 
   transformToRSVPWithSectionMarkers(unformedContent: string): string[] {
@@ -35,6 +45,70 @@ export class RSVPService {
         contentWithLineBreaksAndSectionMarkers
       )
     );
+  }
+
+  calculateSectionMarkerIndexes(content: string[]): number[] {
+    let tick = 0;
+    return content.map((word: string, index: number) => {
+      if (word === '#section-marker') {
+        return index - tick++;
+      }
+    }).filter(isNotNullOrUndefined);
+  }
+
+  calculateRelativePositionsOfIndexes(indexes: number[], contentLength: number) {
+    return indexes.map((value: number) => {
+      return value * 100 / contentLength;
+    });
+  }
+
+  moveAhead() {
+    this._index++;
+    if (this._index + 1 >= this._contentLength) {
+      this._isComplete.next(true);
+    }
+  }
+
+  percentRead() {
+    return (this._index + 1) * 100 / this._contentLength;
+  }
+
+  get contentLength(): number {
+    return this._contentLength;
+  }
+
+  get currentWord(): string {
+    return this._readableContent
+      ? this._readableContent[this._index]
+      : '';
+  }
+
+  get index() {
+    return this._index
+  }
+
+  get isComplete(): boolean {
+    return this._index + 1 >= this._contentLength;
+  }
+
+  get readableContent(): string[] {
+    return this._readableContent;
+  }
+
+  get sectionMarkerIndexes(): number[] {
+    return this._sectionMarkerIndexes;
+  }
+
+  get sectionMarkerPositions(): number[] {
+    return this._sectionMarkerPositions;
+  }
+
+  get title(): string {
+    return this._title;
+  }
+
+  set contentLength(value: number) {
+    this._contentLength = value;
   }
 
   private removeSectionMarkers(contentWithSectionMarkers: string) {
@@ -54,47 +128,5 @@ export class RSVPService {
       unformedContent = unformedContent.replace('  ', ' ');
     }
     return unformedContent;
-  }
-
-  calculateSectionMarkerIndexes(content: string[]): number[] {
-    let tick = 0;
-    return content.map((word: string, index: number) => {
-      if (word === '#section-marker') {
-        return index - tick++;
-      }
-    }).filter(isNotNullOrUndefined);
-  }
-
-  calculateRelativePositionsOfIndexes(indexes: number[], contentLength: number) {
-    return indexes.map((value: number) => {
-      return value * 100 / contentLength;
-    });
-  }
-
-  index() {
-    return this._index
-  }
-
-  moveAhead() {
-    this._index++;
-    if (this._index + 1 >= this._contentLength) {
-      this._isComplete.next(true);
-    }
-  }
-
-  get contentLength(): number {
-    return this._contentLength;
-  }
-
-  get isComplete(): boolean {
-    return this._index + 1 >= this._contentLength;
-  }
-
-  set contentLength(value: number) {
-    this._contentLength = value;
-  }
-
-  percentRead() {
-    return (this._index + 1) * 100 / this._contentLength;
   }
 }
