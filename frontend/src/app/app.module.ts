@@ -14,6 +14,7 @@ import { RsvpSectionMarksComponent } from './rsvp-section-marks/rsvp-section-mar
 import { NgxBootstrapSliderModule } from 'ngx-bootstrap-slider';
 import { QuizComponent } from './quiz/quiz.component';
 import { MetricsComponent } from './metrics/metrics.component';
+import { RsvpContainerComponent } from './rsvp-container/rsvp-container.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { MetricsComponent } from './metrics/metrics.component';
     RsvpSectionMarksComponent,
     QuizComponent,
     MetricsComponent,
+    RsvpContainerComponent,
   ],
   imports: [
     BrowserModule,

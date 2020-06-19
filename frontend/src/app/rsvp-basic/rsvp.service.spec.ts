@@ -65,4 +65,15 @@ describe('RSVPService', () => {
     service.moveAhead();
     expect(service.isComplete).toBeTrue();
   });
+
+  it('should prepare all the reading shapes and data on hydrate', () => {
+    service.hydrate(passageStub);
+    expect(service.readableContent).toEqual([
+      'One', 'two.', 'Three.', 'Four', 'five', 'six.', 'Seven', 'eight.'
+    ])
+    expect(service.percentRead()).toBe(12.5);
+    expect(service.index()).toBe(0);
+    expect(service.isComplete).toBeFalsy();
+    expect(service.contentLength).toBe(8);
+  });
 });

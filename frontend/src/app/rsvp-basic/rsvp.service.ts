@@ -12,9 +12,17 @@ export class RSVPService {
   private _index = 0;
   private _contentLength = Number.MAX_SAFE_INTEGER;
   private _isComplete = new BehaviorSubject<boolean>(false);
+  private passage: Passage;
   isComplete$ = this._isComplete.asObservable();
-
+  readableContent: string[];
   constructor() {
+  }
+
+  hydrate(passage: Passage) {
+    this.passage = passage;
+    this.readableContent =
+      this.transformToReadableContent(passage.content);
+    this._contentLength = this.readableContent.length;
   }
 
   transformToRSVPWithSectionMarkers(unformedContent: string): string[] {
@@ -72,6 +80,10 @@ export class RSVPService {
     if (this._index + 1 >= this._contentLength) {
       this._isComplete.next(true);
     }
+  }
+
+  get contentLength(): number {
+    return this._contentLength;
   }
 
   get isComplete(): boolean {
