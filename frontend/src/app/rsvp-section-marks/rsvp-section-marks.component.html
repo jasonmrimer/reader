@@ -1,12 +1,12 @@
 <app-reader
   [content]="content"
-  [rsvpService]="readerService"
+  [rsvpService]="rsvpService"
   [title]="passage.title"
 >
 </app-reader>
 <mv-slider
   *ngIf="ticks"
-  [value]="readerService.index()"
+  [value]="rsvpService.index()"
   [min]="0"
   [max]="content.length"
   [ticks]="ticks"
