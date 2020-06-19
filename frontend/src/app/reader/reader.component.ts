@@ -2,7 +2,7 @@ import { Component, Input, NgZone, OnInit } from '@angular/core';
 import { IntervalService } from './interval.service';
 import { Subscription } from 'rxjs';
 import { skip } from 'rxjs/operators';
-import { RSVPService } from '../rsvp-basic/rsvp.service';
+import { RSVPService } from '../rsvp-utils/rsvp.service';
 
 @Component({
   selector: 'app-reader',

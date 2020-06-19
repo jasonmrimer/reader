@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { MetricInterface } from '../metric';
-import { RsvpComponent } from '../rsvp-container/rsvp.component';
-import { PassageService } from '../passage/passage.service';
+import { MetricInterface } from '../metrics/metric';
+import { RsvpComponent } from '../rsvp-utils/rsvp.component';
 
 @Component({
   selector: 'app-basic-rsvp',

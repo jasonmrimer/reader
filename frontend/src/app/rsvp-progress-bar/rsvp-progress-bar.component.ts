@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { PassageService } from '../passage/passage.service';
-import { RsvpComponent } from '../rsvp-container/rsvp.component';
-import { MetricInterface } from '../metric';
+import { PassageService } from '../rsvp-utils/passage.service';
+import { RsvpComponent } from '../rsvp-utils/rsvp.component';
+import { MetricInterface } from '../metrics/metric';
 
 @Component({
   selector: 'app-rsvp-progress-bar',

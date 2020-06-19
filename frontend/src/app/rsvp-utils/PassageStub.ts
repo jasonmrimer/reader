@@ -1,4 +1,4 @@
-import { Passage } from '../passage/passage';
+import { Passage } from './passage';
 
 export const passageStub = new Passage(
   'title01',

@@ -1,14 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RsvpComponent } from './rsvp.component';
-import { passageStub } from '../rsvp-basic/PassageStub';
-import { PassageService } from '../passage/passage.service';
-import { PassageServiceStub } from '../passage/passage-stub.service';
+import { passageStub } from './PassageStub';
+import { PassageService } from './passage.service';
+import { PassageServiceStub } from './passage-stub.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { RSVPService } from '../rsvp-basic/rsvp.service';
-import { MetricInterface } from '../metric';
-import { MetricsService } from '../metrics.service';
-import { MetricsServiceStub } from '../metrics-stub.service';
+import { RSVPService } from './rsvp.service';
+import { MetricInterface } from '../metrics/metric';
+import { MetricsService } from '../metrics/metrics.service';
+import { MetricsServiceStub } from '../metrics/metrics-stub.service';
 
 describe('RsvpComponent', () => {
   let component: RsvpComponent;

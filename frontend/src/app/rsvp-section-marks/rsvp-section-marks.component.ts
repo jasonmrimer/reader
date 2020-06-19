@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { RSVPService } from '../rsvp-basic/rsvp.service';
-import { PassageService } from '../passage/passage.service';
-import { RsvpComponent } from '../rsvp-container/rsvp.component';
-import { MetricInterface } from '../metric';
+import { RSVPService } from '../rsvp-utils/rsvp.service';
+import { PassageService } from '../rsvp-utils/passage.service';
+import { RsvpComponent } from '../rsvp-utils/rsvp.component';
+import { MetricInterface } from '../metrics/metric';
 
 @Component({
   selector: 'app-rsvp-section-marks',

@@ -4,8 +4,8 @@ import { ReaderComponent } from './reader.component';
 import { By } from '@angular/platform-browser';
 import { IntervalService } from './interval.service';
 import { IntervalServiceMock } from './interval.service.mock.spec';
-import { RSVPService } from '../rsvp-basic/rsvp.service';
-import { passageStub } from '../rsvp-basic/PassageStub';
+import { RSVPService } from '../rsvp-utils/rsvp.service';
+import { passageStub } from '../rsvp-utils/PassageStub';
 
 describe('ReaderComponent', () => {
   let component: ReaderComponent;

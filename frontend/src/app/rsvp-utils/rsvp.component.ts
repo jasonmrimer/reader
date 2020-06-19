@@ -1,9 +1,9 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Passage } from '../passage/passage';
-import { PassageService } from '../passage/passage.service';
-import { RSVPService } from '../rsvp-basic/rsvp.service';
-import { MetricsService } from '../metrics.service';
-import { MetricInterface } from '../metric';
+import { Passage } from './passage';
+import { PassageService } from './passage.service';
+import { RSVPService } from './rsvp.service';
+import { MetricsService } from '../metrics/metrics.service';
+import { MetricInterface } from '../metrics/metric';
 import { skip } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 
@@ -19,7 +19,7 @@ export class RsvpComponent implements OnInit {
   constructor(
     private metricsService: MetricsService,
     private passageService: PassageService,
-    private rsvpService: RSVPService
+    public rsvpService: RSVPService
   ) {
   }
 

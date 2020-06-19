@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PassageService } from './passage.service';
 import { defer, of } from 'rxjs';
-import { passagesStub } from '../rsvp-basic/PassageStub';
+import { passagesStub } from './PassageStub';
 
 @Injectable()
 export class PassageServiceStub extends PassageService {

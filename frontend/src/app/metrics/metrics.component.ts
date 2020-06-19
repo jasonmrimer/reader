@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MetricsService } from '../metrics.service';
-import { Metric } from '../metric';
+import { MetricsService } from './metrics.service';
+import { Metric } from './metric';
 
 class Row {
   constructor(

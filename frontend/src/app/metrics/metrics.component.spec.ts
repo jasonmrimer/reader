@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MetricsComponent } from './metrics.component';
-import { MetricsServiceStub } from '../metrics-stub.service';
-import { MetricsService } from '../metrics.service';
+import { MetricsServiceStub } from './metrics-stub.service';
+import { MetricsService } from './metrics.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('MetricsComponent', () => {

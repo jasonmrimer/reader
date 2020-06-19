@@ -5,10 +5,10 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReaderComponent } from '../reader/reader.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { By } from '@angular/platform-browser';
-import { RSVPService } from '../rsvp-basic/rsvp.service';
-import { PassageService } from '../passage/passage.service';
-import { PassageServiceStub } from '../passage/passage-stub.service';
-import { passageStub } from '../rsvp-basic/PassageStub';
+import { RSVPService } from '../rsvp-utils/rsvp.service';
+import { PassageService } from '../rsvp-utils/passage.service';
+import { PassageServiceStub } from '../rsvp-utils/passage-stub.service';
+import { passageStub } from '../rsvp-utils/PassageStub';
 
 describe('RSVPProgressBarComponent', () => {
   let component: RsvpProgressBarComponent;
