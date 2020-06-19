@@ -5,11 +5,10 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { ReaderComponent } from '../reader/reader.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { By } from '@angular/platform-browser';
-import { ReaderService } from '../reader/reader.service';
 import { passagesStub } from '../rsvp-basic/PassageStub';
 import { RSVPService } from '../rsvp-basic/rsvp.service';
 
-class ReaderServiceMock extends ReaderService {
+class RSVPServiceMock extends RSVPService {
   index(): number {
     return 3;
   }
@@ -46,7 +45,7 @@ describe('RSVPProgressBarComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RsvpProgressBarComponent);
     component = fixture.componentInstance;
-    component.readerService = new ReaderServiceMock();
+    component.rsvpService = new RSVPServiceMock();
     fixture.detectChanges();
 
     injector = getTestBed();

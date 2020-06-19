@@ -2,13 +2,13 @@
   <app-reader
     [title]="passage.title"
     [content]="readerContent"
-    [rsvpService]="readerService"
+    [rsvpService]="rsvpService"
   >
   </app-reader>
   <mat-progress-bar
     id="completion-meter"
     mode="determinate"
-    value="{{readerService.percentRead()}}"
+    value="{{rsvpService.percentRead()}}"
   >
   </mat-progress-bar>
 </div>

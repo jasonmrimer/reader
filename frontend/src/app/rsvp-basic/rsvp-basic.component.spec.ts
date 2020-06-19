@@ -6,7 +6,6 @@ import { RSVPService } from './rsvp.service';
 import { RsvpBasicComponent } from './rsvp-basic.component';
 import { PassageService } from '../passage/passage.service';
 import { PassageServiceStub } from '../passage/passage-stub.service';
-import { ReaderService } from '../reader/reader.service';
 import { MetricsService } from '../metrics.service';
 import { MetricsServiceStub } from '../metrics-stub.service';
 import { MetricInterface } from '../metric';
