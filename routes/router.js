@@ -42,7 +42,7 @@ router.get('/metrics', (request, response, next) => {
 router.post('/metrics', (request, response, next) => {
     let interfaceName = request.body.interfaceName;
     metric.findOneAndUpdate(
-      interfaceName,
+      {interfaceName: interfaceName},
       {$inc: {'completionCount': 1}},
       {upsert: true, new: true},
       function(err, doc) {
