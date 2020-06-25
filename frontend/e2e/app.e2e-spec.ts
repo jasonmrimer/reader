@@ -31,78 +31,56 @@ describe('Reader App', () => {
     page = new FrontendPage();
   });
 
-  xit('should fetch and display a passage on baseline', function () {
+  it('should fetch and display a passage on baseline', function () {
     browser.get('/baseline');
     expect(element(by.id('passage-title')).getText()).toEqual('For SpaceX, Third Launch is Charm');
     expect(element(by.id('passage-content')).getText()).toContain('Following a pair of last-second');
     expect(element(by.id('passage-content')).getText()).toContain('launch at least one SpaceX rocket every week');
   });
 
-  xit('should present basic RSVP one word at a time', () => {
-    browser.get('/rsvp-basic');
-    verifyRSVPWorks();
-  });
-
-  xit('should present RSVP with a completion bar', () => {
-    browser.get('/rsvp-progress-bar');
-    verifyRSVPWorks();
-    expect(element(by.id('progress-bar'))).toBeDefined();
-  });
-
-  xit('should present RSVP with a completion bar with markers', () => {
-    browser.get('/rsvp-section-mark');
-    verifyRSVPWorks();
-    expect(element(by.id('completion-meter'))).toBeDefined();
-    expect(element.all(by.className('slider-tick')).count()).toBe(4);
-  });
-
   xit('should take a quiz', () => {
     expect(false).toBeTruthy();
   });
 
-  it('should add a new read count to the metrics page after completing a passage', async () => {
-    //  capture count of Basic
-    //  capture count of Progress Bar
-    //  complete basic reading
-    //  assert basic count + 1
-    //  assert progress unchange
-    //  complete progress bar
-    //  assert progress bar + 1
-    //  assert basic unchanged
-
-    let rsvpBasicStartingCount: number;
-    let rsvpProgressBarStartingCount: number;
-    let rsvpSectionMarkStartingCount: number;
-    let rsvpBasicUpdatedCount: number;
-    let rsvpProgressBarUpdatedCount: number;
-    let rsvpSectionMarkUpdatedCount: number;
-
-    browser.get('/metrics');
-    rsvpBasicStartingCount = await getMetricCountFor('RSVP Basic');
-    console.log('basic start' + rsvpBasicStartingCount);
-    rsvpProgressBarStartingCount = await getMetricCountFor('RSVP Progress Bar');
-    rsvpSectionMarkStartingCount = await getMetricCountFor('RSVP Section Mark');
-    browser.get('/rsvp-basic');
-    verifyRSVPWorks();
-
-    browser.get('/metrics');
-    rsvpBasicUpdatedCount = await getMetricCountFor('RSVP Basic');
-    console.log('basic update' + rsvpBasicUpdatedCount);
-    rsvpProgressBarUpdatedCount = await getMetricCountFor('RSVP Progress Bar');
-    rsvpSectionMarkUpdatedCount = await getMetricCountFor('RSVP Section Mark');
-    expect(rsvpBasicUpdatedCount).toBe(
-      rsvpBasicStartingCount + 1,
-      'Metrics did not add one RSVP Basic'
-    );
-    expect(rsvpProgressBarUpdatedCount).toBe(
-      rsvpProgressBarStartingCount,
-      'Metrics erroneously added one to RSVP Progress Bar'
-    );
-    expect(rsvpSectionMarkUpdatedCount).toBe(
-      rsvpSectionMarkStartingCount,
-      'Metrics erroneously added one to RSVP Section Mark'
+  it(
+    'should add complete a passage with RSVP Basic and increase the completion count on the metrics page'
+    , async () => {
+    await testPassageCompletionAndMetricCaptureFor(
+      'rsvp-basic',
+      'RSVP Basic',
+      'RSVP Progress Bar',
+      'RSVP Section Mark'
     );
   });
+
+  it(
+    'should add complete a passage with a Progress Bar and increase the completion count on the metrics page',
+    async () => {
+      await testPassageCompletionAndMetricCaptureFor(
+        'rsvp-progress-bar',
+        'RSVP Progress Bar',
+        'RSVP Basic',
+        'RSVP Section Mark'
+      );
+      browser.get('/rsvp-progress-bar');
+      expect(element(by.id('progress-bar'))).toBeDefined();
+    }
+  );
+
+  it(
+    'should add complete a passage with a Section Markers and increase the completion count on the metrics page',
+    async () => {
+      await testPassageCompletionAndMetricCaptureFor(
+        'rsvp-section-mark',
+        'RSVP Section Mark',
+        'RSVP Progress Bar',
+        'RSVP Basic',
+      );
+      browser.get('/rsvp-section-mark');
+      expect(element(by.id('completion-meter'))).toBeDefined();
+      expect(element.all(by.className('slider-tick')).count()).toBe(4);
+    }
+  );
 
   function getMetricRowByInterfaceName(rows, interfaceName: string) {
     let metricRow = rows.filter((row) => {
@@ -133,5 +111,44 @@ describe('Reader App', () => {
     let metricRow = getMetricRowByInterfaceName(rows, interfaceName);
     let completionCountFromRow = getCompletionCountFromRow(metricRow);
     return completionCountFromRow;
+  }
+
+  async function testPassageCompletionAndMetricCaptureFor(
+    url: string,
+    subjectInterfaceName: string,
+    staticInterfaceName1: string,
+    staticInterfaceName2: string
+  ) {
+    let subjectInterfaceNameStartingCount: number;
+    let staticInterfaceName1StartingCount: number;
+    let staticInterfaceName2StartingCount: number;
+    let subjectInterfaceNameUpdatedCount: number;
+    let staticInterfaceName1UpdatedCount: number;
+    let staticInterfaceName2UpdatedCount: number;
+
+    browser.get('/metrics');
+    subjectInterfaceNameStartingCount = await getMetricCountFor(subjectInterfaceName);
+    staticInterfaceName1StartingCount = await getMetricCountFor(staticInterfaceName1);
+    staticInterfaceName2StartingCount = await getMetricCountFor(staticInterfaceName2);
+    browser.get(`/${url}`);
+    verifyRSVPWorks();
+
+    browser.get('/metrics');
+    subjectInterfaceNameUpdatedCount = await getMetricCountFor(subjectInterfaceName);
+    staticInterfaceName1UpdatedCount = await getMetricCountFor(staticInterfaceName1);
+    staticInterfaceName2UpdatedCount = await getMetricCountFor(staticInterfaceName2);
+
+    expect(subjectInterfaceNameUpdatedCount).toBe(
+      subjectInterfaceNameStartingCount + 1,
+      `Metrics did not add one ${subjectInterfaceName}`
+    );
+    expect(staticInterfaceName1UpdatedCount).toBe(
+      staticInterfaceName1StartingCount,
+      `Metrics erroneously added one to ${staticInterfaceName1}`
+    );
+    expect(staticInterfaceName2UpdatedCount).toBe(
+      staticInterfaceName2StartingCount,
+      `Metrics erroneously added one to ${staticInterfaceName2}`
+    );
   }
 });
