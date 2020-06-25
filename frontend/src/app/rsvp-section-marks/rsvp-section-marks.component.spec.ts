@@ -4,6 +4,7 @@ import { RsvpSectionMarksComponent } from './rsvp-section-marks.component';
 import { RSVPService } from '../rsvp-utils/rsvp.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReaderComponent } from '../reader/reader.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('RsvpSectionMarksComponent', () => {
   let component: RsvpSectionMarksComponent;
@@ -11,7 +12,10 @@ describe('RsvpSectionMarksComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule
+      ],
       declarations: [
         RsvpSectionMarksComponent,
         ReaderComponent,

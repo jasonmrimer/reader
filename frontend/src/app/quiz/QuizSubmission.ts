@@ -3,7 +3,8 @@ export class QuizSubmission {
 
   constructor(
     public passage: string,
-    surveyData: any
+    surveyData: any,
+    public interfaceName: string
   ) {
     this.answers = this.convertDataToAnswers(surveyData);
   }

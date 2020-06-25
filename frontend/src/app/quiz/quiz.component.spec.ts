@@ -6,6 +6,7 @@ import { By } from '@angular/platform-browser';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { QuizService } from './quiz.service';
 import { of } from 'rxjs';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 
 describe('QuizComponent', () => {
   let component: QuizComponent;
@@ -17,7 +18,14 @@ describe('QuizComponent', () => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [
-        {provide: QuizService, useValue: quizServiceSpy}
+        {provide: QuizService, useValue: quizServiceSpy},
+        {
+          provide: ActivatedRoute, useValue: {
+            paramMap: of(convertToParamMap({
+              'interfaceName': 'rsvp-basic'
+            }))
+          }
+        }
       ],
       declarations: [QuizComponent]
     })
@@ -43,7 +51,7 @@ describe('QuizComponent', () => {
     expect(fixture.debugElement.queryAll(By.css('.sv_q_radiogroup_control_item')).length).toBe(8);
   });
 
-  it('should submit a set of choices', () => {
+  it('should submit a set of choices along with the quiz type', () => {
     let choices = fixture.debugElement.queryAll(By.css('input[type=radio]'));
     choices.map((choice) => {
       if (
@@ -67,8 +75,14 @@ describe('QuizComponent', () => {
             question: 'question2',
             answer: 'answer2.2'
           },
-        ]
+        ],
+        interfaceName: 'rsvp-basic'
       })
     );
+  });
+
+  it('should set its interface type based on its routing', async () => {
+    await fixture.detectChanges();
+    expect(component.interfaceName).toBe('rsvp-basic');
   });
 });

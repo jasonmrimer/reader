@@ -42,8 +42,9 @@ describe('QuizService', () => {
         question1: 'answer1',
         question2: 'answer2',
         question3: 'answer3',
-      }
-    )
+      },
+      'interface name'
+    );
 
     service
       .postAnswers(quizSubmission)
@@ -58,7 +59,8 @@ describe('QuizService', () => {
         {question: 'question1', answer: 'answer1'},
         {question: 'question2', answer: 'answer2'},
         {question: 'question3', answer: 'answer3'},
-      ]
+      ],
+      interfaceName: 'interface name'
     }));
     request.flush({});
   }));

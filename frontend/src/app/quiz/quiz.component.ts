@@ -3,6 +3,7 @@ import { ReactSurveyModel, SurveyModel, SurveyNG } from 'survey-angular';
 import { QuizService } from './quiz.service';
 import { Choice, Question, Quiz } from './Quiz';
 import { QuizSubmission } from './QuizSubmission';
+import { ActivatedRoute } from '@angular/router';
 
 
 SurveyNG.apply({theme: 'modern'});
@@ -15,12 +16,20 @@ SurveyNG.apply({theme: 'modern'});
 export class QuizComponent implements OnInit {
   quiz: Quiz;
   private quizService: QuizService;
+  interfaceName: string;
 
-  constructor(private _quizService: QuizService) {
+  constructor(
+    private _quizService: QuizService,
+    private route: ActivatedRoute
+  ) {
     this.quizService = _quizService;
   }
 
   ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      this.interfaceName = params.get('interfaceName');
+    });
+
     this.quizService.getQuizzes()
       .subscribe(quizzes => {
         this.quiz = quizzes[0];
@@ -64,8 +73,10 @@ export class QuizComponent implements OnInit {
   private submitAnswers = (surveyModel: SurveyModel) => {
     const quizSubmission = new QuizSubmission(
       this.quiz.passage,
-      surveyModel.data
+      surveyModel.data,
+      this.interfaceName
     )
+    console.log(quizSubmission);
     this.quizService.postAnswers(quizSubmission)
       .subscribe();
   }

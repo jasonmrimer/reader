@@ -2,7 +2,17 @@ import { TestBed } from '@angular/core/testing';
 
 import { MetricsService } from './metrics.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { Metric, MetricInterface, metricsStub } from './metric';
+import {
+  Metric,
+  MetricInterface,
+  metricsStub,
+  PassageMetric,
+  passageMetricsStub,
+  QuizMetric,
+  quizMetricsStub
+} from './metric';
+import { passagesStub } from '../rsvp-utils/PassageStub';
+import { quizzesStub } from '../quiz/Quiz';
 
 describe('MetricsService', () => {
   let service: MetricsService;
@@ -20,21 +30,48 @@ describe('MetricsService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get metrics', () => {
-    service.fetchMetrics().subscribe((response: Metric[]) => {
-      expect(response).toEqual(metricsStub);
+  it('should get passage completion metrics', () => {
+    service.fetchPassageMetrics().subscribe((response: PassageMetric[]) => {
+      expect(response).toEqual(passageMetricsStub);
     })
 
-    const request = httpMock.expectOne('http://localhost:4000/api/metrics');
-    expect(request.request.method).toBe('GET');
-    request.flush(metricsStub);
+    passageGETStub();
   });
 
-  it('should update a metric', () => {
+  it('should update a passage completion metric', () => {
     service.postPassageCompletion(MetricInterface.RSVP_BASIC)
       .subscribe(()=>{});
-    const request = httpMock.expectOne('http://localhost:4000/api/metrics');
-    expect(request.request.method).toBe('POST');
-    expect(request.request.body).toEqual({interfaceName: 'RSVP Basic'});
+    passagePOSTStub();
   });
+
+  it('should fetch the quiz metrics', () => {
+    service.fetchQuizMetrics().subscribe((response: QuizMetric[]) => {
+      expect(response).toEqual(quizMetricsStub);
+    });
+
+    quizGETStub();
+  });
+
+  it('should combine the quiz and completion metrics into a single metric', () => {
+    const metrics = service.mergeMetrics(passageMetricsStub, quizMetricsStub);
+    expect(metrics).toEqual(metricsStub);
+  });
+
+  function passageGETStub() {
+    const request = httpMock.expectOne('http://localhost:4000/api/metrics-passage');
+    expect(request.request.method).toBe('GET');
+    request.flush(passageMetricsStub);
+  }
+
+  function passagePOSTStub() {
+    const request = httpMock.expectOne('http://localhost:4000/api/metrics-passage');
+    expect(request.request.method).toBe('POST');
+    expect(request.request.body).toEqual({interfaceName: 'rsvp-basic'});
+  }
+
+  function quizGETStub() {
+    const request = httpMock.expectOne('http://localhost:4000/api/metrics-quiz');
+    expect(request.request.method).toBe('GET');
+    request.flush(quizMetricsStub);
+  }
 });

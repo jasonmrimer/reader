@@ -1,8 +1,10 @@
 <table class="metrics-table">
 <th>Interface</th>
 <th>Completion Count</th>
+<th>Quiz Count</th>
      <tr *ngFor="let row of rows" class="metrics-row">
        <td class="interface-name">{{row.interfaceName}}</td>
        <td class="completion-count">{{row.completionCount}}</td>
+       <td class="quiz-count">{{row.quizCount}}</td>
      </tr>
 </table>
