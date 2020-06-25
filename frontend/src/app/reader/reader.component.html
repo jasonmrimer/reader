@@ -3,5 +3,16 @@
   <div id="passage-content">{{rsvpService.currentWord}}</div>
   <button id="play-button" (click)="playReader()">Play</button>
   <button id="pause-button" (click)="pauseReader()">Pause</button>
-  <div *ngIf="rsvpService.isComplete" class="completion-message">Passage Complete</div>
+  <div
+    *ngIf="rsvpService.isComplete"
+    class="completion-message"
+  >
+    Passage Complete
+  </div>
+  <input
+    *ngIf="rsvpService.isComplete"
+    type="button"
+    class="button-quiz btn btn-primary"
+    value="Take Quiz"
+  />
 </div>

@@ -55,7 +55,7 @@ describe('ReaderComponent', () => {
     expect(contentBox.nativeElement.textContent).toBe('two.');
   });
 
-  it('should stop  moving ahead on completion', () => {
+  it('should stop moving ahead on completion', () => {
     component.playReader();
     while (!component.rsvpService.isComplete) {
       intervalServiceMock.tick();
@@ -78,4 +78,12 @@ describe('ReaderComponent', () => {
     expect(fixture.debugElement.query(By.css('.completion-message'))).toBeTruthy();
   });
 
+  it('should present a button to take a quiz at finish', () => {
+    expect(fixture.debugElement.query(By.css('input[value="Take Quiz"]'))).toBeFalsy();
+    while (!component.rsvpService.isComplete) {
+      component.rsvpService.moveAhead();
+    }
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css('input[value="Take Quiz"]'))).toBeTruthy();
+  });
 });

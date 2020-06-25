@@ -59,5 +59,4 @@ describe('RsvpComponent', () => {
     expect(rsvpService.isComplete).toBeTrue();
     expect(metricsService.postPassageCompletion).toHaveBeenCalledWith(MetricInterface.RSVP_BASIC);
   });
-
 });
