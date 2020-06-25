@@ -3,6 +3,7 @@ import { IntervalService } from './interval.service';
 import { Subscription } from 'rxjs';
 import { skip } from 'rxjs/operators';
 import { RSVPService } from '../rsvp-utils/rsvp.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reader',
@@ -15,7 +16,11 @@ export class ReaderComponent implements OnInit {
   subscription: Subscription;
   rsvpPlayer;
 
-  constructor(private ngZone: NgZone, private _intervalService: IntervalService) {
+  constructor(
+    private ngZone: NgZone,
+    private _intervalService: IntervalService,
+    private router: Router
+  ) {
   }
 
   ngOnInit() {
@@ -45,5 +50,9 @@ export class ReaderComponent implements OnInit {
 
   pauseReader() {
     this._intervalService.clearInterval();
+  }
+
+  takeQuiz() {
+    this.router.navigate([this.rsvpService.quizRoute]);
   }
 }

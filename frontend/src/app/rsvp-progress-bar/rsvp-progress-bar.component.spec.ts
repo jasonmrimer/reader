@@ -9,15 +9,16 @@ import { RSVPService } from '../rsvp-utils/rsvp.service';
 import { PassageService } from '../rsvp-utils/passage.service';
 import { PassageServiceStub } from '../rsvp-utils/passage-stub.service';
 import { passageStub } from '../rsvp-utils/PassageStub';
+import { MetricInterface } from '../metrics/metric';
 
 describe('RSVPProgressBarComponent', () => {
   let component: RsvpProgressBarComponent;
   let fixture: ComponentFixture<RsvpProgressBarComponent>;
-  let rsvpService;
+  let rsvpService: RSVPService;
 
   beforeEach(async(() => {
     rsvpService = new RSVPService();
-    rsvpService.hydrate(passageStub);
+    rsvpService.hydrate(passageStub, MetricInterface.RSVP_BASIC);
 
     TestBed.configureTestingModule({
       imports: [

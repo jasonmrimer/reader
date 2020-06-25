@@ -27,7 +27,10 @@ export class RsvpComponent implements OnInit {
     this.passageService
       .getPassages()
       .subscribe(passages => {
-        this.rsvpService.hydrate(passages[0]);
+        this.rsvpService.hydrate(
+          passages[0],
+          this.rsvpType
+        );
       })
 
     this.subscription = this.rsvpService.isComplete$

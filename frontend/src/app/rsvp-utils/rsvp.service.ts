@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Passage } from './passage';
 import { isNotNullOrUndefined } from 'codelyzer/util/isNotNullOrUndefined';
 import { BehaviorSubject } from 'rxjs';
+import { MetricInterface } from '../metrics/metric';
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +17,12 @@ export class RSVPService {
   private _title: string;
   private _sectionMarkerIndexes: number[];
   private _sectionMarkerPositions: number[];
+  private _interfaceType: MetricInterface;
 
   constructor() {
   }
 
-  hydrate(passage: Passage) {
+  hydrate(passage: Passage, interfaceType: MetricInterface) {
     this.passage = passage;
     this._readableContent =
       this.transformToReadableContent(passage.content);
@@ -33,6 +35,7 @@ export class RSVPService {
       this._sectionMarkerIndexes,
       this._contentLength
     );
+    this._interfaceType = interfaceType;
   }
 
   transformToRSVPWithSectionMarkers(unformedContent: string): string[] {
@@ -89,6 +92,11 @@ export class RSVPService {
 
   get isComplete(): boolean {
     return this._index + 1 >= this._contentLength;
+  }
+
+  get quizRoute(): string {
+    let route = this._interfaceType.replace(/ /g, '-').toLowerCase();
+    return `/quiz-${route}`;
   }
 
   get readableContent(): string[] {

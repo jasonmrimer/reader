@@ -6,6 +6,9 @@ import { IntervalService } from './interval.service';
 import { IntervalServiceMock } from './interval.service.mock.spec';
 import { RSVPService } from '../rsvp-utils/rsvp.service';
 import { passageStub } from '../rsvp-utils/PassageStub';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
+import { MetricInterface } from '../metrics/metric';
 
 describe('ReaderComponent', () => {
   let component: ReaderComponent;
@@ -13,14 +16,16 @@ describe('ReaderComponent', () => {
   let titleBox;
   let contentBox;
   let intervalServiceMock: IntervalServiceMock;
-  let rsvpService;
+  let rsvpService: RSVPService;
+  let router;
 
   beforeEach(async(() => {
     intervalServiceMock = new IntervalServiceMock();
     rsvpService = new RSVPService();
-    rsvpService.hydrate(passageStub);
+    rsvpService.hydrate(passageStub, MetricInterface.RSVP_BASIC);
 
     TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
       declarations: [ReaderComponent],
       providers: [
         {provide: IntervalService, useValue: intervalServiceMock},
@@ -37,6 +42,7 @@ describe('ReaderComponent', () => {
 
     titleBox = fixture.debugElement.query(By.css('#passage-title'));
     contentBox = fixture.debugElement.query(By.css('#passage-content'));
+    router = TestBed.inject(Router);
   });
 
   it('should be created', () => {
@@ -69,21 +75,32 @@ describe('ReaderComponent', () => {
     expect(intervalServiceMock.clearInterval).toHaveBeenCalled();
   });
 
-  it('should display a completion message at finish', () => {
+  it('should display ar completion message at finish', () => {
     expect(fixture.debugElement.query(By.css('.completion-message'))).toBeFalsy();
-    while (!component.rsvpService.isComplete) {
-      component.rsvpService.moveAhead();
-    }
+    completePassage();
     fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('.completion-message'))).toBeTruthy();
   });
 
   it('should present a button to take a quiz at finish', () => {
     expect(fixture.debugElement.query(By.css('input[value="Take Quiz"]'))).toBeFalsy();
+    completePassage();
+    expect(fixture.debugElement.query(By.css('input[value="Take Quiz"]'))).toBeTruthy();
+  });
+
+  it('should navigate to a quiz on click', async () => {
+    spyOn(router, 'navigate').and.returnValue(true);
+    completePassage();
+    const quizButton = fixture.debugElement.query(By.css('input[value="Take Quiz"]'));
+    quizButton.nativeElement.click();
+    fixture.detectChanges();
+    expect(router.navigate).toHaveBeenCalledWith(['/quiz-rsvp-basic']);
+  });
+
+  function completePassage() {
     while (!component.rsvpService.isComplete) {
       component.rsvpService.moveAhead();
     }
     fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('input[value="Take Quiz"]'))).toBeTruthy();
-  });
+  }
 });

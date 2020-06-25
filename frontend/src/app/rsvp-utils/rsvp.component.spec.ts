@@ -13,7 +13,7 @@ import { MetricsServiceStub } from '../metrics/metrics-stub.service';
 describe('RsvpComponent', () => {
   let component: RsvpComponent;
   let fixture: ComponentFixture<RsvpComponent>;
-  let rsvpService;
+  let rsvpService: RSVPService;
   let passageService;
   let metricsService;
 
@@ -48,7 +48,7 @@ describe('RsvpComponent', () => {
   });
 
   it('should hydrate the rsvp service', () => {
-    expect(rsvpService.hydrate).toHaveBeenCalledWith(passageStub);
+    expect(rsvpService.hydrate).toHaveBeenCalledWith(passageStub, MetricInterface.RSVP_BASIC);
   });
 
   it('should fire a metrics post on passage complete', () => {

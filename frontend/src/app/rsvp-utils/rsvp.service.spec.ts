@@ -2,6 +2,7 @@ import { inject, TestBed } from '@angular/core/testing';
 
 import { RSVPService } from './rsvp.service';
 import { passageStub } from './PassageStub';
+import { MetricInterface } from '../metrics/metric';
 
 describe('RSVPService', () => {
   let service: RSVPService;
@@ -12,7 +13,7 @@ describe('RSVPService', () => {
     });
 
     service = TestBed.inject(RSVPService);
-    service.hydrate(passageStub);
+    service.hydrate(passageStub, MetricInterface.RSVP_BASIC);
   });
 
   it('should be created', inject([RSVPService], (service: RSVPService) => {
@@ -30,6 +31,7 @@ describe('RSVPService', () => {
     expect(service.title).toBe('title01');
     expect(service.sectionMarkerIndexes).toEqual([0, 3]);
     expect(service.sectionMarkerPositions).toEqual([0, 37.5]);
+    expect(service.quizRoute).toBe('/quiz-rsvp-basic');
   });
 
   it('should transform passage content into RSVP shape', function () {
@@ -82,5 +84,13 @@ describe('RSVPService', () => {
     service.moveAhead();
     service.moveAhead();
     expect(service.currentWord).toBe('Three.');
+  });
+
+  it('should return a quiz route', () => {
+    expect(service.quizRoute).toBe('/quiz-rsvp-basic');
+    service.hydrate(passageStub, MetricInterface.RSVP_SECTION_MARK);
+    expect(service.quizRoute).toBe('/quiz-rsvp-section-mark');
+    service.hydrate(passageStub, MetricInterface.RSVP_PROGRESS_BAR);
+    expect(service.quizRoute).toBe('/quiz-rsvp-progress-bar');
   });
 });
