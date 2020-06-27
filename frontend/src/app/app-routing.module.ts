@@ -15,6 +15,7 @@ const routes: Routes = [
   {path: 'rsvp-progress-bar', component: RsvpProgressBarComponent},
   {path: 'rsvp-section-mark', component: RsvpSectionMarksComponent},
   {path: 'quiz', component: QuizComponent},
+  {path: 'quiz/:interfaceName', component: QuizComponent},
   {path: 'metrics', component: MetricsComponent},
 ];
 

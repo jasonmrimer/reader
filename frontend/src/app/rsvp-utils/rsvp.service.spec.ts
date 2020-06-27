@@ -31,7 +31,7 @@ describe('RSVPService', () => {
     expect(service.title).toBe('title01');
     expect(service.sectionMarkerIndexes).toEqual([0, 3]);
     expect(service.sectionMarkerPositions).toEqual([0, 37.5]);
-    expect(service.quizRoute).toBe('/quiz-rsvp-basic');
+    expect(service.quizRoute).toBe('rsvp-basic');
   });
 
   it('should transform passage content into RSVP shape', function () {
@@ -87,10 +87,10 @@ describe('RSVPService', () => {
   });
 
   it('should return a quiz route', () => {
-    expect(service.quizRoute).toBe('/quiz-rsvp-basic');
+    expect(service.quizRoute).toBe('rsvp-basic');
     service.hydrate(passageStub, MetricInterface.RSVP_SECTION_MARK);
-    expect(service.quizRoute).toBe('/quiz-rsvp-section-mark');
+    expect(service.quizRoute).toBe('rsvp-section-mark');
     service.hydrate(passageStub, MetricInterface.RSVP_PROGRESS_BAR);
-    expect(service.quizRoute).toBe('/quiz-rsvp-progress-bar');
+    expect(service.quizRoute).toBe('rsvp-progress-bar');
   });
 });

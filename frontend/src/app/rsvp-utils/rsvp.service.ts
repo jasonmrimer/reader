@@ -95,8 +95,7 @@ export class RSVPService {
   }
 
   get quizRoute(): string {
-    let route = this._interfaceType.replace(/ /g, '-').toLowerCase();
-    return `/quiz-${route}`;
+    return this._interfaceType.replace(/ /g, '-').toLowerCase();
   }
 
   get readableContent(): string[] {

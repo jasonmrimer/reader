@@ -53,6 +53,6 @@ export class ReaderComponent implements OnInit {
   }
 
   takeQuiz() {
-    this.router.navigate([this.rsvpService.quizRoute]);
+    this.router.navigate(['/quiz', this.rsvpService.quizRoute]);
   }
 }

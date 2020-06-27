@@ -6,6 +6,7 @@ import { By } from '@angular/platform-browser';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { QuizService } from './quiz.service';
 import { of } from 'rxjs';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 
 describe('QuizComponent', () => {
   let component: QuizComponent;
@@ -17,7 +18,14 @@ describe('QuizComponent', () => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [
-        {provide: QuizService, useValue: quizServiceSpy}
+        {provide: QuizService, useValue: quizServiceSpy},
+        {
+          provide: ActivatedRoute, useValue: {
+            paramMap: of({
+              'interfaceName': 'rsvp-basic'
+            })
+          }
+        }
       ],
       declarations: [QuizComponent]
     })
@@ -70,5 +78,10 @@ describe('QuizComponent', () => {
         ]
       })
     );
+  });
+
+  it('should set its interface type based on its routing', async () => {
+    await fixture.detectChanges();
+    expect(component.interfaceName).toBe('rsvp-basic');
   });
 });

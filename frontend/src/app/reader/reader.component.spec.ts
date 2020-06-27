@@ -94,7 +94,7 @@ describe('ReaderComponent', () => {
     const quizButton = fixture.debugElement.query(By.css('input[value="Take Quiz"]'));
     quizButton.nativeElement.click();
     fixture.detectChanges();
-    expect(router.navigate).toHaveBeenCalledWith(['/quiz-rsvp-basic']);
+    expect(router.navigate).toHaveBeenCalledWith(['/quiz', 'rsvp-basic']);
   });
 
   function completePassage() {
