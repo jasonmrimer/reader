@@ -51,7 +51,7 @@ describe('QuizComponent', () => {
     expect(fixture.debugElement.queryAll(By.css('.sv_q_radiogroup_control_item')).length).toBe(8);
   });
 
-  it('should submit a set of choices', () => {
+  it('should submit a set of choices along with the quiz type', () => {
     let choices = fixture.debugElement.queryAll(By.css('input[type=radio]'));
     choices.map((choice) => {
       if (
@@ -75,7 +75,8 @@ describe('QuizComponent', () => {
             question: 'question2',
             answer: 'answer2.2'
           },
-        ]
+        ],
+        interfaceName: 'rsvp-basic'
       })
     );
   });

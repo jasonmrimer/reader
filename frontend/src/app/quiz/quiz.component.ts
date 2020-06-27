@@ -29,7 +29,7 @@ export class QuizComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.interfaceName = params['interfaceName'];
     });
-    
+
     this.quizService.getQuizzes()
       .subscribe(quizzes => {
         this.quiz = quizzes[0];
@@ -73,7 +73,8 @@ export class QuizComponent implements OnInit {
   private submitAnswers = (surveyModel: SurveyModel) => {
     const quizSubmission = new QuizSubmission(
       this.quiz.passage,
-      surveyModel.data
+      surveyModel.data,
+      this.interfaceName
     )
     this.quizService.postAnswers(quizSubmission)
       .subscribe();
