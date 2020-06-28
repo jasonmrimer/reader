@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const metric = mongoose.Schema({
+const passageMetric = mongoose.Schema({
   interfaceName: {
     type: String,
     required: true
@@ -11,4 +11,4 @@ const metric = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('metric', metric);
+module.exports = mongoose.model('passageMetric', passageMetric);

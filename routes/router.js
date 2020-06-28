@@ -4,7 +4,7 @@ const router = express.Router();
 const passage = require('../models/passage.js');
 const quiz = require('../models/quiz.js');
 const submission = require('../models/submission.js');
-const metric = require('../models/metric.js');
+const passageMetric = require('../models/passageMetric.js');
 
 router.get('/passages', (request, response, next) => {
     passage.find((err, passages) => {
@@ -34,15 +34,15 @@ router.post('/quizzes', (request, response, next) => {
     })
 });
 
-router.get('/metrics', (request, response, next) => {
-    metric.find((err, metrics) => {
+router.get('/metrics-passage', (request, response, next) => {
+    passageMetric.find((err, metrics) => {
         response.json(metrics);
     })
 });
 
-router.post('/metrics', (request, response, next) => {
+router.post('/metrics-passage', (request, response, next) => {
     let interfaceName = request.body.interfaceName;
-    metric.findOneAndUpdate(
+    passageMetric.findOneAndUpdate(
       {interfaceName: interfaceName},
       {$inc: {'completionCount': 1}},
       {upsert: true, new: true},
