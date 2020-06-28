@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { MetricsService } from './metrics.service';
 import { Metric } from './metric';
+import { forkJoin } from 'rxjs';
 
 class Row {
   constructor(
     public interfaceName: string,
-    public completionCount: number
+    public completionCount: number,
+    public quizCount: number,
   ) {
-
   }
 }
 
@@ -25,13 +26,22 @@ export class MetricsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.metricsService.fetchMetrics()
-      .subscribe((metrics: Metric[]) => {
-          metrics.map((metric) => {
-            this.rows.push(new Row(metric.interfaceName, metric.completionCount))
-          })
-        }
-      )
+    forkJoin([
+      this.metricsService.fetchPassageMetrics(),
+      this.metricsService.fetchQuizMetrics()
+    ]).subscribe(([passageResults, quizResults]) => {
+      const metrics = this.metricsService.mergeMetrics(
+          passageResults,
+          quizResults
+        );
+      this.rows = metrics.map(metric => {
+        return new Row(
+          metric.interfaceName,
+          metric.completionCount,
+          metric.quizCount
+        )
+      })
+    });
   }
 
 }
