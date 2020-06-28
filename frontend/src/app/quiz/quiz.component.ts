@@ -27,7 +27,7 @@ export class QuizComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.interfaceName = params['interfaceName'];
+      this.interfaceName = params.get('interfaceName');
     });
 
     this.quizService.getQuizzes()
@@ -76,6 +76,7 @@ export class QuizComponent implements OnInit {
       surveyModel.data,
       this.interfaceName
     )
+    console.log(quizSubmission);
     this.quizService.postAnswers(quizSubmission)
       .subscribe();
   }

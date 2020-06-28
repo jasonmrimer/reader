@@ -21,9 +21,9 @@ describe('QuizComponent', () => {
         {provide: QuizService, useValue: quizServiceSpy},
         {
           provide: ActivatedRoute, useValue: {
-            paramMap: of({
+            paramMap: of(convertToParamMap({
               'interfaceName': 'rsvp-basic'
-            })
+            }))
           }
         }
       ],

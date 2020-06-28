@@ -8,6 +8,10 @@ const submission = mongoose.Schema({
   answers: {
     type: [],
     required: true
+  },
+  interface: {
+    type: String,
+    require: true
   }
 });
 

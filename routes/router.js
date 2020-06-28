@@ -21,7 +21,8 @@ router.get('/quizzes', (request, response, next) => {
 router.post('/quizzes', (request, response, next) => {
     let newSubmission  = new submission({
         quizId: request.body.passage,
-        answers: request.body.answers
+        answers: request.body.answers,
+        interface: request.body.interfaceName
       }
     )
     newSubmission.save((err, sub) => {
