@@ -24,9 +24,9 @@ export class QuizMetric {
 
 export enum MetricInterface {
   BASELINE = 'Baseline',
-  RSVP_BASIC = 'RSVP Basic',
-  RSVP_PROGRESS_BAR = 'RSVP Progress Bar',
-  RSVP_SECTION_MARK = 'RSVP Section Mark',
+  RSVP_BASIC = 'rsvp-basic',
+  RSVP_PROGRESS_BAR = 'rsvp-progress-bar',
+  RSVP_SECTION_MARK = 'rsvp-section-mark',
 }
 
 const passageMetricStub1 = new PassageMetric('int1', 1);
