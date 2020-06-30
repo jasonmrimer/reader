@@ -66,7 +66,7 @@ describe('MetricsService', () => {
   function passagePOSTStub() {
     const request = httpMock.expectOne('http://localhost:4000/api/metrics-passage');
     expect(request.request.method).toBe('POST');
-    expect(request.request.body).toEqual({interfaceName: 'RSVP Basic'});
+    expect(request.request.body).toEqual({interfaceName: 'rsvp-basic'});
   }
 
   function quizGETStub() {
