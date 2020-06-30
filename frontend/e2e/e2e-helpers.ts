@@ -42,23 +42,21 @@ function testMetrics(
   metricType: string,
   metricCountStart: number[],
   metricCountEnd: number[],
-  primaryInterface: string,
-  secondaryInterface1: string,
-  secondaryInterface2: string
+  interfaces: {[key: string]: string}
 ) {
   expect(metricCountEnd[0]).toBe(
     metricCountStart[0] + 1,
-    `Metrics did not a ${metricType} for ${primaryInterface}`
+    `Metrics did not a ${metricType} for ${interfaces['primary']}`
   );
 
   expect(metricCountEnd[1]).toBe(
     metricCountEnd[1],
-    `Metrics erroneously added a ${metricType} to ${secondaryInterface1}`
+    `Metrics erroneously added a ${metricType} to ${interfaces['secondary1']}`
   );
 
   expect(metricCountEnd[2]).toBe(
     metricCountEnd[2],
-    `Metrics erroneously added a ${metricType} to ${secondaryInterface2}`
+    `Metrics erroneously added a ${metricType} to ${interfaces['secondary2']}`
   );
 }
 
@@ -67,69 +65,49 @@ export async function journeyReadAndQuiz(
   secondaryInterface1: string,
   secondaryInterface2: string,
 ) {
-  const completionCountStart = await getMetricsFor(
-    'completion-count',
-    primaryInterface,
-    secondaryInterface1,
-    secondaryInterface2
-  );
-  const quizCountStart = await getMetricsFor(
-    'quiz-count',
-    primaryInterface,
-    secondaryInterface1,
-    secondaryInterface2
-  );
+  const interfaces: {[key: string]: string} = {
+    primary: primaryInterface,
+    secondary1: secondaryInterface1,
+    secondary2: secondaryInterface2
+  };
+
+  const completionCountStart = await getMetricsFor('completion-count', interfaces);
+  const quizCountStart = await getMetricsFor('quiz-count', interfaces);
 
   browser.get(`/${primaryInterface}`);
   verifyRSVPWorks();
   takeQuiz();
 
-  const completionCountEnd = await getMetricsFor(
-    'completion-count',
-    primaryInterface,
-    secondaryInterface1,
-    secondaryInterface2
-  );
-  const quizCountEnd = await getMetricsFor(
-    'quiz-count',
-    primaryInterface,
-    secondaryInterface1,
-    secondaryInterface2
-  );
+  const completionCountEnd = await getMetricsFor('completion-count', interfaces);
+  const quizCountEnd = await getMetricsFor('quiz-count', interfaces);
 
   testMetrics(
     'completion-count',
     completionCountStart,
     completionCountEnd,
-    primaryInterface,
-    secondaryInterface1,
-    secondaryInterface2
+    interfaces
   );
 
   testMetrics(
     'quiz-count',
     quizCountStart,
     quizCountEnd,
-    primaryInterface,
-    secondaryInterface1,
-    secondaryInterface2
+    interfaces
   );
 }
 
 export async function getMetricsFor(
   metricTitle: string,
-  subjectInterfaceName: string,
-  staticInterfaceName1: string,
-  staticInterfaceName2: string
+  interfaces: {[key: string]: string}
 ) {
   let subjectInterfaceNameCount: number;
   let staticInterfaceName1Count: number;
   let staticInterfaceName2Count: number;
 
   browser.get('/metrics');
-  subjectInterfaceNameCount = await getMetricCountFor(subjectInterfaceName, metricTitle);
-  staticInterfaceName1Count = await getMetricCountFor(staticInterfaceName1, metricTitle);
-  staticInterfaceName2Count = await getMetricCountFor(staticInterfaceName2, metricTitle);
+  subjectInterfaceNameCount = await getMetricCountFor(interfaces['primary'], metricTitle);
+  staticInterfaceName1Count = await getMetricCountFor(interfaces['secondary1'], metricTitle);
+  staticInterfaceName2Count = await getMetricCountFor(interfaces['secondary2'], metricTitle);
 
   return [
     subjectInterfaceNameCount,
