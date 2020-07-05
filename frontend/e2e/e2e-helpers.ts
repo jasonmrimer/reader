@@ -74,7 +74,7 @@ export async function journeyReadAndQuiz(
   const completionCountStart = await getMetricsFor('completion-count', interfaces);
   const quizCountStart = await getMetricsFor('quiz-count', interfaces);
 
-  browser.get(`/${primaryInterface}`);
+  browser.get(`/${primaryInterface}/:0`);
   verifyRSVPWorks();
   takeQuiz();
 
@@ -123,13 +123,13 @@ export function verifyRSVPWorks() {
     5000,
     'Passage Title taking too long to appear in the DOM'
   );
-  expect(element(by.id('passage-title')).getText()).toEqual('For SpaceX, Third Launch is Charm');
+  expect(element(by.id('passage-title')).getText()).toEqual('Test Passage');
 
   let content = element(by.id('passage-content'));
-  expect(content.getText()).toBe('Following');
+  expect(content.getText()).toBe('First');
   element(by.id('play-button')).click();
   browser.sleep(400);
-  expect(content.getText()).not.toBe('Following');
+  expect(content.getText()).not.toBe('First');
   browser.wait(
     until.presenceOf(element(by.className('completion-message'))),
     5000,

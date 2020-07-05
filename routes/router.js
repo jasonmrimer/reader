@@ -58,14 +58,11 @@ router.get('/metrics-quiz', (request, response, next) => {
     const interfaceOccurrences = submissions.map(submission => {
       return submission.interface;
     });
-    console.log('int occ');
-    console.log(interfaceOccurrences);
     const interfaceTypes = [...new Set(interfaceOccurrences)];
     const countOccurrences = (arr, val) => arr.reduce((a, v) => (v === val ? a + 1 : a), 0);
     let counts = interfaceTypes.map(type => {
       return {interfaceName: type, quizCount: countOccurrences(interfaceOccurrences, type)}
     });
-    console.log(counts);
     response.json(counts);
   });
 });

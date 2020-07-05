@@ -12,10 +12,10 @@ describe('Reader App', () => {
   });
 
   it('should fetch and display a passage on baseline', function () {
-    browser.get('/baseline');
-    expect(element(by.id('passage-title')).getText()).toEqual('For SpaceX, Third Launch is Charm');
-    expect(element(by.id('passage-content')).getText()).toContain('Following a pair of last-second');
-    expect(element(by.id('passage-content')).getText()).toContain('launch at least one SpaceX rocket every week');
+    browser.get('/baseline/:0');
+    expect(element(by.id('passage-title')).getText()).toEqual('Test Passage');
+    expect(element(by.id('passage-content')).getText()).toContain('First sentence.');
+    expect(element(by.id('passage-content')).getText()).toContain('Last section.');
   });
 
   it('should use RSVP Basic to read passage, take quiz, and update metrics', async () => {
@@ -32,7 +32,7 @@ describe('Reader App', () => {
       'rsvp-basic',
       'rsvp-section-mark'
     );
-    browser.get('/rsvp-progress-bar');
+    browser.get('/rsvp-progress-bar/:0');
     expect(element(by.id('progress-bar'))).toBeDefined();
   });
 
@@ -42,7 +42,7 @@ describe('Reader App', () => {
       'rsvp-basic',
       'rsvp-section-mark'
     );
-    browser.get('/rsvp-section-mark');
+    browser.get('/rsvp-section-mark/:0');
     expect(element(by.id('completion-meter'))).toBeDefined();
     expect(element.all(by.className('slider-tick')).count()).toBe(4);
   });
