@@ -1,0 +1,15 @@
+<div class="container-subway">
+  <div
+    class="container-cyto"
+  >
+    <cytoscape-component
+      [elements]="graphData"
+      [currentSectionCompletion]="rsvpService.currentSectionCompletion"
+      [sections]="rsvpService.sections"
+      [currentSection]="rsvpService.currentSection"
+    ></cytoscape-component>
+  </div>
+  <app-reader
+    [rsvpService]="rsvpService"
+  ></app-reader>
+</div>

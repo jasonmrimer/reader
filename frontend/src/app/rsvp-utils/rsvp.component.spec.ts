@@ -60,7 +60,7 @@ describe('RsvpComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should hydrate the rsvp service', () => {
+  it('should hydrate the rsvp rsvpService', () => {
     expect(rsvpService.hydrate).toHaveBeenCalledWith(passageStub, MetricInterface.RSVP_BASIC);
   });
 

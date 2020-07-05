@@ -6,14 +6,27 @@ db.passages.insert(
   {
     _id: '0',
     title: 'Test Passage',
-    content: cat(filePathPassageTest)
+    content: cat(filePathPassageTest),
+    coordinates: [
+      {x: 0, y: 0},
+      {x: -15.6, y: 127.0},
+      {x: 109.6, y: 153.7},
+      {x: 170.1, y: 132.8},
+    ]
   }
 );
 db.passages.insert(
   {
     _id: '1',
     title: 'For SpaceX, Third Launch is Charm',
-    content: cat(filePathPassage01)
+    content: cat(filePathPassage01),
+    coordinates: [
+      {x: 0, y: 0},
+      {x: -285.3, y:	92.7},
+      {x: -559.7, y:	367.1},
+      {x: 138.6, y:	318.2},
+      {x: 64.3, y:	302.4},
+    ]
   }
 );
 db.quizzes.insert(

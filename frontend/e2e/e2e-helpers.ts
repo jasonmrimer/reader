@@ -62,14 +62,14 @@ function testMetrics(
 
 export async function journeyReadAndQuiz(
   primaryInterface: string,
-  secondaryInterface1: string,
-  secondaryInterface2: string,
+  secondaryInterfaces: string[]
 ) {
-  const interfaces: {[key: string]: string} = {
+  const interfaces: { [key: string]: string; } = {
     primary: primaryInterface,
-    secondary1: secondaryInterface1,
-    secondary2: secondaryInterface2
   };
+  secondaryInterfaces.map((interfaceName, index) => {
+    Object.assign(interfaces, {[`secondary${index + 1}`]: interfaceName});
+  });
 
   const completionCountStart = await getMetricsFor('completion-count', interfaces);
   const quizCountStart = await getMetricsFor('quiz-count', interfaces);

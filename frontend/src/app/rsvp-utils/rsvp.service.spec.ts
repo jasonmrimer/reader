@@ -3,6 +3,7 @@ import { inject, TestBed } from '@angular/core/testing';
 import { RSVPService } from './rsvp.service';
 import { passageStub } from './PassageStub';
 import { MetricInterface } from '../metrics/metric';
+import { Section } from './Section';
 
 describe('RSVPService', () => {
   let service: RSVPService;
@@ -92,5 +93,59 @@ describe('RSVPService', () => {
     expect(service.quizRoute).toBe('rsvp-section-mark');
     service.hydrate(passageStub, MetricInterface.RSVP_PROGRESS_BAR);
     expect(service.quizRoute).toBe('rsvp-progress-bar');
+  });
+
+  it('should collect sections with word counts', () => {
+    expect(service.sectionLengths).toEqual([3, 5]);
+  });
+
+  it('should collections sections', () => {
+    expect(service.sections).toEqual([
+      new Section(1, 0, 2, 33.33333333333333),
+      new Section(2, 3, 7, 0)
+    ]);
+  });
+
+  it('should get the current section based on progress', () => {
+    expect(service.currentSectionRank).toBe(1);
+    service.moveAhead();
+    service.moveAhead();
+    service.moveAhead();
+    expect(service.currentSectionRank).toBe(2);
+  });
+
+  it('should return percent read of current section', () => {
+    expect(service.currentSectionCompletion).toBeCloseTo(33, 0);
+    service.moveAhead();
+    expect(service.currentSectionCompletion).toBeCloseTo(66.6, 0);
+    service.moveAhead();
+    expect(service.currentSectionCompletion).toBe(100);
+    service.moveAhead();
+    expect(service.currentSectionCompletion).toBe(20);
+    service.moveAhead();
+    service.moveAhead();
+    service.moveAhead();
+    service.moveAhead();
+    expect(service.currentSectionCompletion).toBe(100);
+  });
+
+  it('should return percent read of all sections', () => {
+    expect(service.sections[0].percentRead).toBeCloseTo(33, 0);
+    expect(service.sections[1].percentRead).toBe(0);
+    service.moveAhead();
+    expect(service.sections[0].percentRead).toBeCloseTo(66.6, 0);
+    expect(service.sections[1].percentRead).toBe(0);
+    service.moveAhead();
+    expect(service.sections[0].percentRead).toBe(100);
+    expect(service.sections[1].percentRead).toBe(0);
+    service.moveAhead();
+    expect(service.sections[0].percentRead).toBe(100);
+    expect(service.sections[1].percentRead).toBe(20);
+    service.moveAhead();
+    service.moveAhead();
+    service.moveAhead();
+    service.moveAhead();
+    expect(service.sections[0].percentRead).toBe(100);
+    expect(service.sections[1].percentRead).toBe(100);
   });
 });

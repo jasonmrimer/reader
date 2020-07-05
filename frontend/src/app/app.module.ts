@@ -15,6 +15,9 @@ import { NgxBootstrapSliderModule } from 'ngx-bootstrap-slider';
 import { QuizComponent } from './quiz/quiz.component';
 import { MetricsComponent } from './metrics/metrics.component';
 import { RsvpComponent } from './rsvp-utils/rsvp.component';
+import { RsvpSubwayComponent } from './rsvp-subway/rsvp-subway.component';
+import { CytoscapeComponent } from './rsvp-subway/cytoscape.component';
+import { SubwayComponent } from './rsvp-subway/subway/subway.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,9 @@ import { RsvpComponent } from './rsvp-utils/rsvp.component';
     QuizComponent,
     MetricsComponent,
     RsvpComponent,
+    RsvpSubwayComponent,
+    CytoscapeComponent,
+    SubwayComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +41,7 @@ import { RsvpComponent } from './rsvp-utils/rsvp.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatProgressBarModule,
-    NgxBootstrapSliderModule
+    NgxBootstrapSliderModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

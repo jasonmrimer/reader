@@ -1,10 +1,9 @@
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { PassageService } from './passage.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Passage } from './passage';
 import { passageStub } from './PassageStub';
-import { passageMetricsStub } from '../metrics/metric';
 
 describe('PassageService', () => {
   let service: PassageService;

@@ -3,6 +3,7 @@ import { Passage } from './passage';
 import { isNotNullOrUndefined } from 'codelyzer/util/isNotNullOrUndefined';
 import { BehaviorSubject } from 'rxjs';
 import { MetricInterface } from '../metrics/metric';
+import { Section } from './Section';
 
 @Injectable({
   providedIn: 'root'
@@ -10,20 +11,22 @@ import { MetricInterface } from '../metrics/metric';
 export class RSVPService {
   private _index = 0;
   private _contentLength = Number.MAX_SAFE_INTEGER;
+
   private _isComplete = new BehaviorSubject<boolean>(false);
-  private passage: Passage;
+  private _passage: Passage;
   isComplete$ = this._isComplete.asObservable();
   private _readableContent: string[];
   private _title: string;
   private _sectionMarkerIndexes: number[];
   private _sectionMarkerPositions: number[];
   private _interfaceType: MetricInterface;
-
+  private _sectionLengths: number[];
+  private _sections: Section[] = [];
   constructor() {
   }
 
   hydrate(passage: Passage, interfaceType: MetricInterface) {
-    this.passage = passage;
+    this._passage = passage;
     this._readableContent =
       this.transformToReadableContent(passage.content);
     this._contentLength = this.readableContent.length;
@@ -36,6 +39,13 @@ export class RSVPService {
       this._contentLength
     );
     this._interfaceType = interfaceType;
+    this._sectionLengths = this.calculateSectionLengths(
+      this._sectionMarkerIndexes,
+      this._contentLength
+    );
+
+    this._sections = this.extractSections(this._sectionMarkerIndexes, this._contentLength);
+    this.updateSections();
   }
 
   transformToRSVPWithSectionMarkers(unformedContent: string): string[] {
@@ -70,6 +80,7 @@ export class RSVPService {
     if (this._index + 1 >= this._contentLength) {
       this._isComplete.next(true);
     }
+    this.updateSections();
   }
 
   percentRead() {
@@ -78,6 +89,22 @@ export class RSVPService {
 
   get contentLength(): number {
     return this._contentLength;
+  }
+
+  get currentSectionRank(): number {
+    let section = this.currentSection;
+    return section ? section.rank : -1;
+  }
+
+  get currentSection(): Section {
+    if (!this._sections) {
+      return null;
+    }
+
+    let section = this._sections.find((section) => {
+      return section.start <= this._index && this._index <= section.end;
+    });
+    return section;
   }
 
   get currentWord(): string {
@@ -94,12 +121,24 @@ export class RSVPService {
     return this._index + 1 >= this._contentLength;
   }
 
+  get passage(): Passage {
+    return this._passage;
+  }
+
   get quizRoute(): string {
     return this._interfaceType.replace(/ /g, '-').toLowerCase();
   }
 
   get readableContent(): string[] {
     return this._readableContent;
+  }
+
+  get sections(): Section[] {
+    return this._sections;
+  }
+
+  get sectionLengths(): number[] {
+    return this._sectionLengths;
   }
 
   get sectionMarkerIndexes(): number[] {
@@ -135,5 +174,45 @@ export class RSVPService {
       unformedContent = unformedContent.replace('  ', ' ');
     }
     return unformedContent;
+  }
+
+  private calculateSectionLengths(
+    sectionMarkerIndexes: number[],
+    contentLength: number
+  ) {
+    return sectionMarkerIndexes.map((position, index) => {
+      if (index === sectionMarkerIndexes.length - 1) {
+        return contentLength - position;
+      }
+      return sectionMarkerIndexes[index + 1] - position;
+    })
+  }
+
+  private extractSections(sectionMarkerIndexes: number[], contentLength: number) {
+    let lengths = this.calculateSectionLengths(sectionMarkerIndexes, contentLength);
+    return sectionMarkerIndexes.map((position, index) => {
+      return new Section(index + 1, position, position + lengths[index] - 1, 0);
+    });
+  }
+
+  get currentSectionCompletion() {
+    let section = this.currentSection;
+    if (!section) {
+      return -1;
+    }
+    return this.calculateCompletionPercentage(section);
+  }
+
+  private calculateCompletionPercentage(section: Section) {
+    let complete = this._index - section.start + 1;
+    return complete / section.length * 100;
+  }
+
+  private updateSections() {
+    let section = this.currentSection;
+    if (!section) {
+      return;
+    }
+    section.percentRead = this.calculateCompletionPercentage(section);
   }
 }

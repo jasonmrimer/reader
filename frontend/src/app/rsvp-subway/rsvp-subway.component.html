@@ -1,0 +1,6 @@
+<div class="rsvp-subway" *ngIf="rsvpService.passage">
+  <app-subway
+    [passage]="rsvpService.passage"
+    [rsvpService]="rsvpService"
+  ></app-subway>
+</div>

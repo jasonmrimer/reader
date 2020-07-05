@@ -27,6 +27,9 @@ export class PassageComponent implements OnInit {
       .getPassage(this.passageId)
       .subscribe(passage => {
         this.passage = passage;
+        this.passage.coordinates.map((coordinate) => {
+          console.log(coordinate);
+        })
       });
   }
 }
