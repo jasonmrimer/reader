@@ -15,6 +15,7 @@ export class ReaderComponent implements OnInit {
   rsvpService: RSVPService;
   subscription: Subscription;
   rsvpPlayer;
+  wpm = 250;
 
   constructor(
     private ngZone: NgZone,
@@ -25,7 +26,7 @@ export class ReaderComponent implements OnInit {
 
   ngOnInit() {
     this._intervalService.setInterval(
-      1,
+      (60 / this.wpm * 1000),
       () => {
         this.ngZone.run(() => {
           this.rsvpService.moveAhead();
