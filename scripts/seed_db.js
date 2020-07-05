@@ -1,10 +1,19 @@
 conn = new Mongo();
 db = conn.getDB('reader');
-filePath = pwd() + '/models/passage01';
+filePathPassageTest = pwd() + '/models/passageTest';
+filePathPassage01 = pwd() + '/models/passage01';
 db.passages.insert(
   {
+    _id: '0',
+    title: 'Test Passage',
+    content: cat(filePathPassageTest)
+  }
+);
+db.passages.insert(
+  {
+    _id: '1',
     title: 'For SpaceX, Third Launch is Charm',
-    content: cat(filePath)
+    content: cat(filePathPassage01)
   }
 );
 db.quizzes.insert(

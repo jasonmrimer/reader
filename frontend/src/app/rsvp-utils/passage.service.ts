@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Passage } from './passage';
 import { environment } from '../../environments/environment';
 
@@ -12,6 +12,14 @@ export class PassageService {
   }
 
   getPassages() {
-    return this._http.get<Passage[]>(`${environment.apiUrl}/passages`)
+    return this._http.get<Passage[]>(`${environment.apiUrl}/passage`)
+  }
+
+  getPassage(passageId: number) {
+    let params = new HttpParams().set('id', String(passageId));
+    return this._http.get<Passage>(
+      `${environment.apiUrl}/passage`,
+      {params: params}
+    )
   }
 }

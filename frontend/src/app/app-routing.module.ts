@@ -10,10 +10,10 @@ import { MetricsComponent } from './metrics/metrics.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
-  {path: 'baseline', component: PassageComponent},
-  {path: 'rsvp-basic', component: RsvpBasicComponent},
-  {path: 'rsvp-progress-bar', component: RsvpProgressBarComponent},
-  {path: 'rsvp-section-mark', component: RsvpSectionMarksComponent},
+  {path: 'baseline/:passageId', component: PassageComponent},
+  {path: 'rsvp-basic/:passageId', component: RsvpBasicComponent},
+  {path: 'rsvp-progress-bar/:passageId', component: RsvpProgressBarComponent},
+  {path: 'rsvp-section-mark/:passageId', component: RsvpSectionMarksComponent},
   {path: 'quiz', component: QuizComponent},
   {path: 'quiz/:interfaceName', component: QuizComponent},
   {path: 'metrics', component: MetricsComponent},

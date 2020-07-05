@@ -6,10 +6,18 @@ const quiz = require('../models/quiz.js');
 const submission = require('../models/submission.js');
 const passageMetric = require('../models/passageMetric.js');
 
-router.get('/passages', (request, response, next) => {
-  passage.find((err, passages) => {
-    response.json(passages);
-  })
+router.get('/passage', (request, response, next) => {
+  const id = request.query.id;
+
+  passage.findById(id,
+    function (err, psg) {
+      if (err) {
+        console.error('Error retrieving passage by id');
+      } else {
+        response.json(psg);
+      }
+    }
+  );
 });
 
 router.get('/quizzes', (request, response, next) => {
@@ -58,14 +66,11 @@ router.get('/metrics-quiz', (request, response, next) => {
     const interfaceOccurrences = submissions.map(submission => {
       return submission.interface;
     });
-    console.log('int occ');
-    console.log(interfaceOccurrences);
     const interfaceTypes = [...new Set(interfaceOccurrences)];
     const countOccurrences = (arr, val) => arr.reduce((a, v) => (v === val ? a + 1 : a), 0);
     let counts = interfaceTypes.map(type => {
       return {interfaceName: type, quizCount: countOccurrences(interfaceOccurrences, type)}
     });
-    console.log(counts);
     response.json(counts);
   });
 });

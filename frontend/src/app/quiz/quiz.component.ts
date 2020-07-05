@@ -76,7 +76,6 @@ export class QuizComponent implements OnInit {
       surveyModel.data,
       this.interfaceName
     )
-    console.log(quizSubmission);
     this.quizService.postAnswers(quizSubmission)
       .subscribe();
   }

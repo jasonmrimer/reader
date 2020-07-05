@@ -2,17 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { MetricsService } from './metrics.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import {
-  Metric,
-  MetricInterface,
-  metricsStub,
-  PassageMetric,
-  passageMetricsStub,
-  QuizMetric,
-  quizMetricsStub
-} from './metric';
-import { passagesStub } from '../rsvp-utils/PassageStub';
-import { quizzesStub } from '../quiz/Quiz';
+import { MetricInterface, metricsStub, PassageMetric, passageMetricsStub, QuizMetric, quizMetricsStub } from './metric';
 
 describe('MetricsService', () => {
   let service: MetricsService;

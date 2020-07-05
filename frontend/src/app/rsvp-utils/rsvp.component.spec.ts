@@ -9,6 +9,8 @@ import { RSVPService } from './rsvp.service';
 import { MetricInterface } from '../metrics/metric';
 import { MetricsService } from '../metrics/metrics.service';
 import { MetricsServiceStub } from '../metrics/metrics-stub.service';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('RsvpComponent', () => {
   let component: RsvpComponent;
@@ -30,7 +32,14 @@ describe('RsvpComponent', () => {
       providers: [
         {provide: PassageService, useValue: passageService},
         {provide: RSVPService, useValue: rsvpService},
-        {provide: MetricsService, useValue: metricsService}
+        {provide: MetricsService, useValue: metricsService},
+        {
+          provide: ActivatedRoute, useValue: {
+            paramMap: of(convertToParamMap({
+              'passageId': '0'
+            }))
+          }
+        }
       ]
     })
       .compileComponents();
@@ -46,7 +55,7 @@ describe('RsvpComponent', () => {
   afterEach(() => {
     fixture.destroy();
   });
-  
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });

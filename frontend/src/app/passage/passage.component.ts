@@ -1,23 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import { PassageService } from '../rsvp-utils/passage.service';
 import { Passage } from '../rsvp-utils/passage';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-passage',
   templateUrl: './passage.component.html',
   styleUrls: ['./passage.component.css'],
-  providers: [PassageService]
 })
 export class PassageComponent implements OnInit {
-  passage: Passage = new Passage();
+  public passage: Passage = new Passage();
+  passageId: number;
 
-  constructor(private _passageService: PassageService) {
+  constructor(
+    private passageService: PassageService,
+    private route: ActivatedRoute
+  ) {
   }
 
   ngOnInit() {
-    this._passageService.getPassages()
-      .subscribe(passages => {
-        this.passage = passages[0]
+    this.route.paramMap.subscribe(params => {
+      this.passageId = parseInt(params.get('passageId'));
+    });
+
+    this.passageService
+      .getPassage(this.passageId)
+      .subscribe(passage => {
+        this.passage = passage;
       });
   }
 }
