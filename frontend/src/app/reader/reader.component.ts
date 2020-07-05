@@ -26,7 +26,7 @@ export class ReaderComponent implements OnInit {
 
   ngOnInit() {
     this._intervalService.setInterval(
-      (60 / this.wpm * 1000),
+      this.calculatePace(),
       () => {
         this.ngZone.run(() => {
           this.rsvpService.moveAhead();
@@ -37,6 +37,11 @@ export class ReaderComponent implements OnInit {
     this.subscription = this.rsvpService.isComplete$
       .pipe(skip(1))
       .subscribe(this.finishReading);
+  }
+
+  private calculatePace() {
+    let millisecondsPerMinute = 60000;
+    return millisecondsPerMinute / this.wpm;
   }
 
   private finishReading = () => {
