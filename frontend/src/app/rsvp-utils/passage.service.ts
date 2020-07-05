@@ -12,13 +12,13 @@ export class PassageService {
   }
 
   getPassages() {
-    return this._http.get<Passage[]>(`${environment.apiUrl}/passages`)
+    return this._http.get<Passage[]>(`${environment.apiUrl}/passage`)
   }
 
   getPassage(passageId: number) {
-    let params = new HttpParams().set('passageId', String(passageId));
+    let params = new HttpParams().set('id', String(passageId));
     return this._http.get<Passage>(
-      `${environment.apiUrl}/passages`,
+      `${environment.apiUrl}/passage`,
       {params: params}
     )
   }

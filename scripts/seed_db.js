@@ -4,14 +4,14 @@ filePathPassageTest = pwd() + '/models/passageTest';
 filePathPassage01 = pwd() + '/models/passage01';
 db.passages.insert(
   {
-    id: 0,
+    _id: '0',
     title: 'Test Passage',
     content: cat(filePathPassageTest)
   }
 );
 db.passages.insert(
   {
-    id: 1,
+    _id: '1',
     title: 'For SpaceX, Third Launch is Charm',
     content: cat(filePathPassage01)
   }

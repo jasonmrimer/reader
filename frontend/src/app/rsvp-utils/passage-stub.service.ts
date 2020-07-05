@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { PassageService } from './passage.service';
-import { defer, of } from 'rxjs';
-import { passagesStub } from './PassageStub';
+import { defer, Observable, of } from 'rxjs';
+import { passagesStub, passageStub } from './PassageStub';
+import { Passage } from './passage';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class PassageServiceStub extends PassageService {
   constructor() {
     super(null);
@@ -11,11 +14,10 @@ export class PassageServiceStub extends PassageService {
 
   getPassages() {
     return of(passagesStub);
-    // return fakeAsyncResponse(passagesStub);
   }
 
-}
-
-export function fakeAsyncResponse<T>(data: T) {
-  return defer(() => Promise.resolve(data))
+  getPassage(passageId: number): Observable<Passage> {
+    console.log('stub');
+    return of(passageStub);
+  }
 }

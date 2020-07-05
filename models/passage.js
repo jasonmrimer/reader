@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const passage = mongoose.Schema({
-  id: {
-    type: Number,
+  _id: {
+    type: String,
     required: true
   },
   title: {

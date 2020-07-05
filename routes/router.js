@@ -6,10 +6,20 @@ const quiz = require('../models/quiz.js');
 const submission = require('../models/submission.js');
 const passageMetric = require('../models/passageMetric.js');
 
-router.get('/passages', (request, response, next) => {
-  passage.find((err, passages) => {
-    response.json(passages);
-  })
+router.get('/passage', (request, response, next) => {
+  const id = request.query.id;
+  console.log(id);
+
+  passage.findById(id,
+    function (err, psg) {
+      if (err) {
+        console.error('Error retrieving passage by id');
+      } else {
+        console.log(('passage ' + JSON.stringify(psg)));
+        response.json(psg);
+      }
+    }
+  );
 });
 
 router.get('/quizzes', (request, response, next) => {
