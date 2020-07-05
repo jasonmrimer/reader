@@ -11,10 +11,10 @@ import { passageStub } from '../rsvp-utils/PassageStub';
 describe('PassageComponent', () => {
   let component: PassageComponent;
   let fixture: ComponentFixture<PassageComponent>;
-  let passageService = new PassageServiceStub();
+  let passageService: PassageService;
 
   beforeEach(async(() => {
-    spyOn(passageService, 'getPassage').and.callThrough();
+    passageService = new PassageServiceStub();
 
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
@@ -24,7 +24,7 @@ describe('PassageComponent', () => {
         {
           provide: ActivatedRoute, useValue: {
             paramMap: of(convertToParamMap({
-              'passageId': '1'
+              'passageId': '0'
             }))
           }
         }
@@ -39,13 +39,16 @@ describe('PassageComponent', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    fixture.destroy();
+  });
+
   it('should be created', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should hydrate with one passage based on route', async () => {
-    await fixture.detectChanges();
-    expect(passageService.getPassage).toHaveBeenCalledWith(1);
+  it('should hydrate with one passage based on route', () => {
+    fixture.detectChanges();
     expect(component.passage).toEqual(passageStub);
   });
 });

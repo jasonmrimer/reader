@@ -27,7 +27,7 @@ describe('PassageService', () => {
       expect(response).toEqual(passageStub);
     })
 
-    const request = httpMock.expectOne('http://localhost:4000/api/passages?passageId=1');
+    const request = httpMock.expectOne('http://localhost:4000/api/passage?id=1');
     expect(request.request.method).toBe('GET');
     request.flush(passageStub);
   });

@@ -74,7 +74,7 @@ export async function journeyReadAndQuiz(
   const completionCountStart = await getMetricsFor('completion-count', interfaces);
   const quizCountStart = await getMetricsFor('quiz-count', interfaces);
 
-  browser.get(`/${primaryInterface}/:0`);
+  browser.get(`/${primaryInterface}/0`);
   verifyRSVPWorks();
   takeQuiz();
 

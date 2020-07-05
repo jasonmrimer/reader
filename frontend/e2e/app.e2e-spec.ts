@@ -12,7 +12,7 @@ describe('Reader App', () => {
   });
 
   it('should fetch and display a passage on baseline', function () {
-    browser.get('/baseline/:0');
+    browser.get('/baseline/0');
     expect(element(by.id('passage-title')).getText()).toEqual('Test Passage');
     expect(element(by.id('passage-content')).getText()).toContain('First sentence.');
     expect(element(by.id('passage-content')).getText()).toContain('Last section.');
@@ -32,7 +32,7 @@ describe('Reader App', () => {
       'rsvp-basic',
       'rsvp-section-mark'
     );
-    browser.get('/rsvp-progress-bar/:0');
+    browser.get('/rsvp-progress-bar/0');
     expect(element(by.id('progress-bar'))).toBeDefined();
   });
 
@@ -42,7 +42,7 @@ describe('Reader App', () => {
       'rsvp-basic',
       'rsvp-section-mark'
     );
-    browser.get('/rsvp-section-mark/:0');
+    browser.get('/rsvp-section-mark/0');
     expect(element(by.id('completion-meter'))).toBeDefined();
     expect(element.all(by.className('slider-tick')).count()).toBe(4);
   });

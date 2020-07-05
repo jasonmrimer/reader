@@ -17,7 +17,6 @@ export class PassageServiceStub extends PassageService {
   }
 
   getPassage(passageId: number): Observable<Passage> {
-    console.log('stub');
     return of(passageStub);
   }
 }

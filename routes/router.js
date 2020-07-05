@@ -8,14 +8,12 @@ const passageMetric = require('../models/passageMetric.js');
 
 router.get('/passage', (request, response, next) => {
   const id = request.query.id;
-  console.log(id);
 
   passage.findById(id,
     function (err, psg) {
       if (err) {
         console.error('Error retrieving passage by id');
       } else {
-        console.log(('passage ' + JSON.stringify(psg)));
         response.json(psg);
       }
     }

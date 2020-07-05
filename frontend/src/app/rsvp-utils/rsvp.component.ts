@@ -6,6 +6,7 @@ import { MetricsService } from '../metrics/metrics.service';
 import { MetricInterface } from '../metrics/metric';
 import { skip } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-rsvp-component',
@@ -15,20 +16,26 @@ import { Subscription } from 'rxjs';
 export class RsvpComponent implements OnInit {
   rsvpType: MetricInterface;
   private subscription: Subscription;
+  private passageId: number;
 
   constructor(
     private metricsService: MetricsService,
     private passageService: PassageService,
-    public rsvpService: RSVPService
+    public rsvpService: RSVPService,
+    private route: ActivatedRoute
   ) {
   }
 
   ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      this.passageId = parseInt(params.get('passageId'));
+    });
+
     this.passageService
-      .getPassages()
-      .subscribe(passages => {
+      .getPassage(this.passageId)
+      .subscribe(passage => {
         this.rsvpService.hydrate(
-          passages[0],
+          passage,
           this.rsvpType
         );
       })
