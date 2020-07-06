@@ -16,6 +16,7 @@ import { QuizComponent } from './quiz/quiz.component';
 import { MetricsComponent } from './metrics/metrics.component';
 import { RsvpComponent } from './rsvp-utils/rsvp.component';
 import { RsvpSubwayComponent } from './rsvp-subway/rsvp-subway.component';
+import { CytoComponent } from './rsvp-section-marks/CytoComponent';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { RsvpSubwayComponent } from './rsvp-subway/rsvp-subway.component';
     MetricsComponent,
     RsvpComponent,
     RsvpSubwayComponent,
+    CytoComponent
   ],
   imports: [
     BrowserModule,
