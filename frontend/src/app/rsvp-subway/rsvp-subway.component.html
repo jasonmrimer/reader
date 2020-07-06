@@ -8,6 +8,8 @@
     [elements]="graphData"
     [layout]="layout"
     (select)="nodeChange($event)"
+    (change)="nodeChange($event)"
+    [percentRead]="rsvpService.percentRead()"
   >
   </ng2-cytoscape>
 </div>

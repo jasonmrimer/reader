@@ -1,5 +1,5 @@
-import { Component, OnChanges, Renderer2, ElementRef, Input, Output, EventEmitter } from '@angular/core';
-import dagre from 'dagre';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, Renderer2 } from '@angular/core';
+import { RSVPService } from '../rsvp-utils/rsvp.service';
 
 declare var cytoscape: any;
 
@@ -20,7 +20,7 @@ export class CytoComponent implements OnChanges {
   @Input() public style: any;
   @Input() public layout: any;
   @Input() public zoom: any;
-
+  @Input() public percentRead;
   @Output() select: EventEmitter<any> = new EventEmitter<any>();
 
   public constructor(private renderer: Renderer2, private el: ElementRef) {
@@ -48,7 +48,7 @@ export class CytoComponent implements OnChanges {
         'text-outline-color': 'data(colorCode)',
         'background-color': 'data(colorCode)',
         'color': '#fff',
-        'font-size': 10
+        'font-size': 16
       })
       .selector(':selected')
       .css({
@@ -57,29 +57,21 @@ export class CytoComponent implements OnChanges {
       })
       .selector('edge')
       .css({
-        'curve-style': 'bezier',
-        'opacity': 0.666,
-        'width': 'mapData(strength, 70, 100, 2, 6)',
-        'target-arrow-shape': 'triangle',
-        'line-color': 'data(colorCode)',
-        'source-arrow-color': 'data(colorCode)',
-        'target-arrow-color': 'data(colorCode)'
       })
-      .selector('edge.questionable')
-      .css({
-        'line-style': 'dotted',
-        'target-arrow-shape': 'diamond'
-      })
-      .selector('.faded')
-      .css({
-        'opacity': 0.25,
-        'text-opacity': 0
-      });
+      // .selector('edge.questionable')
+      // .css({
+      //   'line-style': 'dotted',
+      //   'target-arrow-shape': 'diamond'
+      // })
+      // .selector('.faded')
+      // .css({
+      //   'opacity': 0.25,
+      //   'text-opacity': 0
+      // });
   }
 
   public ngOnChanges(): any {
     this.render();
-    console.log(this.el.nativeElement);
   }
 
   public render() {
@@ -94,20 +86,39 @@ export class CytoComponent implements OnChanges {
       elements: this.elements,
     });
 
-    cy.on('tap', 'node', function (e) {
-      var node = e.target;
-      var neighborhood = node.neighborhood().add(node);
+    // cy.on('tap', 'node', function (e) {
+    //   var node = e.target;
+    //   var neighborhood = node.neighborhood().add(node);
+    //
+    //   cy.elements().addClass('faded');
+    //   neighborhood.removeClass('faded');
+    //   localselect.emit(node.data('name'));
+    // });
+    //
+    // cy.on('tap', function (e) {
+    //   if (e.target === cy) {
+    //     cy.elements().removeClass('faded');
+    //   }
+    // });
 
-      cy.elements().addClass('faded');
-      neighborhood.removeClass('faded');
-      localselect.emit(node.data('name'));
-    });
 
-    cy.on('tap', function (e) {
-      if (e.target === cy) {
-        cy.elements().removeClass('faded');
+
+   let elementAnimation = cy.$('#edge-01').animation({
+      style: {
+        width: this.percentRead * 10,
+        'line-gradient-stop-positions': `0% ${this.percentRead}% ${this.percentRead}%`
+        // 'line-color': 'green',
+        // 'line-fill': 'linear-gradient',
+        // 'line-gradient-stop-colors': 'white white green',
+        // 'line-gradient-stop-positions': `0% 25% 25%`
       }
     });
+   //
+    elementAnimation
+      .progress(1)
+      .apply()
+      .promise('frame')
+      .then(() => {});
   }
 
 }

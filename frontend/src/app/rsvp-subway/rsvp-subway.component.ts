@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnChanges, SimpleChanges } from '@angular/core';
 import { RsvpComponent } from '../rsvp-utils/rsvp.component';
 import { MetricInterface } from '../metrics/metric';
 
@@ -7,7 +7,7 @@ import { MetricInterface } from '../metrics/metric';
   templateUrl: './rsvp-subway.component.html',
   styleUrls: ['./rsvp-subway.component.css']
 })
-export class RsvpSubwayComponent extends RsvpComponent {
+export class RsvpSubwayComponent extends RsvpComponent implements OnChanges {
   node_name: string;
 
   layout = {
@@ -44,14 +44,13 @@ export class RsvpSubwayComponent extends RsvpComponent {
     ],
     edges: [
       {
-        data: {source: 'section-01', target: 'section-02', colorCode: 'blue', strength: 10},
+        data: {id: 'edge-01', source: 'section-01', target: 'section-02', colorCode: 'blue', strength: 10},
         style: {
-          'line-color': 'white',
+          'line-color': 'green',
           'line-fill': 'linear-gradient',
-          'line-gradient-stop-colors': 'red red white',
-          'line-gradient-stop-positions': `0% ${this.rsvpService.percentRead()}% ${this.rsvpService.percentRead()}`
-        },
-        },
+          'line-gradient-stop-colors': 'white white green',
+        }
+      },
       {data: {source: 'section-02', target: 'section-03', colorCode: 'blue', strength: 10}},
       {data: {source: 'section-03', target: 'section-04', colorCode: 'blue', strength: 10}},
     ]
@@ -63,7 +62,14 @@ export class RsvpSubwayComponent extends RsvpComponent {
     this.rsvpType = MetricInterface.RSVP_SUBWAY
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log("change");
+  }
+
   nodeChange(event) {
     this.node_name = event;
+    console.log('hello');
   }
+
+
 }
