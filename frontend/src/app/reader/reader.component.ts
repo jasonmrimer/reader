@@ -15,7 +15,7 @@ export class ReaderComponent implements OnInit {
   rsvpService: RSVPService;
   subscription: Subscription;
   rsvpPlayer;
-  wpm = 250;
+  wpm = 6000;
 
   constructor(
     private ngZone: NgZone,

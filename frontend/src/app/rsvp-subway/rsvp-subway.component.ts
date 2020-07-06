@@ -11,31 +11,49 @@ export class RsvpSubwayComponent extends RsvpComponent {
   node_name: string;
 
   layout = {
-    name: 'circle',
-    rankDir: 'LR',
-    directed: true,
-    padding: 0
+    // name: 'circle',
+    // rankDir: 'LR',
+    // directed: true,
+    // padding: 0
   };
 
   graphData = {
     nodes: [
-      {data: {id: 'a', name: 'Signup', weight: 100, colorCode: 'blue', shapeType: 'roundrectangle'}},
-      {data: {id: 'b', name: 'User Profile', weight: 100, colorCode: 'magenta', shapeType: 'roundrectangle'}},
-      {data: {id: 'c', name: 'Billing', weight: 100, colorCode: 'magenta', shapeType: 'roundrectangle'}},
-      {data: {id: 'd', name: 'Sales', weight: 100, colorCode: 'orange', shapeType: 'roundrectangle'}},
-      {data: {id: 'e', name: 'Referral', weight: 100, colorCode: 'orange', shapeType: 'roundrectangle'}},
-      {data: {id: 'f', name: 'Loan', weight: 100, colorCode: 'orange', shapeType: 'roundrectangle'}},
-      {data: {id: 'j', name: 'Support', weight: 100, colorCode: 'red', shapeType: 'ellipse'}},
-      {data: {id: 'k', name: 'Sink Event', weight: 100, colorCode: 'green', shapeType: 'ellipse'}}
+      {
+        data:
+          {id: 'section-01', name: '01', weight: 100, colorCode: 'blue', shapeType: 'ellipse'},
+        position: {x: 1, y: 1},
+        style: {height: 64, width: 64, 'text-valign': 'center', 'text-halign': 'center'}
+      },
+      {
+        data: {id: 'section-02', name: '02', weight: 100, colorCode: 'magenta', shapeType: 'ellipse'},
+        position: {x: 1, y: 2},
+        style: {height: 64, width: 64, 'text-valign': 'center', 'text-halign': 'center'}
+      },
+
+      {
+        data: {id: 'section-03', name: '03', weight: 100, colorCode: 'magenta', shapeType: 'ellipse'},
+        position: {x: 2, y: 2},
+        style: {height: 64, width: 64, 'text-valign': 'center', 'text-halign': 'center'}
+      },
+      {
+        data: {id: 'section-04', name: '04', weight: 100, colorCode: 'orange', shapeType: 'ellipse'},
+        position: {x: 2, y: 1},
+        style: {height: 64, width: 64, 'text-valign': 'center', 'text-halign': 'center'}
+      },
     ],
     edges: [
-      {data: {source: 'a', target: 'b', colorCode: 'blue', strength: 10}},
-      {data: {source: 'b', target: 'c', colorCode: 'blue', strength: 10}},
-      {data: {source: 'c', target: 'd', colorCode: 'blue', strength: 10}},
-      {data: {source: 'c', target: 'e', colorCode: 'blue', strength: 10}},
-      {data: {source: 'c', target: 'f', colorCode: 'blue', strength: 10}},
-      {data: {source: 'e', target: 'j', colorCode: 'red', strength: 10}},
-      {data: {source: 'e', target: 'k', colorCode: 'green', strength: 10}}
+      {
+        data: {source: 'section-01', target: 'section-02', colorCode: 'blue', strength: 10},
+        style: {
+          'line-color': 'white',
+          'line-fill': 'linear-gradient',
+          'line-gradient-stop-colors': 'red red white',
+          'line-gradient-stop-positions': `0% ${this.rsvpService.percentRead()}% ${this.rsvpService.percentRead()}`
+        },
+        },
+      {data: {source: 'section-02', target: 'section-03', colorCode: 'blue', strength: 10}},
+      {data: {source: 'section-03', target: 'section-04', colorCode: 'blue', strength: 10}},
     ]
   };
 
