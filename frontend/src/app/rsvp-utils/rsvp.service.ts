@@ -9,6 +9,7 @@ import { MetricInterface } from '../metrics/metric';
 })
 export class RSVPService {
   private _index = 0;
+
   private _contentLength = Number.MAX_SAFE_INTEGER;
   private _isComplete = new BehaviorSubject<boolean>(false);
   private passage: Passage;
@@ -18,6 +19,7 @@ export class RSVPService {
   private _sectionMarkerIndexes: number[];
   private _sectionMarkerPositions: number[];
   private _interfaceType: MetricInterface;
+  private _sectionLengths: number[];
 
   constructor() {
   }
@@ -36,6 +38,10 @@ export class RSVPService {
       this._contentLength
     );
     this._interfaceType = interfaceType;
+    this._sectionLengths = this.calculateSectionLengths(
+      this._sectionMarkerIndexes,
+      this._contentLength
+    );
   }
 
   transformToRSVPWithSectionMarkers(unformedContent: string): string[] {
@@ -102,6 +108,10 @@ export class RSVPService {
     return this._readableContent;
   }
 
+  get sectionLengths(): number[] {
+    return this._sectionLengths;
+  }
+
   get sectionMarkerIndexes(): number[] {
     return this._sectionMarkerIndexes;
   }
@@ -135,5 +145,17 @@ export class RSVPService {
       unformedContent = unformedContent.replace('  ', ' ');
     }
     return unformedContent;
+  }
+
+  private calculateSectionLengths(
+    sectionMarkerIndexes: number[],
+    contentLength: number
+  ) {
+    return sectionMarkerIndexes.map((position, index) => {
+      if (index === sectionMarkerIndexes.length - 1) {
+        return contentLength - position;
+      }
+      return sectionMarkerIndexes[index + 1] - position;
+    })
   }
 }

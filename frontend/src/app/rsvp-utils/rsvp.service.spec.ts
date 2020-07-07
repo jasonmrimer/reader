@@ -93,4 +93,8 @@ describe('RSVPService', () => {
     service.hydrate(passageStub, MetricInterface.RSVP_PROGRESS_BAR);
     expect(service.quizRoute).toBe('rsvp-progress-bar');
   });
+
+  it('should collect sections with word counts', () => {
+    expect(service.sectionLengths).toEqual([3, 5]);
+  });
 });
