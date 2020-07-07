@@ -89,6 +89,13 @@ export class RSVPService {
     return this._contentLength;
   }
 
+  get currentSection() {
+    let section = this._sections.find((section) => {
+      return section.start <= this._index && this._index <= section.end;
+    });
+    return section ? section.rank : -1;
+  }
+
   get currentWord(): string {
     return this._readableContent
       ? this._readableContent[this._index]
@@ -169,7 +176,11 @@ export class RSVPService {
   private extractSections(sectionMarkerIndexes: number[], contentLength: number) {
     let lengths = this.calculateSectionLengths(sectionMarkerIndexes, contentLength);
     return sectionMarkerIndexes.map((position, index) => {
-      return new Section(position, position + lengths[index] - 1);
+      return new Section(
+        index + 1,
+        position,
+        position + lengths[index] - 1
+      );
     });
   }
 }

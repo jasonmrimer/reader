@@ -1,12 +1,13 @@
 export class Section {
   constructor(
-    public startIndex,
-    public endIndex
+    public rank: number = -1,
+    public start: number,
+    public end: number
   ) {
 
   }
 
   get length() {
-    return this.endIndex - this.startIndex + 1;
+    return this.end - this.start + 1;
   }
 }

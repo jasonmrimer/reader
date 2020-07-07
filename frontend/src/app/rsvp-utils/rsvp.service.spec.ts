@@ -101,8 +101,16 @@ describe('RSVPService', () => {
 
   it('should collections sections', () => {
     expect(service.sections).toEqual([
-      new Section(0, 2),
-      new Section(3, 7)
+      new Section(1, 0, 2),
+      new Section(2, 3, 7)
     ]);
+  });
+
+  it('should get the current section based on progress', () => {
+    expect(service.currentSection).toBe(1);
+    service.moveAhead();
+    service.moveAhead();
+    service.moveAhead();
+    expect(service.currentSection).toBe(2);
   });
 });
