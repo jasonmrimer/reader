@@ -107,10 +107,25 @@ describe('RSVPService', () => {
   });
 
   it('should get the current section based on progress', () => {
-    expect(service.currentSection).toBe(1);
+    expect(service.currentSectionRank).toBe(1);
     service.moveAhead();
     service.moveAhead();
     service.moveAhead();
-    expect(service.currentSection).toBe(2);
+    expect(service.currentSectionRank).toBe(2);
+  });
+
+  it('should return percent read of current section', () => {
+    expect(service.currentSectionCompletion).toBeCloseTo(33, 0);
+    service.moveAhead();
+    expect(service.currentSectionCompletion).toBeCloseTo(66.6, 0);
+    service.moveAhead();
+    expect(service.currentSectionCompletion).toBe(100);
+    service.moveAhead();
+    expect(service.currentSectionCompletion).toBe(20);
+    service.moveAhead();
+    service.moveAhead();
+    service.moveAhead();
+    service.moveAhead();
+    expect(service.currentSectionCompletion).toBe(100);
   });
 });

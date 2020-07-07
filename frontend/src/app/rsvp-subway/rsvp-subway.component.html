@@ -10,6 +10,8 @@
     (select)="nodeChange($event)"
     (change)="nodeChange($event)"
     [percentRead]="rsvpService.percentRead()"
+    [currentSection]="rsvpService.currentSectionRank"
+    [currentSectionCompletion]="rsvpService.currentSectionCompletion"
   >
   </ng2-cytoscape>
 </div>

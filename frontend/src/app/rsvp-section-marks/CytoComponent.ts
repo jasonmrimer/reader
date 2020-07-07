@@ -21,6 +21,8 @@ export class CytoComponent implements OnChanges {
   @Input() public layout: any;
   @Input() public zoom: any;
   @Input() public percentRead;
+  @Input() public currentSection;
+  @Input() public currentSectionCompletion;
   @Output() select: EventEmitter<any> = new EventEmitter<any>();
 
   public constructor(private renderer: Renderer2, private el: ElementRef) {
@@ -103,10 +105,9 @@ export class CytoComponent implements OnChanges {
 
 
 
-   let elementAnimation = cy.$('#edge-01').animation({
+   let elementAnimation = cy.$(`#edge-${this.currentSection}`).animation({
       style: {
-        width: this.percentRead * 10,
-        'line-gradient-stop-positions': `0% ${this.percentRead}% ${this.percentRead}%`
+        'line-gradient-stop-positions': `0% ${this.currentSectionCompletion}% ${this.currentSectionCompletion}%`
         // 'line-color': 'green',
         // 'line-fill': 'linear-gradient',
         // 'line-gradient-stop-colors': 'white white green',
