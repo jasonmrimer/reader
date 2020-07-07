@@ -3,6 +3,7 @@ import { inject, TestBed } from '@angular/core/testing';
 import { RSVPService } from './rsvp.service';
 import { passageStub } from './PassageStub';
 import { MetricInterface } from '../metrics/metric';
+import { Section } from './Section';
 
 describe('RSVPService', () => {
   let service: RSVPService;
@@ -96,5 +97,12 @@ describe('RSVPService', () => {
 
   it('should collect sections with word counts', () => {
     expect(service.sectionLengths).toEqual([3, 5]);
+  });
+
+  it('should collections sections', () => {
+    expect(service.sections).toEqual([
+      new Section(0, 2),
+      new Section(3, 7)
+    ]);
   });
 });

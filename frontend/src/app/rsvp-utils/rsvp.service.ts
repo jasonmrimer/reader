@@ -3,6 +3,7 @@ import { Passage } from './passage';
 import { isNotNullOrUndefined } from 'codelyzer/util/isNotNullOrUndefined';
 import { BehaviorSubject } from 'rxjs';
 import { MetricInterface } from '../metrics/metric';
+import { Section } from './Section';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class RSVPService {
   private _sectionMarkerPositions: number[];
   private _interfaceType: MetricInterface;
   private _sectionLengths: number[];
+  private _sections: Section[];
 
   constructor() {
   }
@@ -42,6 +44,7 @@ export class RSVPService {
       this._sectionMarkerIndexes,
       this._contentLength
     );
+    this._sections = this.extractSections(this._sectionMarkerIndexes, this._contentLength);
   }
 
   transformToRSVPWithSectionMarkers(unformedContent: string): string[] {
@@ -108,6 +111,10 @@ export class RSVPService {
     return this._readableContent;
   }
 
+  get sections(): Section[] {
+    return this._sections;
+  }
+
   get sectionLengths(): number[] {
     return this._sectionLengths;
   }
@@ -157,5 +164,12 @@ export class RSVPService {
       }
       return sectionMarkerIndexes[index + 1] - position;
     })
+  }
+
+  private extractSections(sectionMarkerIndexes: number[], contentLength: number) {
+    let lengths = this.calculateSectionLengths(sectionMarkerIndexes, contentLength);
+    return sectionMarkerIndexes.map((position, index) => {
+      return new Section(position, position + lengths[index] - 1);
+    });
   }
 }
