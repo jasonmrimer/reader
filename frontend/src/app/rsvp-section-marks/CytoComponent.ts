@@ -79,6 +79,7 @@ export class CytoComponent implements OnChanges {
   public render() {
     let cy_contianer = this.renderer.selectRootElement("#cy");
     let localselect = this.select;
+
     let cy = cytoscape({
       container: cy_contianer,
       layout: this.layout,
@@ -88,6 +89,9 @@ export class CytoComponent implements OnChanges {
       elements: this.elements,
     });
 
+    cy.panningEnabled(false);
+    cy.autoungrabify(true);
+    cy.autounselectify(true);
     // cy.on('tap', 'node', function (e) {
     //   var node = e.target;
     //   var neighborhood = node.neighborhood().add(node);

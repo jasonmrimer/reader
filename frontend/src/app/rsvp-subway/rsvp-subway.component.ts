@@ -19,27 +19,43 @@ export class RsvpSubwayComponent extends RsvpComponent implements OnChanges {
 
   graphData = {
     nodes: [
+
       {
-        data:
-          {id: 'section-01', name: '01', weight: 100, colorCode: 'blue', shapeType: 'ellipse'},
+        data: {id: 'section-01', name: '01', weight: 100, colorCode: 'blue', shapeType: 'ellipse'},
         position: {x: 1, y: 1},
-        style: {height: 64, width: 64, 'text-valign': 'center', 'text-halign': 'center'}
+        style: {height: 64, width: 64, 'text-valign': 'center', 'text-halign': 'center'},
+        grabbable: false,
+        pannable: false,
+        selectable: false
+
       },
       {
         data: {id: 'section-02', name: '02', weight: 100, colorCode: 'magenta', shapeType: 'ellipse'},
         position: {x: 1, y: 2},
-        style: {height: 64, width: 64, 'text-valign': 'center', 'text-halign': 'center'}
+        style: {height: 64, width: 64, 'text-valign': 'center', 'text-halign': 'center'},
+        grabbable: false,
+        pannable: false,
+        selectable: false
+
       },
 
       {
         data: {id: 'section-03', name: '03', weight: 100, colorCode: 'magenta', shapeType: 'ellipse'},
         position: {x: 2, y: 2},
-        style: {height: 64, width: 64, 'text-valign': 'center', 'text-halign': 'center'}
+        style: {height: 64, width: 64, 'text-valign': 'center', 'text-halign': 'center'},
+        grabbable: false,
+        pannable: false,
+        selectable: false
+
       },
       {
         data: {id: 'section-04', name: '04', weight: 100, colorCode: 'orange', shapeType: 'ellipse'},
         position: {x: 2, y: 1},
-        style: {height: 64, width: 64, 'text-valign': 'center', 'text-halign': 'center'}
+        style: {height: 64, width: 64, 'text-valign': 'center', 'text-halign': 'center'},
+        grabbable: false,
+        pannable: false,
+        selectable: false
+
       },
     ],
     edges: [
@@ -49,7 +65,11 @@ export class RsvpSubwayComponent extends RsvpComponent implements OnChanges {
           'line-color': 'green',
           'line-fill': 'linear-gradient',
           'line-gradient-stop-colors': 'white white green',
-        }
+        },
+        grabbable: false,
+        pannable: false,
+        selectable: false
+
       },
       {
         data: {id: 'edge-2', source: 'section-02', target: 'section-03', colorCode: 'blue', strength: 10},
@@ -57,7 +77,11 @@ export class RsvpSubwayComponent extends RsvpComponent implements OnChanges {
           'line-color': 'green',
           'line-fill': 'linear-gradient',
           'line-gradient-stop-colors': 'white white green',
-        }
+        },
+        grabbable: false,
+        pannable: false,
+        selectable: false
+
       },
       {
         data: {id: 'edge-3', source: 'section-03', target: 'section-04', colorCode: 'blue', strength: 10},
@@ -65,7 +89,11 @@ export class RsvpSubwayComponent extends RsvpComponent implements OnChanges {
           'line-color': 'green',
           'line-fill': 'linear-gradient',
           'line-gradient-stop-colors': 'white white green',
-        }
+        },
+        grabbable: false,
+        pannable: false,
+        selectable: false
+
       },
     ]
   };

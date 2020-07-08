@@ -1,3 +1,18 @@
+.container-subway {
+  display: flex;
+  border: 5px solid red;
+  align-items: start;
+  justify-content: center;
+}
+
+.container-cyto {
+
+}
+
+app-reader {
+  position: fixed;
+}
+
 ng2-cytoscape {
   height: 100vh;
   float: left;
