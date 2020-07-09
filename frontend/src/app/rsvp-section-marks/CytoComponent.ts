@@ -7,7 +7,7 @@ declare var cytoscape: any;
   selector: 'ng2-cytoscape',
   template: '<div id="cy"></div>',
   styles: [`#cy {
-    height: 100%;
+    height: 200px;
     width: 100%;
     position: relative;
     left: 0;
@@ -39,10 +39,6 @@ export class CytoComponent implements OnChanges {
     };
 
     this.style = [
-      // {
-      //   height: '300px',
-      //   width: '300px',
-      // },
       {
         selector: 'node',
         style: {
