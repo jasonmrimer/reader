@@ -68,10 +68,10 @@ export class CytoComponent implements OnChanges {
   }
 
   public render() {
-    let cy_contianer = this.renderer.selectRootElement("#cy");
+    let cy_container = this.renderer.selectRootElement("#cy");
 
     let cy = cytoscape({
-      container: cy_contianer,
+      container: cy_container,
       layout: this.layout,
       style: this.style,
       elements: this.elements,
@@ -81,25 +81,34 @@ export class CytoComponent implements OnChanges {
     cy.autoungrabify(true);
     cy.autounselectify(true);
 
-    let sectionCompletion = this.currentSectionCompletion;
-    this.sections.map((section) => {
+    if (!this.sections) {
 
-    let elementAnimation = cy.$(`#edge-${section.rank}`).animation({
-      style: {
-        'line-color': 'white',
-        'line-fill': 'linear-gradient',
-        'line-gradient-stop-colors': 'green green white',
-        'line-gradient-stop-positions': `0% ${section.percentRead}% ${section.percentRead}%`
-      }
-    });
+    } else {
+      this.sections.map((section, index) => {
+        if (this.isLastNode(index, this.sections)) {
+          return;
+        }
+        let element = cy.$(`#edge-${section.rank}`);
+        let elementAnimation = element.animation({
+          style: {
+            'line-color': 'white',
+            'line-fill': 'linear-gradient',
+            'line-gradient-stop-colors': 'green green white',
+            'line-gradient-stop-positions': `0% ${section.percentRead}% ${section.percentRead}%`
+          }
+        });
 
-    elementAnimation
-      .progress(1)
-      .apply()
-      .promise('frame')
-      .then(() => {
+        elementAnimation
+          .progress(1)
+          .apply()
+          .promise('frame')
+          .then(() => {
+          });
       });
-    })
+    }
   }
 
+  private isLastNode(index: number, sections: Section[]) {
+    return index === sections.length - 1;
+  }
 }

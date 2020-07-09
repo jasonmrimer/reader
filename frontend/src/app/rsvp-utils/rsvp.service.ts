@@ -93,11 +93,15 @@ export class RSVPService {
   }
 
   get currentSectionRank(): number {
-    let section = this.currentSection
+    let section = this.currentSection;
     return section ? section.rank : -1;
   }
 
   get currentSection(): Section {
+    if (!this._sections) {
+      return null;
+    }
+
     let section = this._sections.find((section) => {
       return section.start <= this._index && this._index <= section.end;
     });
