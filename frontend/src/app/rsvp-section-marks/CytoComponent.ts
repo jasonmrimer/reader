@@ -28,8 +28,8 @@ export class CytoComponent implements OnChanges {
   public constructor(private renderer: Renderer2, private el: ElementRef) {
 
     this.layout = this.layout || {
-      name: 'grid',
-      directed: true,
+      // name: 'grid',
+      // directed: true,
       padding: 0
     };
 
@@ -51,11 +51,6 @@ export class CytoComponent implements OnChanges {
         'background-color': 'data(colorCode)',
         'color': '#fff',
         'font-size': 16
-      })
-      .selector(':selected')
-      .css({
-        'border-width': 1,
-        'border-color': 'black'
       })
       .selector('edge')
       .css({

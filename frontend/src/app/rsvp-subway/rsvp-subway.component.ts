@@ -10,52 +10,36 @@ import { MetricInterface } from '../metrics/metric';
 export class RsvpSubwayComponent extends RsvpComponent implements OnChanges {
   node_name: string;
 
-  layout = {
-    // name: 'circle',
-    // rankDir: 'LR',
-    // directed: true,
-    // padding: 0
-  };
+  // layout = {
+  //   // name: 'circle',
+  //   // rankDir: 'LR',
+  //   // directed: true,
+  //   // padding: 0
+  // };
 
   graphData = {
     nodes: [
 
       {
         data: {id: 'section-01', name: '01', weight: 100, colorCode: 'blue', shapeType: 'ellipse'},
-        position: {x: 1, y: 1},
+        position: {x: 10, y: 10},
         style: {height: 64, width: 64, 'text-valign': 'center', 'text-halign': 'center'},
-        grabbable: false,
-        pannable: false,
-        selectable: false
-
       },
       {
-        data: {id: 'section-02', name: '02', weight: 100, colorCode: 'magenta', shapeType: 'ellipse'},
+        data: {id: 'section-02', name: '02', weight: 100, colorCode: 'blue', shapeType: 'ellipse'},
         position: {x: 1, y: 2},
         style: {height: 64, width: 64, 'text-valign': 'center', 'text-halign': 'center'},
-        grabbable: false,
-        pannable: false,
-        selectable: false
-
       },
 
       {
-        data: {id: 'section-03', name: '03', weight: 100, colorCode: 'magenta', shapeType: 'ellipse'},
-        position: {x: 2, y: 2},
+        data: {id: 'section-03', name: '03', weight: 100, colorCode: 'blue', shapeType: 'ellipse'},
+        position: {x: 8, y: 8},
         style: {height: 64, width: 64, 'text-valign': 'center', 'text-halign': 'center'},
-        grabbable: false,
-        pannable: false,
-        selectable: false
-
       },
       {
-        data: {id: 'section-04', name: '04', weight: 100, colorCode: 'orange', shapeType: 'ellipse'},
+        data: {id: 'section-04', name: '04', weight: 100, colorCode: 'blue', shapeType: 'ellipse'},
         position: {x: 2, y: 1},
         style: {height: 64, width: 64, 'text-valign': 'center', 'text-halign': 'center'},
-        grabbable: false,
-        pannable: false,
-        selectable: false
-
       },
     ],
     edges: [
@@ -66,10 +50,6 @@ export class RsvpSubwayComponent extends RsvpComponent implements OnChanges {
           'line-fill': 'linear-gradient',
           'line-gradient-stop-colors': 'white white green',
         },
-        grabbable: false,
-        pannable: false,
-        selectable: false
-
       },
       {
         data: {id: 'edge-2', source: 'section-02', target: 'section-03', colorCode: 'blue', strength: 10},
@@ -78,10 +58,6 @@ export class RsvpSubwayComponent extends RsvpComponent implements OnChanges {
           'line-fill': 'linear-gradient',
           'line-gradient-stop-colors': 'white white green',
         },
-        grabbable: false,
-        pannable: false,
-        selectable: false
-
       },
       {
         data: {id: 'edge-3', source: 'section-03', target: 'section-04', colorCode: 'blue', strength: 10},
@@ -90,10 +66,6 @@ export class RsvpSubwayComponent extends RsvpComponent implements OnChanges {
           'line-fill': 'linear-gradient',
           'line-gradient-stop-colors': 'white white green',
         },
-        grabbable: false,
-        pannable: false,
-        selectable: false
-
       },
     ]
   };
