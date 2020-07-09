@@ -10,63 +10,33 @@ import { MetricInterface } from '../metrics/metric';
 export class RsvpSubwayComponent extends RsvpComponent implements OnChanges {
   node_name: string;
 
-  // layout = {
-  //   // name: 'circle',
-  //   // rankDir: 'LR',
-  //   // directed: true,
-  //   // padding: 0
-  // };
+
 
   graphData = {
     nodes: [
 
       {
-        data: {id: 'section-01', name: '01', weight: 100, colorCode: 'blue', shapeType: 'ellipse'},
-        position: {x: 10, y: 10},
-        style: {height: 64, width: 64, 'text-valign': 'center', 'text-halign': 'center'},
+        data: {id: 'section-01', name: '01'},
+        position: {x: 100, y: 100},
       },
       {
-        data: {id: 'section-02', name: '02', weight: 100, colorCode: 'blue', shapeType: 'ellipse'},
-        position: {x: 1, y: 2},
-        style: {height: 64, width: 64, 'text-valign': 'center', 'text-halign': 'center'},
+        data: {id: 'section-02', name: '02'},
+        position: {x: 100, y: 200},
       },
 
       {
-        data: {id: 'section-03', name: '03', weight: 100, colorCode: 'blue', shapeType: 'ellipse'},
-        position: {x: 8, y: 8},
-        style: {height: 64, width: 64, 'text-valign': 'center', 'text-halign': 'center'},
+        data: {id: 'section-03', name: '03'},
+        position: {x: 200, y: 200},
       },
       {
-        data: {id: 'section-04', name: '04', weight: 100, colorCode: 'blue', shapeType: 'ellipse'},
-        position: {x: 2, y: 1},
-        style: {height: 64, width: 64, 'text-valign': 'center', 'text-halign': 'center'},
+        data: {id: 'section-04', name: '04'},
+        position: {x: 200, y: 100},
       },
     ],
     edges: [
-      {
-        data: {id: 'edge-1', source: 'section-01', target: 'section-02', colorCode: 'blue', strength: 10},
-        style: {
-          'line-color': 'green',
-          'line-fill': 'linear-gradient',
-          'line-gradient-stop-colors': 'white white green',
-        },
-      },
-      {
-        data: {id: 'edge-2', source: 'section-02', target: 'section-03', colorCode: 'blue', strength: 10},
-        style: {
-          'line-color': 'green',
-          'line-fill': 'linear-gradient',
-          'line-gradient-stop-colors': 'white white green',
-        },
-      },
-      {
-        data: {id: 'edge-3', source: 'section-03', target: 'section-04', colorCode: 'blue', strength: 10},
-        style: {
-          'line-color': 'green',
-          'line-fill': 'linear-gradient',
-          'line-gradient-stop-colors': 'white white green',
-        },
-      },
+      {data: {id: 'edge-1', source: 'section-01', target: 'section-02', colorCode: 'blue', strength: 10},},
+      {data: {id: 'edge-2', source: 'section-02', target: 'section-03', colorCode: 'blue', strength: 10},},
+      {data: {id: 'edge-3', source: 'section-03', target: 'section-04', colorCode: 'blue', strength: 10},},
     ]
   };
 
@@ -84,6 +54,4 @@ export class RsvpSubwayComponent extends RsvpComponent implements OnChanges {
     this.node_name = event;
     console.log('hello');
   }
-
-
 }
