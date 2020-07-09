@@ -16,7 +16,7 @@ import { QuizComponent } from './quiz/quiz.component';
 import { MetricsComponent } from './metrics/metrics.component';
 import { RsvpComponent } from './rsvp-utils/rsvp.component';
 import { RsvpSubwayComponent } from './rsvp-subway/rsvp-subway.component';
-import { CytoComponent } from './rsvp-section-marks/CytoComponent';
+import { CytoscapeComponent } from './rsvp-subway/cytoscape.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +31,7 @@ import { CytoComponent } from './rsvp-section-marks/CytoComponent';
     MetricsComponent,
     RsvpComponent,
     RsvpSubwayComponent,
-    CytoComponent
+    CytoscapeComponent
   ],
   imports: [
     BrowserModule,

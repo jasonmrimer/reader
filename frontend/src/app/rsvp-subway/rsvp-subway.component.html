@@ -1,19 +1,14 @@
 <div class="container-subway">
   <div
     class="container-cyto"
-    style="height: 90%; width: 80%; float: left; overflow: auto; overflow-y: hidden"
   >
-    <ng2-cytoscape
+    <cytoscape-component
       [elements]="graphData"
-      [percentRead]="rsvpService.percentRead()"
-      [currentSection]="rsvpService.currentSectionRank"
       [currentSectionCompletion]="rsvpService.currentSectionCompletion"
       [sections]="rsvpService.sections"
-    >
-    </ng2-cytoscape>
+    ></cytoscape-component>
   </div>
   <app-reader
     [rsvpService]="rsvpService"
-  >
-  </app-reader>
+  ></app-reader>
 </div>

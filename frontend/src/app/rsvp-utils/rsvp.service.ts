@@ -21,7 +21,7 @@ export class RSVPService {
   private _sectionMarkerPositions: number[];
   private _interfaceType: MetricInterface;
   private _sectionLengths: number[];
-  private _sections: Section[];
+  private _sections: Section[] = [];
 
   constructor() {
   }
