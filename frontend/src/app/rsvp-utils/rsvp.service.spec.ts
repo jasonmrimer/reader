@@ -101,8 +101,8 @@ describe('RSVPService', () => {
 
   it('should collections sections', () => {
     expect(service.sections).toEqual([
-      new Section(1, 0, 2),
-      new Section(2, 3, 7)
+      new Section(1, 0, 2, 33.33333333333333),
+      new Section(2, 3, 7, 0)
     ]);
   });
 
@@ -127,5 +127,25 @@ describe('RSVPService', () => {
     service.moveAhead();
     service.moveAhead();
     expect(service.currentSectionCompletion).toBe(100);
+  });
+
+  it('should return percent read of all sections', () => {
+    expect(service.sections[0].percentRead).toBeCloseTo(33, 0);
+    expect(service.sections[1].percentRead).toBe(0);
+    service.moveAhead();
+    expect(service.sections[0].percentRead).toBeCloseTo(66.6, 0);
+    expect(service.sections[1].percentRead).toBe(0);
+    service.moveAhead();
+    expect(service.sections[0].percentRead).toBe(100);
+    expect(service.sections[1].percentRead).toBe(0);
+    service.moveAhead();
+    expect(service.sections[0].percentRead).toBe(100);
+    expect(service.sections[1].percentRead).toBe(20);
+    service.moveAhead();
+    service.moveAhead();
+    service.moveAhead();
+    service.moveAhead();
+    expect(service.sections[0].percentRead).toBe(100);
+    expect(service.sections[1].percentRead).toBe(100);
   });
 });

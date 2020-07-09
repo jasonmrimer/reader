@@ -44,7 +44,9 @@ export class RSVPService {
       this._sectionMarkerIndexes,
       this._contentLength
     );
+
     this._sections = this.extractSections(this._sectionMarkerIndexes, this._contentLength);
+    this.updateSections();
   }
 
   transformToRSVPWithSectionMarkers(unformedContent: string): string[] {
@@ -79,6 +81,7 @@ export class RSVPService {
     if (this._index + 1 >= this._contentLength) {
       this._isComplete.next(true);
     }
+    this.updateSections();
   }
 
   percentRead() {
@@ -181,11 +184,7 @@ export class RSVPService {
   private extractSections(sectionMarkerIndexes: number[], contentLength: number) {
     let lengths = this.calculateSectionLengths(sectionMarkerIndexes, contentLength);
     return sectionMarkerIndexes.map((position, index) => {
-      return new Section(
-        index + 1,
-        position,
-        position + lengths[index] - 1
-      );
+      return new Section(index + 1, position, position + lengths[index] - 1, 0);
     });
   }
 
@@ -194,7 +193,19 @@ export class RSVPService {
     if (!section) {
       return -1;
     }
+    return this.calculateCompletionPercentage(section);
+  }
+
+  private calculateCompletionPercentage(section: Section) {
     let complete = this._index - section.start + 1;
     return complete / section.length * 100;
+  }
+
+  private updateSections() {
+    let section = this.currentSection;
+    if (!section) {
+      return;
+    }
+    section.percentRead = this.calculateCompletionPercentage(section);
   }
 }

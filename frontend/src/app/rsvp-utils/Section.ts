@@ -2,9 +2,9 @@ export class Section {
   constructor(
     public rank: number = -1,
     public start: number,
-    public end: number
+    public end: number,
+    public percentRead: number
   ) {
-
   }
 
   get length() {
