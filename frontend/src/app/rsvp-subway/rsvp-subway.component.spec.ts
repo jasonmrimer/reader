@@ -46,8 +46,4 @@ describe('RsvpSubwayComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  xit('should have nodes', () => {
-    expect(component.nodes).toBeDefined();
-  });
 });

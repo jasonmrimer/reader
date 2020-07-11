@@ -25,4 +25,8 @@ export class SubwayService {
     });
     return nodes;
   }
+
+  convertCoordinateToEdges(coordinates: Point[]): any[] {
+    return [];
+  }
 }
