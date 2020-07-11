@@ -1,14 +1,6 @@
-<div class="container-subway">
-  <div
-    class="container-cyto"
-  >
-    <cytoscape-component
-      [elements]="graphData"
-      [currentSectionCompletion]="rsvpService.currentSectionCompletion"
-      [sections]="rsvpService.sections"
-    ></cytoscape-component>
-  </div>
-  <app-reader
+<div class="rsvp-subway" *ngIf="rsvpService.passage">
+  <app-subway
+    [passage]="rsvpService.passage"
     [rsvpService]="rsvpService"
-  ></app-reader>
+  ></app-subway>
 </div>

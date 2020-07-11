@@ -10,10 +10,10 @@ import { Section } from './Section';
 })
 export class RSVPService {
   private _index = 0;
-
   private _contentLength = Number.MAX_SAFE_INTEGER;
+
   private _isComplete = new BehaviorSubject<boolean>(false);
-  private passage: Passage;
+  private _passage: Passage;
   isComplete$ = this._isComplete.asObservable();
   private _readableContent: string[];
   private _title: string;
@@ -22,12 +22,11 @@ export class RSVPService {
   private _interfaceType: MetricInterface;
   private _sectionLengths: number[];
   private _sections: Section[] = [];
-
   constructor() {
   }
 
   hydrate(passage: Passage, interfaceType: MetricInterface) {
-    this.passage = passage;
+    this._passage = passage;
     this._readableContent =
       this.transformToReadableContent(passage.content);
     this._contentLength = this.readableContent.length;
@@ -120,6 +119,10 @@ export class RSVPService {
 
   get isComplete(): boolean {
     return this._index + 1 >= this._contentLength;
+  }
+
+  get passage(): Passage {
+    return this._passage;
   }
 
   get quizRoute(): string {

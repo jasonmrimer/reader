@@ -1,0 +1,16 @@
+.container-subway {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  border: yellow solid 2px;
+}
+
+app-reader {
+  position: fixed;
+}
+
+.container-cyto {
+  width: 100%;
+  position: relative;
+  border: green solid 4px;
+}
