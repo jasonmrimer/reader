@@ -13,6 +13,10 @@ const passage = mongoose.Schema({
     type: String,
     required: true
   },
+  coordinates: {
+    type: Array,
+    required: true
+  }
 });
 
 module.exports = mongoose.model('passage', passage);
