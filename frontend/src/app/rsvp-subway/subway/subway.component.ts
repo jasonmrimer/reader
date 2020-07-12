@@ -17,9 +17,11 @@ export class SubwayComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let nodes = this.subwayService.convertCoordinatesToNodes(this.passage.coordinates);
+    let edges = this.subwayService.createEdgesFromNodes(nodes);
     this.graphData = {
-      nodes: this.subwayService.convertCoordinatesToNodes(this.passage.coordinates),
-      edges: this.subwayService.convertCoordinateToEdges(this.passage.coordinates)
+      nodes: nodes,
+      edges: edges
     };
   }
 }
