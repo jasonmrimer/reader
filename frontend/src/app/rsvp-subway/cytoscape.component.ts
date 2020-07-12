@@ -9,7 +9,7 @@ declare var cytoscape: any;
   styleUrls: ['./cytoscape.component.css'],
 })
 export class CytoscapeComponent implements OnChanges {
-
+  @Input() public currentSection: Section;
   @Input() public elements: any;
   @Input() public currentSectionCompletion;
   @Input() public sections = [];
@@ -42,10 +42,11 @@ export class CytoscapeComponent implements OnChanges {
       {
         selector: 'edge',
         style: {
-          'line-color': 'white',
+          'line-color': '#ffffffff',
           'line-fill': 'linear-gradient',
-          'line-gradient-stop-colors': 'green green white',
-          'line-gradient-stop-positions': `0% 0% 0%`
+          'line-gradient-stop-colors': '#63ee2a #63ee2a white',
+          'line-gradient-stop-positions': `0% 0% 0%`,
+          'opacity': '0.4'
         },
       }
     ]
@@ -62,23 +63,12 @@ export class CytoscapeComponent implements OnChanges {
   }
 
   private animateEdges(cy) {
-    this.sections.map((section, index) => {
-      if (this.isNotLastNode(index, this.sections)) {
-        let edge = cy.$(`#edge-${section.rank}`);
-        this.play(edge.animation({
-          style: this.makeGradient(section)
-        }));
-      }
+    this.sections.map((section) => {
+      let edge = cy.$(`#edge-${section.rank}`);
+      CytoscapeComponent.play(edge.animation({
+        style: this.makeGradient(section)
+      }));
     });
-  }
-
-  private play(elementAnimation) {
-    elementAnimation
-      .progress(1)
-      .apply()
-      .promise('frame')
-      .then(() => {
-      });
   }
 
   private createCytoscape(cy_container) {
@@ -95,16 +85,26 @@ export class CytoscapeComponent implements OnChanges {
     return cy;
   }
 
+  private static play(elementAnimation) {
+    elementAnimation
+      .progress(1)
+      .apply()
+      .promise('frame')
+      .then(() => {
+      });
+  }
+
+  private isCurrentSection(section: any) {
+    return this.currentSection === section;
+  }
+
   private makeGradient(section) {
     return {
       'line-color': 'white',
       'line-fill': 'linear-gradient',
-      'line-gradient-stop-colors': 'green green white',
-      'line-gradient-stop-positions': `0% ${section.percentRead}% ${section.percentRead}%`
+      'line-gradient-stop-colors': '#63ee2a #63ee2a white',
+      'line-gradient-stop-positions': `0% ${section.percentRead}% ${section.percentRead}%`,
+      'opacity': this.isCurrentSection(section) ? '0.8' : '0.4'
     };
-  }
-
-  private isNotLastNode(index: number, sections: Section[]) {
-    return index < sections.length - 1;
   }
 }
