@@ -8,7 +8,7 @@ import { MetricInterface } from '../metrics/metric';
   styleUrls: ['./rsvp-subway.component.css']
 })
 export class RsvpSubwayComponent extends RsvpComponent {
-  ngOnInit(): void {
+  ngOnInit() {
     super.ngOnInit();
     this.rsvpType = MetricInterface.RSVP_SUBWAY;
   }
