@@ -34,22 +34,19 @@ describe('Reader App', () => {
 
   it('should use RSVP Section Mark to read passage, take quiz, and update metrics', async () => {
     await journeyReadAndQuiz(
-      'rsvp-progress-bar',
-      ['rsvp-basic', 'rsvp-section-mark']
+      'rsvp-section-mark',
+      ['rsvp-basic', 'rsvp-progress-bar']
     );
     browser.get('/rsvp-section-mark/0');
     expect(element(by.id('completion-meter'))).toBeDefined();
     expect(element.all(by.className('slider-tick')).count()).toBe(4);
   });
 
-  it('should use RSVP Subway to read passage, take quiz, and update metrics', async () => {
+  xit('should use RSVP Subway to read passage, take quiz, and update metrics', async () => {
     await journeyReadAndQuiz(
-      'rsvp-progress-bar',
+      'rsvp-subway',
       ['rsvp-basic', 'rsvp-section-mark']
     );
-    browser.get('/rsvp-section-mark/0');
-    expect(element(by.id('completion-meter'))).toBeDefined();
-    expect(element.all(by.className('slider-tick')).count()).toBe(4);
   });
 });
 
