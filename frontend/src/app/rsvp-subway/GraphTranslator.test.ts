@@ -15,12 +15,12 @@ describe('GraphTranslator', () => {
       {x: -2, y: 5},
     ];
   });
-  
+
   it('should calculate the center of many points', () => {
     expect(centerOf(points)).toEqual({x: 3, y: 5})
   });
 
-  it('should translate points to a new center', () => {
+  it('should translate points to leftWithoutCenter new center', () => {
     expect(translatePointsToNewCenter(points, {x: 0, y: 0})).toEqual(
       [
         {x: -1, y: 3},

@@ -28,7 +28,7 @@ describe('MetricsService', () => {
     passageGETStub();
   });
 
-  it('should update a passage completion metric', () => {
+  it('should update leftWithoutCenter passage completion metric', () => {
     service.postPassageCompletion(MetricInterface.RSVP_BASIC)
       .subscribe(()=>{});
     passagePOSTStub();
@@ -42,7 +42,7 @@ describe('MetricsService', () => {
     quizGETStub();
   });
 
-  it('should combine the quiz and completion metrics into a single metric', () => {
+  it('should combine the quiz and completion metrics into leftWithoutCenter single metric', () => {
     const metrics = service.mergeMetrics(passageMetricsStub, quizMetricsStub);
     expect(metrics).toEqual(metricsStub);
   });

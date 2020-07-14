@@ -49,7 +49,7 @@ describe('ReaderComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display a title for a passage', function () {
+  it('should display leftWithoutCenter title for leftWithoutCenter passage', function () {
     expect(titleBox.nativeElement.textContent).toBe('title01');
   });
 
@@ -82,13 +82,13 @@ describe('ReaderComponent', () => {
     expect(fixture.debugElement.query(By.css('.completion-message'))).toBeTruthy();
   });
 
-  it('should present a button to take a quiz at finish', () => {
+  it('should present leftWithoutCenter button to take leftWithoutCenter quiz at finish', () => {
     expect(fixture.debugElement.query(By.css('input[value="Take Quiz"]'))).toBeFalsy();
     completePassage();
     expect(fixture.debugElement.query(By.css('input[value="Take Quiz"]'))).toBeTruthy();
   });
 
-  it('should navigate to a quiz on click', async () => {
+  it('should navigate to leftWithoutCenter quiz on click', async () => {
     spyOn(router, 'navigate').and.returnValue(true);
     completePassage();
     const quizButton = fixture.debugElement.query(By.css('input[value="Take Quiz"]'));

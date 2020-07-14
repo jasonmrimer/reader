@@ -60,36 +60,39 @@
 .hide {
   display: none;
 }
-#tw {
+#text-measurer {
   position: absolute;
   visibility: hidden;
   white-space: nowrap;
 }
-#tw,
-#txt_L,
-#txt_C,
-#txt_R
+#text-measurer,
+#text-left,
+#text-center,
+#text-right
 {
   font: bold 18px Arial;
   line-height: 1;
 }
-#txt_L { color: #080; }
-#txt_C { color: #f00; }
-#txt_R { color: #000; }
-#wrap {
+#text-left { color: #080; }
+#text-center { color: #f00; }
+#text-right { color: #000; }
+
+#border-wrapper {
   position: relative;
   width: 220px;
   height: 50px;
   border-top: 1px solid #f00;
   border-bottom: 1px solid #f00;
 }
-#b1 {
+
+#crosshairs {
   width: 110px;
   height: 50px;
   border-right: 1px solid #000;
   float:left;
 }
-#bw {
+
+#text-joiner {
   position: absolute;
   width: 220px;
   top: 10px;

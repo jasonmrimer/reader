@@ -93,56 +93,49 @@ export class ReaderComponent implements OnInit, AfterViewInit {
 17 - 19 : center 7
 */
 
-  Loop(txt, wpm) {
+  Loop(passage, wpm) {
     let
-      n = txt.length,
+      n = passage.length,
       i = 0,
-      b = document.getElementById('bw'),
-      tw = document.getElementById('tw'),
-      tx = {
-        L: document.getElementById('txt_L'),
-        C: document.getElementById('txt_C'),
-        R: document.getElementById('txt_R')
+      textJoiner = document.getElementById('text-joiner'),
+      textElements = {
+        left: document.getElementById('text-left'),
+        center: document.getElementById('text-center'),
+        right: document.getElementById('text-right')
       };
 
-    function width(w) {
-      tw.textContent = w;
-      return tw.offsetWidth;
-    }
-
-    function middle(w) {
-      var n = w.length,
-        // Center char calculation. 1=1, 2-4=2, 5-7=3, ...
-        c = ~~((n + 1) / 3) + 1,
-        z = {a: 0, b: 0, c: 0};
-      if (!n)
+    function setContentOnTextElements(word) {
+      let textJoinerWidth = 220;
+      let wordLength = word.length;
+      let centerIndex = ~~((wordLength + 1) / 3) + 1;
+      if (!wordLength)
         return;
-      z.a = width(w.substr(0, c - 1));
-      z.b = width(w.substr(0, c));
-      z.c = (z.b - z.a) / 2;
-      b.style.paddingLeft = ~~(110 - (z.a + z.c)) + 'px';
+      let textElementWidths = {leftWithoutCenter: 0, leftWithCenter: 0, halfCenter: 0};
+      // ReaderComponent.wordWidthZ();
+      textElementWidths.leftWithoutCenter = ReaderComponent.wordWidthZ(word.substr(0, centerIndex - 1));
+      textElementWidths.leftWithCenter = ReaderComponent.wordWidthZ(word.substr(0, centerIndex));
+      textElementWidths.halfCenter =
+        (textElementWidths.leftWithCenter - textElementWidths.leftWithoutCenter) / 2;
+      textJoiner.style.paddingLeft =
+        ~~((textJoinerWidth / 2) - (textElementWidths.leftWithoutCenter + textElementWidths.halfCenter)) + 'px';
 
-      tx.L.textContent = w.substr(0, c - 1);
-      tx.C.textContent = w.substr(c - 1, 1);
-      tx.R.textContent = w.substr(c);
+      textElements.left.textContent = word.substr(0, centerIndex - 1);
+      textElements.center.textContent = word.substr(centerIndex - 1, 1);
+      textElements.right.textContent = word.substr(centerIndex);
     }
 
     function word() {
-      middle(txt[i])
+      setContentOnTextElements(passage[i])
       if (++i === n)
         i = 0;
     }
-    // this.whiteout = function(w) {
-    //   if (w) {
-    //     tx.L.style.color = '#fff';
-    //     tx.R.style.color = '#fff';
-    //   } else {
-    //     tx.L.style.color = '#080';
-    //     tx.R.style.color = '#000';
-    //   }
-    // };
     wpm = wpm || 200;
     var tt = setInterval(word, (60 / wpm) * 1000);
   }
 
+  static wordWidthZ(word) {
+    let textMeasurer = document.getElementById('text-measurer');
+    textMeasurer.textContent = word;
+    return textMeasurer.offsetWidth;
+  }
 }

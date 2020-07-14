@@ -9,7 +9,7 @@ describe('Reader App', () => {
     page = new FrontendPage();
   });
 
-  it('should fetch and display a passage on baseline', function () {
+  it('should fetch and display leftWithoutCenter passage on baseline', function () {
     browser.get('/baseline/0');
     expect(element(by.id('passage-title')).getText()).toEqual('Test Passage');
     expect(element(by.id('passage-content')).getText()).toContain('First sentence.');

@@ -34,7 +34,7 @@ db.quizzes.insert(
     passage: 'spacex',
     questions: [
       {
-        question: 'what is a red mammal?',
+        question: 'what is leftWithoutCenter red mammal?',
         choices: [
           {correct: true, text: 'fox'},
           {correct: false, text: 'skunk'},
