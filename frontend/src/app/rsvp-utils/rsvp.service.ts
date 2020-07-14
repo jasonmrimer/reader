@@ -22,6 +22,7 @@ export class RSVPService {
   private _interfaceType: MetricInterface;
   private _sectionLengths: number[];
   private _sections: Section[] = [];
+
   constructor() {
   }
 
@@ -216,8 +217,14 @@ export class RSVPService {
     section.percentRead = this.calculateCompletionPercentage(section);
   }
 
+
   calculatePause() {
+
     let lastLetter = this.currentWord[this.currentWord.length - 1];
+
+    let isSectionBreak = () => {
+      return this._sectionMarkerIndexes.includes(this._index + 1);
+    }
 
     function isEndingPunctuation() {
       return lastLetter === '.' || lastLetter === '!' || lastLetter === '?' || lastLetter === '...';
@@ -227,7 +234,9 @@ export class RSVPService {
       return lastLetter === ',' || lastLetter === ';';
     }
 
-    if (isEndingPunctuation()) {
+    if (isSectionBreak()) {
+      return 1000;
+    } else if (isEndingPunctuation()) {
       return 500;
     } else if (isMiddlePunctuation()) {
       return 400;

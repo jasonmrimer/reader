@@ -49,7 +49,7 @@ describe('RSVPService', () => {
       'eight?'
     ]);
   });
-  
+
   it('should calculate percent read', () => {
     service.contentLength = 8;
     service.moveAhead();
@@ -139,6 +139,8 @@ describe('RSVPService', () => {
     expect(service.currentWord).toBe('two.');
     expect(service.calculatePause()).toBe(500);
     service.moveAhead();
+    expect(service.currentWord).toBe('Three.');
+    expect(service.calculatePause()).toBe(1000);
     service.moveAhead();
     expect(service.currentWord).toBe('Four,');
     expect(service.calculatePause()).toBe(400);

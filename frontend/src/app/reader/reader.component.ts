@@ -79,7 +79,7 @@ export class ReaderComponent implements OnInit {
     });
   }
 
-  pauseReader() {
+  pauseReaderByClick() {
     this._intervalService.clearInterval();
   }
 
