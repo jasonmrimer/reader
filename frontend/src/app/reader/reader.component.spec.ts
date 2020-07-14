@@ -41,7 +41,7 @@ describe('ReaderComponent', () => {
     fixture.detectChanges();
 
     titleBox = fixture.debugElement.query(By.css('#passage-title'));
-    contentBox = fixture.debugElement.query(By.css('#passage-content'));
+    contentBox = fixture.debugElement.query(By.css('#text-joiner'));
     router = TestBed.inject(Router);
   });
 
@@ -54,11 +54,11 @@ describe('ReaderComponent', () => {
   });
 
   it('should move to the next word as the interval ticks', () => {
-    expect(contentBox.nativeElement.textContent).toBe('One');
+    expect(contentBox.nativeElement.textContent).toEqual(' ');
     const playButton = fixture.debugElement.query(By.css('#play-button'));
     playButton.nativeElement.click();
     fixture.detectChanges();
-    expect(contentBox.nativeElement.textContent).toBe('two.');
+    expect(contentBox.nativeElement.textContent).toBe('One');
   });
 
   it('should stop moving ahead on completion', () => {

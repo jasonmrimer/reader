@@ -10,9 +10,9 @@ export class IntervalService {
 
   constructor() { }
 
-  setInterval(time: number, callback: () => void) {
+  setInterval(wordsPerMinute: number, callback: () => void) {
     this._callback = callback;
-    this.time = time;
+    this.time = this.calculatePace(wordsPerMinute);
   }
 
   runInterval() {
@@ -25,6 +25,11 @@ export class IntervalService {
 
   callback() {
     this._callback();
+  }
+
+  private calculatePace(wpm: number) {
+    let millisecondsPerMinute = 60000;
+    return millisecondsPerMinute / wpm;
   }
 }
 

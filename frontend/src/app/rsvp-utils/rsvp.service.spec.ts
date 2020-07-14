@@ -23,7 +23,7 @@ describe('RSVPService', () => {
 
   it('should prepare all the reading shapes and data on hydrate', () => {
     expect(service.readableContent).toEqual([
-      'One', 'two.', 'Three.', 'Four', 'five', 'six.', 'Seven', 'eight.'
+      'One', 'two.', 'Three.', 'Four,', 'five;', 'six!', 'Seven...', 'eight?'
     ])
     expect(service.percentRead()).toBe(12.5);
     expect(service.index).toBe(0);
@@ -35,12 +35,6 @@ describe('RSVPService', () => {
     expect(service.quizRoute).toBe('rsvp-basic');
   });
 
-  it('should transform passage content into RSVP shape', function () {
-    expect(service.transformToReadableContent(passageStub.content)).toEqual([
-      'One', 'two.', 'Three.', 'Four', 'five', 'six.', 'Seven', 'eight.'
-    ]);
-  });
-
   it('should transform passage content into RSVP shape and include section-markers', () => {
     expect(service.transformToRSVPWithSectionMarkers(passageStub.content)).toEqual([
       '#section-marker',
@@ -48,25 +42,14 @@ describe('RSVPService', () => {
       'two.',
       'Three.',
       '#section-marker',
-      'Four',
-      'five',
-      'six.',
-      'Seven',
-      'eight.'
+      'Four,',
+      'five;',
+      'six!',
+      'Seven...',
+      'eight?'
     ]);
   });
-
-  it('should output array of section marks', () => {
-    const transformedContent = service.transformToRSVPWithSectionMarkers(passageStub.content);
-    expect(service.calculateSectionMarkerIndexes(transformedContent)).toEqual([0, 3]);
-  });
-
-  it('should calculate the percentage position of ticks based on index value within content', () => {
-    const indexes = [0, 3];
-    const contentLength = 8;
-    expect(service.calculateRelativePositionsOfIndexes(indexes, contentLength)).toEqual([0, 37.5]);
-  });
-
+  
   it('should calculate percent read', () => {
     service.contentLength = 8;
     service.moveAhead();
@@ -147,5 +130,30 @@ describe('RSVPService', () => {
     service.moveAhead();
     expect(service.sections[0].percentRead).toBe(100);
     expect(service.sections[1].percentRead).toBe(100);
+  });
+
+  it('should pause at punctuation', () => {
+    expect(service.currentWord).toBe('One');
+    expect(service.calculatePause()).toBe(0);
+    service.moveAhead();
+    expect(service.currentWord).toBe('two.');
+    expect(service.calculatePause()).toBe(500);
+    service.moveAhead();
+    service.moveAhead();
+    expect(service.currentWord).toBe('Four,');
+    expect(service.calculatePause()).toBe(400);
+    service.moveAhead();
+    expect(service.currentWord).toBe('five;');
+    expect(service.calculatePause()).toBe(400);
+    service.moveAhead();
+    expect(service.currentWord).toBe('six!');
+    expect(service.calculatePause()).toBe(500);
+    service.moveAhead();
+    expect(service.currentWord).toBe('Seven...');
+    expect(service.calculatePause()).toBe(500);
+    service.moveAhead();
+    expect(service.currentWord).toBe('eight?');
+    expect(service.calculatePause()).toBe(500);
+    service.moveAhead();
   });
 });

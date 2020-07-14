@@ -42,7 +42,7 @@ export class CytoscapeComponent implements OnChanges {
       {
         selector: 'edge',
         style: {
-          'line-color': '#ffffffff',
+          'line-color': '#ffffff',
           'line-fill': 'linear-gradient',
           'line-gradient-stop-colors': '#63ee2a #63ee2a white',
           'line-gradient-stop-positions': `0% 0% 0%`,

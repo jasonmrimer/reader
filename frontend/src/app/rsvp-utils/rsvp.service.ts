@@ -215,4 +215,23 @@ export class RSVPService {
     }
     section.percentRead = this.calculateCompletionPercentage(section);
   }
+
+  calculatePause() {
+    let lastLetter = this.currentWord[this.currentWord.length - 1];
+
+    function isEndingPunctuation() {
+      return lastLetter === '.' || lastLetter === '!' || lastLetter === '?' || lastLetter === '...';
+    }
+
+    function isMiddlePunctuation() {
+      return lastLetter === ',' || lastLetter === ';';
+    }
+
+    if (isEndingPunctuation()) {
+      return 500;
+    } else if (isMiddlePunctuation()) {
+      return 400;
+    }
+    return 0;
+  }
 }

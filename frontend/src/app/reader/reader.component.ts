@@ -14,10 +14,12 @@ import { OrpService } from './orp.service';
 export class ReaderComponent implements OnInit {
   @Input()
   rsvpService: RSVPService;
-
   subscription: Subscription;
   rsvpPlayer;
   wpm = 250;
+  textJoiner;
+  textMeasurer;
+  textElements;
 
   constructor(
     private ngZone: NgZone,
@@ -28,37 +30,43 @@ export class ReaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    let textJoiner = document.getElementById('text-joiner');
-    let textMeasurer = document.getElementById('text-measurer');
-    let textElements = {
+    this.assignElementsById();
+    this.setupIntervalService();
+    this.setupCompletionActions();
+  }
+
+  private assignElementsById() {
+    this.textJoiner = document.getElementById('text-joiner');
+    this.textMeasurer = document.getElementById('text-measurer');
+    this.textElements = {
       left: document.getElementById('text-left'),
       center: document.getElementById('text-center'),
       right: document.getElementById('text-right')
     };
+  }
 
+  private setupIntervalService() {
     this._intervalService.setInterval(
-      this.calculatePace(),
+      this.wpm,
       () => {
         this.ngZone.run(() => {
-          this.rsvpService.moveAhead();
           this.orpService.separateAndAlign(
             this.rsvpService.currentWord,
-            textMeasurer,
-            textElements,
-            textJoiner
+            this.textMeasurer,
+            this.textElements,
+            this.textJoiner
           );
+          this.pauseReaderByPunctuation();
+          this.rsvpService.moveAhead();
         })
       }
     );
+  }
 
+  private setupCompletionActions() {
     this.subscription = this.rsvpService.isComplete$
       .pipe(skip(1))
       .subscribe(this.finishReading);
-  }
-
-  private calculatePace() {
-    let millisecondsPerMinute = 60000;
-    return millisecondsPerMinute / this.wpm;
   }
 
   private finishReading = () => {
@@ -73,6 +81,16 @@ export class ReaderComponent implements OnInit {
 
   pauseReader() {
     this._intervalService.clearInterval();
+  }
+
+  pauseReaderByPunctuation() {
+    let pauseIncrement = this.rsvpService.calculatePause();
+    if (pauseIncrement > 0) {
+      this._intervalService.clearInterval();
+      setTimeout(() => {
+        this.playReader();
+      }, pauseIncrement);
+    }
   }
 
   takeQuiz() {
