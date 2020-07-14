@@ -31,19 +31,12 @@ export class ReaderComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-
-    this.context = this.rsvpCanvas.nativeElement.getContext('2d');
-    this.context.font = "16px Arial"
-    this.context.beginPath();
-    this.context.arc(0, 50, 40, 0, 2 * Math.PI);
-    this.context.stroke();
-    this.context.fillText('hello world', 20, 20);
-
     this._intervalService.setInterval(
       this.calculatePace(),
       () => {
         this.ngZone.run(() => {
           this.rsvpService.moveAhead();
+          this.separateAndAlign(this.rsvpService.currentWord);
         })
       }
     );
@@ -51,8 +44,6 @@ export class ReaderComponent implements OnInit, AfterViewInit {
     this.subscription = this.rsvpService.isComplete$
       .pipe(skip(1))
       .subscribe(this.finishReading);
-
-    this.Loop(this.rsvpService.readableContent, 250);
   }
 
   ngAfterViewInit() {
@@ -81,33 +72,9 @@ export class ReaderComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/quiz', this.rsvpService.quizRoute]);
   }
 
-  /*
-      1 : center
- 2 -  4 : center 2
- 5 -  7 : center 3
- 8 - 10 : center 4
-11 - 13 : center 5
-14 - 16 : center 6
-17 - 19 : center 7
-*/
-
-  static separateAndAlign(word) {
+  separateAndAlign(word) {
     ReaderComponent.setAlignmentPadding(word);
     ReaderComponent.setContentOnTextElements(word);
-  }
-
-  Loop(passage, wpm) {
-    let n = passage.length;
-
-    let i = 0;
-
-    function processPassage() {
-      ReaderComponent.separateAndAlign(passage[i])
-      if (++i === n)
-        i = 0;
-    }
-    wpm = wpm || 200;
-    var tt = setInterval(processPassage, (60 / wpm) * 1000);
   }
 
   private static setContentOnTextElements(word) {
