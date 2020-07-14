@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 echo "
 ----------------------
   vvvvvvvvvvvvvvvv
@@ -13,10 +12,11 @@ echo "
   Removing previous files
 ----------------------
 "
+AWS="ubuntu@ec2-54-219-54-236.us-west-1.compute.amazonaws.com"
 BASEDIR=$(dirname "$0")
 echo "$BASEDIR"
 ssh -i ~/workspace/reader-aws-key.pem \
-ubuntu@ec2-13-52-102-143.us-west-1.compute.amazonaws.com \
+"$AWS" \
 'rm -rf /opt/backend/*'
 
 echo "
@@ -27,22 +27,22 @@ echo "
 cd "$BASEDIR" && cd ..
 scp -i ~/workspace/reader-aws-key.pem \
 -r ~/workspace/reader/index.js \
-ubuntu@ec2-13-52-102-143.us-west-1.compute.amazonaws.com:/opt/backend
+"$AWS":/opt/backend
 scp -i ~/workspace/reader-aws-key.pem \
 -r ~/workspace/reader/models \
-ubuntu@ec2-13-52-102-143.us-west-1.compute.amazonaws.com:/opt/backend
+"$AWS":/opt/backend
 scp -i ~/workspace/reader-aws-key.pem \
 -r ~/workspace/reader/package.json \
-ubuntu@ec2-13-52-102-143.us-west-1.compute.amazonaws.com:/opt/backend
+"$AWS":/opt/backend
 scp -i ~/workspace/reader-aws-key.pem \
 -r ~/workspace/reader/public \
-ubuntu@ec2-13-52-102-143.us-west-1.compute.amazonaws.com:/opt/backend
+"$AWS":/opt/backend
 scp -i ~/workspace/reader-aws-key.pem \
 -r ~/workspace/reader/routes \
-ubuntu@ec2-13-52-102-143.us-west-1.compute.amazonaws.com:/opt/backend
+"$AWS":/opt/backend
 scp -i ~/workspace/reader-aws-key.pem \
 -r ~/workspace/reader/scripts/ \
-ubuntu@ec2-13-52-102-143.us-west-1.compute.amazonaws.com:/opt/backend
+"$AWS":/opt/backend
 
 
 echo "
@@ -51,7 +51,7 @@ echo "
 ----------------------
 "
 ssh -i ~/workspace/reader-aws-key.pem \
-ubuntu@ec2-13-52-102-143.us-west-1.compute.amazonaws.com \
+"$AWS" \
 'cd /opt/backend && npm install'
 
 echo "
@@ -60,11 +60,11 @@ echo "
 ----------------------
 "
 ssh -i ~/workspace/reader-aws-key.pem \
-ubuntu@ec2-13-52-102-143.us-west-1.compute.amazonaws.com \
-"mongo /opt/backend/scripts/truncate_db.js"
+"$AWS" \
+"cd /opt/backend && mongo /opt/backend/scripts/truncate_db.js"
 ssh -i ~/workspace/reader-aws-key.pem \
-ubuntu@ec2-13-52-102-143.us-west-1.compute.amazonaws.com \
-"mongo /opt/backend/scripts/seed_db.js"
+"$AWS" \
+"cd /opt/backend && mongo /opt/backend/scripts/seed_db.js"
 
 echo "
 ----------------------
@@ -72,5 +72,5 @@ echo "
 ----------------------
 "
 ssh -i ~/workspace/reader-aws-key.pem \
-ubuntu@ec2-13-52-102-143.us-west-1.compute.amazonaws.com \
+"$AWS" \
 'cd /opt/backend; sudo pm2 delete "all"; sudo pm2 start index.js'
