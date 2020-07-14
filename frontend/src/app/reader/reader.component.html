@@ -1,6 +1,16 @@
 <div id="container-reader">
   <div id="passage-title">{{rsvpService.title}}</div>
-  <div id="passage-content">{{rsvpService.currentWord}}</div>
+  <div id="passage-content">
+    <span id="text-measurer"></span>
+    <div id="border-wrapper">
+      <div id="crosshairs"></div>
+      <div id="text-joiner">
+        <span id="text-left">&nbsp;</span>
+        <span id="text-center"></span>
+        <span id="text-right"></span>
+      </div>
+    </div>
+  </div>
   <button id="play-button" (click)="playReader()">Play</button>
   <button id="pause-button" (click)="pauseReader()">Pause</button>
   <div

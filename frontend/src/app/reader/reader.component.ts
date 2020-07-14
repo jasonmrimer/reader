@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { skip } from 'rxjs/operators';
 import { RSVPService } from '../rsvp-utils/rsvp.service';
 import { Router } from '@angular/router';
+import { OrpService } from './orp.service';
 
 @Component({
   selector: 'app-reader',
@@ -13,6 +14,7 @@ import { Router } from '@angular/router';
 export class ReaderComponent implements OnInit {
   @Input()
   rsvpService: RSVPService;
+
   subscription: Subscription;
   rsvpPlayer;
   wpm = 250;
@@ -20,16 +22,31 @@ export class ReaderComponent implements OnInit {
   constructor(
     private ngZone: NgZone,
     private _intervalService: IntervalService,
+    private orpService: OrpService,
     private router: Router
   ) {
   }
 
   ngOnInit() {
+    let textJoiner = document.getElementById('text-joiner');
+    let textMeasurer = document.getElementById('text-measurer');
+    let textElements = {
+      left: document.getElementById('text-left'),
+      center: document.getElementById('text-center'),
+      right: document.getElementById('text-right')
+    };
+
     this._intervalService.setInterval(
       this.calculatePace(),
       () => {
         this.ngZone.run(() => {
           this.rsvpService.moveAhead();
+          this.orpService.separateAndAlign(
+            this.rsvpService.currentWord,
+            textMeasurer,
+            textElements,
+            textJoiner
+          );
         })
       }
     );

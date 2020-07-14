@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 
 import { SubwayService } from './subway.service';
 import { passageStub } from '../rsvp-utils/PassageStub';
-import { Point } from './Point';
 
 describe('SubwayService', () => {
   let service: SubwayService;

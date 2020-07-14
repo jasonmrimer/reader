@@ -1,5 +1,6 @@
 <div id="reader">
   <app-reader
+    *ngIf="rsvpService.readableContent"
     [rsvpService]="rsvpService"
   >
   </app-reader>

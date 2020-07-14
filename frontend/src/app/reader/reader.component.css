@@ -14,19 +14,8 @@
 
 #passage-content {
   display: flex;
-  align-items: center;
-  width: 160px;
-  height: 32px;
   margin-top: 16px;
-
   background: #ebebeb;
-  border-radius: 4px;
-
-  font-family: Roboto, sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  color: #000000;
-  padding: 8px;
 }
 
 #play-button {
@@ -47,4 +36,46 @@
 
 .completion-message {
   color: #ebebeb;
+}
+
+#text-measurer {
+  position: absolute;
+  visibility: hidden;
+  white-space: nowrap;
+}
+#text-measurer,
+#text-left,
+#text-center,
+#text-right
+{
+  font: 16px Roboto, sans-serif;
+  line-height: 1;
+}
+#text-left { color: #000000; }
+#text-center { color: #f00; }
+#text-right { color: #000000; }
+
+#border-wrapper {
+  position: relative;
+  width: 220px;
+  height: 50px;
+  border-top: 2px solid #f00;
+  border-bottom: 2px solid #f00;
+}
+
+#crosshairs {
+  width: 110px;
+  height: 48px;
+  border-right: 2px solid #ff0000;
+  float:left;
+}
+
+#text-joiner {
+  position: absolute;
+  width: 220px;
+  top: 10px;
+  background: #ebebeb;
+  padding: 5px 0;
+  line-height: 1;
+  vertical-align: middle;
 }
