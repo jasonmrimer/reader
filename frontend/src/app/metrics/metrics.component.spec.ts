@@ -32,7 +32,7 @@ describe('MetricsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display leftWithoutCenter table of interfaces and the times completed', async () => {
+  it('should display a table of interfaces and the times completed', async () => {
     expect(rows.length).toBe(3);
     expect(rows[0].cells[0].textContent).toBe('int1');
     expect(rows[0].cells[1].textContent).toBe('1');

@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 
 import { SubwayService } from './subway.service';
 import { passageStub } from '../rsvp-utils/PassageStub';
-import { Point } from './Point';
 
 describe('SubwayService', () => {
   let service: SubwayService;
@@ -16,7 +15,7 @@ describe('SubwayService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should convert coordinates from leftWithoutCenter passage into cytoscape nodes', () => {
+  it('should convert coordinates from a passage into cytoscape nodes', () => {
     let nodes = service.convertCoordinatesToNodes(passageStub.coordinates);
     expect(nodes).toEqual([
       {

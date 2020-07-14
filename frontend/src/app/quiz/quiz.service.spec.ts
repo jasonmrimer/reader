@@ -35,7 +35,7 @@ describe('QuizService', () => {
     request.flush(quizzesStub);
   });
 
-  it('should post choices from leftWithoutCenter survey', fakeAsync(() => {
+  it('should post choices from a survey', fakeAsync(() => {
     const quizSubmission = new QuizSubmission(
       'quizId',
       {

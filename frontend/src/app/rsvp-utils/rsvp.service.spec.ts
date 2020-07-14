@@ -87,7 +87,7 @@ describe('RSVPService', () => {
     expect(service.currentWord).toBe('Three.');
   });
 
-  it('should return leftWithoutCenter quiz route', () => {
+  it('should return a quiz route', () => {
     expect(service.quizRoute).toBe('rsvp-basic');
     service.hydrate(passageStub, MetricInterface.RSVP_SECTION_MARK);
     expect(service.quizRoute).toBe('rsvp-section-mark');

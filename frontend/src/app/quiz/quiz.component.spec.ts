@@ -42,7 +42,7 @@ describe('QuizComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should fetch leftWithoutCenter quiz', () => {
+  it('should fetch a quiz', () => {
     expect(component.quiz).toEqual(quizStub);
   });
 
@@ -51,7 +51,7 @@ describe('QuizComponent', () => {
     expect(fixture.debugElement.queryAll(By.css('.sv_q_radiogroup_control_item')).length).toBe(8);
   });
 
-  it('should submit leftWithoutCenter set of choices along with the quiz type', () => {
+  it('should submit a set of choices along with the quiz type', () => {
     let choices = fixture.debugElement.queryAll(By.css('input[type=radio]'));
     choices.map((choice) => {
       if (

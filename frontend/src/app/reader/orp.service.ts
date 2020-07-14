@@ -4,10 +4,6 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class OrpService {
-
-  constructor() {
-  }
-
   public separateAndAlign = (word, textMeasurer, textElements, textJoiner) => {
     this.setAlignmentPadding(word, textJoiner, textMeasurer);
     this.setContentOnTextElements(word, textElements);
@@ -45,9 +41,18 @@ export class OrpService {
   }
 
   private calculateOptimalRecognitionPoint(word) {
-    let wordLength = word.length;
-    let centerCalculation = ~~((wordLength + 1) / 3) + 1;
-    return centerCalculation > 5 ? 5 : centerCalculation;
+    let length = word.length;
+    if (length === 1) {
+      return 1;
+    } else if (length <= 5) {
+      return 2;
+    } else if (length <= 7) {
+      return 3;
+    } else if (length <= 9) {
+      return 4;
+    } else {
+      return 5;
+    }
   }
 
   widthOf(word, textMeasurer) {

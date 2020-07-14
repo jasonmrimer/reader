@@ -19,12 +19,12 @@ describe('OrpService', () => {
     testSeparationAndAlignment('ab', ['a', 'b', '']);
     testSeparationAndAlignment('abc', ['a', 'b', 'c']);
     testSeparationAndAlignment('abcd', ['a', 'b', 'cd']);
-    testSeparationAndAlignment('abcde', ['ab', 'c', 'de']);
+    testSeparationAndAlignment('abcde', ['a', 'b', 'cde']);
     testSeparationAndAlignment('abcdef', ['ab', 'c', 'def']);
     testSeparationAndAlignment('abcdefg', ['ab', 'c', 'defg']);
     testSeparationAndAlignment('abcdefgh', ['abc', 'd', 'efgh']);
     testSeparationAndAlignment('abcdefghi', ['abc', 'd', 'efghi']);
-    testSeparationAndAlignment('abcdefghij', ['abc', 'd', 'efghij']);
+    testSeparationAndAlignment('abcdefghij', ['abcd', 'e', 'fghij']);
     testSeparationAndAlignment('abcdefghijk', ['abcd', 'e', 'fghijk']);
     testSeparationAndAlignment('abcdefghijkl', ['abcd', 'e', 'fghijkl']);
     testSeparationAndAlignment('abcdefghijklmnopqrstuv', ['abcd', 'e', 'fghijklmnopqrstuv']);

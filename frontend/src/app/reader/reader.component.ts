@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, NgZone, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, NgZone, OnInit } from '@angular/core';
 import { IntervalService } from './interval.service';
 import { Subscription } from 'rxjs';
 import { skip } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import { OrpService } from './orp.service';
   templateUrl: './reader.component.html',
   styleUrls: ['./reader.component.css'],
 })
-export class ReaderComponent implements OnInit, AfterViewInit {
+export class ReaderComponent implements OnInit {
   @Input()
   rsvpService: RSVPService;
 
@@ -54,9 +54,6 @@ export class ReaderComponent implements OnInit, AfterViewInit {
     this.subscription = this.rsvpService.isComplete$
       .pipe(skip(1))
       .subscribe(this.finishReading);
-  }
-
-  ngAfterViewInit() {
   }
 
   private calculatePace() {

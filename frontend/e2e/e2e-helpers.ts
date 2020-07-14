@@ -126,10 +126,10 @@ export function verifyRSVPWorks() {
   expect(element(by.id('passage-title')).getText()).toEqual('Test Passage');
 
   let content = element(by.id('passage-content'));
-  expect(content.getText()).toBe('First');
+  expect(content.getText()).toBe(' ');
   element(by.id('play-button')).click();
   browser.sleep(400);
-  expect(content.getText()).not.toBe('First');
+  expect(content.getText()).not.toBe(' ');
   browser.wait(
     until.presenceOf(element(by.className('completion-message'))),
     5000,

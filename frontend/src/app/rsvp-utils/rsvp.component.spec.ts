@@ -64,7 +64,7 @@ describe('RsvpComponent', () => {
     expect(rsvpService.hydrate).toHaveBeenCalledWith(passageStub, MetricInterface.RSVP_BASIC);
   });
 
-  it('should fire leftWithoutCenter metrics post on passage complete', () => {
+  it('should fire a metrics post on passage complete', () => {
     rsvpService.contentLength = 2;
     expect(rsvpService.isComplete).toBeFalsy();
     rsvpService.moveAhead();

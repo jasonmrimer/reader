@@ -49,7 +49,7 @@ describe('RSVPProgressBarComponent', () => {
     await expect(component).toBeTruthy();
   });
 
-  it('should have leftWithoutCenter progress bar', async () => {
+  it('should have a progress bar', async () => {
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       let completionMeter = fixture.debugElement.query(By.css('#completion-meter'));
