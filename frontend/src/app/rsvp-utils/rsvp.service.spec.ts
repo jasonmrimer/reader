@@ -33,20 +33,9 @@ describe('RSVPService', () => {
     expect(service.sectionMarkerIndexes).toEqual([0, 3]);
     expect(service.sectionMarkerPositions).toEqual([0, 37.5]);
     expect(service.quizRoute).toBe('rsvp-basic');
-  });
-
-  it('should transform passage content into RSVP shape and include section-markers', () => {
-    expect(service.transformToRSVPWithSectionMarkers(passageStub.content)).toEqual([
-      '#section-marker',
-      'One',
-      'two.',
-      'Three.',
-      '#section-marker',
-      'Four,',
-      'five;',
-      'six!',
-      'Seven...',
-      'eight?'
+    expect(service.sections).toEqual([
+      new Section(1, 0, 2, 0),
+      new Section(2, 3, 7, 0)
     ]);
   });
 
@@ -80,13 +69,6 @@ describe('RSVPService', () => {
 
   it('should collect sections with word counts', () => {
     expect(service.sectionLengths).toEqual([3, 5]);
-  });
-
-  it('should collections sections', () => {
-    expect(service.sections).toEqual([
-      new Section(1, 0, 2, 33.33333333333333),
-      new Section(2, 3, 7, 0)
-    ]);
   });
 
   it('should get the current section based on progress', () => {

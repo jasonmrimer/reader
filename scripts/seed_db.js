@@ -9,9 +9,10 @@ db.passages.insert(
     content: cat(filePathPassageTest),
     coordinates: [
       {x: 0, y: 0},
-      {x: -15.6, y: 127.0},
-      {x: 109.6, y: 153.7},
-      {x: 170.1, y: 132.8},
+      {x: -121.7, y: 39.6},
+      {x: -302.8, y: 220.6},
+      {x: -47.4, y: 202.7},
+      {x: -172.6, y: 176.1},
     ]
   }
 );
@@ -22,10 +23,10 @@ db.passages.insert(
     content: cat(filePathPassage01),
     coordinates: [
       {x: 0, y: 0},
-      {x: -285.3, y:	92.7},
-      {x: -559.7, y:	367.1},
-      {x: 138.6, y:	318.2},
-      {x: 64.3, y:	302.4},
+      {x: -285.3, y: 92.7},
+      {x: -559.7, y: 367.1},
+      {x: 138.6, y: 318.2},
+      {x: 64.3, y: 302.4},
     ]
   }
 );
