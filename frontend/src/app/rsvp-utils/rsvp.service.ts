@@ -9,7 +9,7 @@ import { Section } from './Section';
   providedIn: 'root'
 })
 export class RSVPService {
-  private _index = 0;
+  private _index = -1;
   private _contentLength = Number.MAX_SAFE_INTEGER;
 
   private _isComplete = new BehaviorSubject<boolean>(false);
@@ -22,6 +22,7 @@ export class RSVPService {
   private _interfaceType: MetricInterface;
   private _sectionLengths: number[];
   private _sections: Section[] = [];
+
   constructor() {
   }
 
@@ -76,10 +77,11 @@ export class RSVPService {
   }
 
   moveAhead() {
-    this._index++;
-    if (this._index + 1 >= this._contentLength) {
+    if (this._index === this._contentLength - 1) {
       this._isComplete.next(true);
+      return;
     }
+    this._index++;
     this.updateSections();
   }
 
@@ -108,7 +110,7 @@ export class RSVPService {
   }
 
   get currentWord(): string {
-    return this._readableContent
+    return this.index > -1
       ? this._readableContent[this._index]
       : '';
   }
@@ -216,8 +218,14 @@ export class RSVPService {
     section.percentRead = this.calculateCompletionPercentage(section);
   }
 
+
   calculatePause() {
+
     let lastLetter = this.currentWord[this.currentWord.length - 1];
+
+    let isSectionBreak = () => {
+      return this._sectionMarkerIndexes.includes(this._index + 1);
+    }
 
     function isEndingPunctuation() {
       return lastLetter === '.' || lastLetter === '!' || lastLetter === '?' || lastLetter === '...';
@@ -227,7 +235,9 @@ export class RSVPService {
       return lastLetter === ',' || lastLetter === ';';
     }
 
-    if (isEndingPunctuation()) {
+    if (isSectionBreak()) {
+      return 1000;
+    } else if (isEndingPunctuation()) {
       return 500;
     } else if (isMiddlePunctuation()) {
       return 400;

@@ -12,7 +12,7 @@
     </div>
   </div>
   <button id="play-button" (click)="playReader()">Play</button>
-  <button id="pause-button" (click)="pauseReader()">Pause</button>
+  <button id="pause-button" (click)="pauseReaderByClick()">Pause</button>
   <div
     *ngIf="rsvpService.isComplete"
     class="completion-message"
