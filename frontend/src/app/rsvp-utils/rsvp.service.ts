@@ -9,7 +9,7 @@ import { Section } from './Section';
   providedIn: 'root'
 })
 export class RSVPService {
-  private _index = 0;
+  private _index = -1;
   private _contentLength = Number.MAX_SAFE_INTEGER;
 
   private _isComplete = new BehaviorSubject<boolean>(false);
@@ -77,10 +77,11 @@ export class RSVPService {
   }
 
   moveAhead() {
-    this._index++;
-    if (this._index + 1 >= this._contentLength) {
+    if (this._index === this._contentLength - 1) {
       this._isComplete.next(true);
+      return;
     }
+    this._index++;
     this.updateSections();
   }
 
@@ -109,7 +110,7 @@ export class RSVPService {
   }
 
   get currentWord(): string {
-    return this._readableContent
+    return this.index > -1
       ? this._readableContent[this._index]
       : '';
   }

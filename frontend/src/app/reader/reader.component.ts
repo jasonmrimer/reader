@@ -50,6 +50,7 @@ export class ReaderComponent implements OnInit {
       this.wpm,
       () => {
         this.ngZone.run(() => {
+          this.rsvpService.moveAhead();
           this.orpService.separateAndAlign(
             this.rsvpService.currentWord,
             this.textMeasurer,
@@ -57,7 +58,6 @@ export class ReaderComponent implements OnInit {
             this.textJoiner
           );
           this.pauseReaderByPunctuation();
-          this.rsvpService.moveAhead();
         })
       }
     );
