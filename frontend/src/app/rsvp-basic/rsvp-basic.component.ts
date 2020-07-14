@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MetricInterface } from '../metrics/metric';
 import { RsvpComponent } from '../rsvp-utils/rsvp.component';
 

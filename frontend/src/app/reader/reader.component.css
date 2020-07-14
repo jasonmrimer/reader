@@ -4,6 +4,10 @@
   align-items: center;
 }
 
+#rsvpCanvas {
+  background: #ebebeb;
+}
+
 #passage-title {
   font-family: Roboto, sans-serif;
   font-size: 24px;
@@ -47,4 +51,50 @@
 
 .completion-message {
   color: #ebebeb;
+}
+
+* {
+  padding: 0;
+  margin:0;
+}
+.hide {
+  display: none;
+}
+#tw {
+  position: absolute;
+  visibility: hidden;
+  white-space: nowrap;
+}
+#tw,
+#txt_L,
+#txt_C,
+#txt_R
+{
+  font: bold 18px Arial;
+  line-height: 1;
+}
+#txt_L { color: #080; }
+#txt_C { color: #f00; }
+#txt_R { color: #000; }
+#wrap {
+  position: relative;
+  width: 220px;
+  height: 50px;
+  border-top: 1px solid #f00;
+  border-bottom: 1px solid #f00;
+}
+#b1 {
+  width: 110px;
+  height: 50px;
+  border-right: 1px solid #000;
+  float:left;
+}
+#bw {
+  position: absolute;
+  width: 220px;
+  top: 10px;
+  background: #fff;
+  padding: 5px 0;
+  line-height: 1;
+  vertical-align: middle;
 }

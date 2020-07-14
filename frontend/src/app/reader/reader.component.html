@@ -1,6 +1,21 @@
 <div id="container-reader">
   <div id="passage-title">{{rsvpService.title}}</div>
   <div id="passage-content">{{rsvpService.currentWord}}</div>
+  <canvas
+    #rsvpCanvas
+    id="rsvpCanvas"
+    width="400"
+    height="64"
+  ></canvas>
+  <span id="tw"></span>
+  <div id="wrap">
+    <div id="b1"></div>
+    <div id="bw">
+      <span id="txt_L">&nbsp;</span>
+      <span id="txt_C"></span>
+      <span id="txt_R"></span>
+    </div>
+  </div>
   <button id="play-button" (click)="playReader()">Play</button>
   <button id="pause-button" (click)="pauseReader()">Pause</button>
   <div
