@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BaselineComponent } from './passage/baseline.component';
+import { BaselineComponent } from './baseline/baseline.component';
 import { RsvpBasicComponent } from './rsvp-basic/rsvp-basic.component';
 import { RsvpProgressBarComponent } from './rsvp-progress-bar/rsvp-progress-bar.component';
 import { HomeComponent } from './home/home.component';

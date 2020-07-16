@@ -13,3 +13,7 @@
   <div class="passage-title">{{rsvpService.title}}</div>
   <div class="passage-content">{{rsvpService.prettyPassage()}}</div>
 </div>
+<app-passage-completion
+  *ngIf="rsvpService.isComplete"
+  [quizRoute]="rsvpService.quizRoute"
+></app-passage-completion>

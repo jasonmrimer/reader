@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
-import { BaselineComponent } from './passage/baseline.component';
+import { BaselineComponent } from './baseline/baseline.component';
 import { AppRoutingModule } from './app-routing.module';
 import { RsvpBasicComponent } from './rsvp-basic/rsvp-basic.component';
 import { ReaderComponent } from './reader/reader.component';
@@ -18,6 +18,7 @@ import { RsvpComponent } from './rsvp-utils/rsvp.component';
 import { RsvpSubwayComponent } from './rsvp-subway/rsvp-subway.component';
 import { CytoscapeComponent } from './rsvp-subway/cytoscape.component';
 import { SubwayComponent } from './rsvp-subway/subway/subway.component';
+import { PassageCompletionComponent } from './quiz/passage-completion/passage-completion.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { SubwayComponent } from './rsvp-subway/subway/subway.component';
     RsvpComponent,
     RsvpSubwayComponent,
     CytoscapeComponent,
-    SubwayComponent
+    SubwayComponent,
+    PassageCompletionComponent
   ],
   imports: [
     BrowserModule,
