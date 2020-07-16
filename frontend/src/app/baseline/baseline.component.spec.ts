@@ -4,24 +4,20 @@ import { BaselineComponent } from './baseline.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { of } from 'rxjs';
-import { PassageService } from '../rsvp-utils/passage.service';
-import { PassageServiceStub } from '../rsvp-utils/passage-stub.service';
 import { passageStub } from '../rsvp-utils/PassageStub';
 import { By } from '@angular/platform-browser';
 import { IntervalServiceMock } from '../reader/interval.service.mock.spec';
 import { IntervalService } from '../reader/interval.service';
 import { RSVPService } from '../rsvp-utils/rsvp.service';
-import { MetricsServiceStub } from '../metrics/metrics-stub.service';
-import { MetricsService } from '../metrics/metrics.service';
 import { MetricInterface } from '../metrics/metric';
+import { PassageCompletionComponent } from '../quiz/passage-completion/passage-completion.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('PassageComponent', () => {
   let component: BaselineComponent;
   let fixture: ComponentFixture<BaselineComponent>;
-  let passageService: PassageService;
   let rsvpService: RSVPService;
   let intervalService: IntervalServiceMock;
-  let metricsService: MetricsServiceStub;
 
   beforeEach(async(() => {
     intervalService = new IntervalServiceMock();
@@ -30,8 +26,8 @@ describe('PassageComponent', () => {
 
 
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      declarations: [BaselineComponent],
+      imports: [HttpClientTestingModule, RouterTestingModule],
+      declarations: [BaselineComponent, PassageCompletionComponent],
       providers: [
         {provide: IntervalService, useValue: intervalService},
         {provide: RSVPService, useValue: rsvpService},
@@ -83,10 +79,12 @@ describe('PassageComponent', () => {
   });
 
   it('should prompt to take quiz on completion', () => {
+    expect(rsvpService.isComplete).toBeFalsy();
     for (let i = 0; i < 8; i++) {
       intervalService.tick();
     }
-    expect(intervalService.interval).toBeFalsy();
-    expect(fixture.debugElement.query(By.css('.button--quiz'))).toBeTruthy();
+    expect(rsvpService.isComplete).toBeTruthy();
+    fixture.detectChanges();
+    expect(fixture.debugElement.nativeElement.querySelector('app-passage-completion')).toBeTruthy();
   });
 });
