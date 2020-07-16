@@ -1,16 +1,17 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PassageComponent } from './passage.component';
+import { BaselineComponent } from './baseline.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { of } from 'rxjs';
 import { PassageService } from '../rsvp-utils/passage.service';
 import { PassageServiceStub } from '../rsvp-utils/passage-stub.service';
 import { passageStub } from '../rsvp-utils/PassageStub';
+import { By } from '@angular/platform-browser';
 
 describe('PassageComponent', () => {
-  let component: PassageComponent;
-  let fixture: ComponentFixture<PassageComponent>;
+  let component: BaselineComponent;
+  let fixture: ComponentFixture<BaselineComponent>;
   let passageService: PassageService;
 
   beforeEach(async(() => {
@@ -18,7 +19,7 @@ describe('PassageComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      declarations: [PassageComponent],
+      declarations: [BaselineComponent],
       providers: [
         {provide: PassageService, useValue: passageService},
         {
@@ -34,7 +35,7 @@ describe('PassageComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PassageComponent);
+    fixture = TestBed.createComponent(BaselineComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -50,5 +51,23 @@ describe('PassageComponent', () => {
   it('should hydrate with one passage based on route', () => {
     fixture.detectChanges();
     expect(component.passage).toEqual(passageStub);
+  });
+
+  function testPreStartConditions() {
+    expect(fixture.debugElement.query(By.css('.instructions'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('.container--passage'))).toBeFalsy();
+  }
+
+  it('should start with instructions', () => {
+    testPreStartConditions();
+  });
+
+  it('should turn instructions off and begin reading on start', () => {
+    testPreStartConditions();
+    fixture.debugElement.query(By.css('.button--start')).nativeElement.click();
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css('.container--passage'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('.instructions'))).toBeFalsy();
+    expect(fixture.debugElement.query(By.css('.button--start'))).toBeFalsy();
   });
 });

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PassageComponent } from './passage/passage.component';
+import { BaselineComponent } from './passage/baseline.component';
 import { RsvpBasicComponent } from './rsvp-basic/rsvp-basic.component';
 import { RsvpProgressBarComponent } from './rsvp-progress-bar/rsvp-progress-bar.component';
 import { HomeComponent } from './home/home.component';
@@ -11,7 +11,7 @@ import { RsvpSubwayComponent } from './rsvp-subway/rsvp-subway.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
-  {path: 'baseline/:passageId', component: PassageComponent},
+  {path: 'baseline/:passageId', component: BaselineComponent},
   {path: 'rsvp-basic/:passageId', component: RsvpBasicComponent},
   {path: 'rsvp-progress-bar/:passageId', component: RsvpProgressBarComponent},
   {path: 'rsvp-section-mark/:passageId', component: RsvpSectionMarksComponent},

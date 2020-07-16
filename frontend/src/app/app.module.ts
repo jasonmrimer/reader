@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
-import { PassageComponent } from './passage/passage.component';
+import { BaselineComponent } from './passage/baseline.component';
 import { AppRoutingModule } from './app-routing.module';
 import { RsvpBasicComponent } from './rsvp-basic/rsvp-basic.component';
 import { ReaderComponent } from './reader/reader.component';
@@ -22,7 +22,7 @@ import { SubwayComponent } from './rsvp-subway/subway/subway.component';
 @NgModule({
   declarations: [
     AppComponent,
-    PassageComponent,
+    BaselineComponent,
     RsvpBasicComponent,
     ReaderComponent,
     RsvpProgressBarComponent,

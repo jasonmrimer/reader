@@ -4,13 +4,14 @@ import { Passage } from '../rsvp-utils/passage';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-passage',
-  templateUrl: './passage.component.html',
-  styleUrls: ['./passage.component.css'],
+  selector: 'app-baseline',
+  templateUrl: './baseline.component.html',
+  styleUrls: ['./baseline.component.css'],
 })
-export class PassageComponent implements OnInit {
+export class BaselineComponent implements OnInit {
   public passage: Passage = new Passage();
   passageId: number;
+  didStart: boolean = false;
 
   constructor(
     private passageService: PassageService,
@@ -27,9 +28,10 @@ export class PassageComponent implements OnInit {
       .getPassage(this.passageId)
       .subscribe(passage => {
         this.passage = passage;
-        this.passage.coordinates.map((coordinate) => {
-          console.log(coordinate);
-        })
       });
+  }
+
+  start() {
+    this.didStart = true;
   }
 }
