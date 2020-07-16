@@ -77,7 +77,7 @@ describe('PassageComponent', () => {
     expect(fixture.debugElement.query(By.css('.container--passage'))).toBeTruthy();
     expect(fixture.debugElement.query(By.css('.passage-title')).nativeElement.textContent).toBe('title01');
     expect(fixture.debugElement.query(By.css('.passage-content')).nativeElement.textContent).toBe(
-      'One two. Three.\nFour, five; six!\n\nSeven... eight?');
+      '\nOne two. Three.\n\nFour, five; six!\n\nSeven... eight?');
     expect(fixture.debugElement.query(By.css('.instructions'))).toBeFalsy();
     expect(fixture.debugElement.query(By.css('.button--start'))).toBeFalsy();
   });

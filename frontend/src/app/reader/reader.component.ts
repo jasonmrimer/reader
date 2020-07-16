@@ -15,7 +15,6 @@ export class ReaderComponent implements OnInit {
   @Input()
   rsvpService: RSVPService;
   subscription: Subscription;
-  rsvpPlayer;
   wpm = 250;
   textJoiner;
   textMeasurer;
@@ -75,7 +74,7 @@ export class ReaderComponent implements OnInit {
 
   playReader() {
     this.ngZone.runOutsideAngular(() => {
-      this.rsvpPlayer = this._intervalService.runInterval();
+      this._intervalService.runInterval();
     });
   }
 
