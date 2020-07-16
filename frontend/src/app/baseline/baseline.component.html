@@ -1,10 +1,17 @@
 <div
-  *ngIf="!didStart" class="instructions"
+  *ngIf="!didStart" class="container--instructions"
 >
+  <span
+    class="instructions"
+  >
+    lorem ipsum
+  </span>
   <button
     class="button--start"
     (click)="playReader()"
-  ></button>
+  >
+    Press to Start
+  </button>
 </div>
 <div
   *ngIf="didStart"

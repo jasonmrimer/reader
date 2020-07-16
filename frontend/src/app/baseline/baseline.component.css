@@ -1,4 +1,15 @@
-#passage-title {
+.container--instructions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.instructions {
+  color: white;
+
+}
+
+.passage-title {
   font-family: Roboto, sans-serif;
   font-size: 24px;
   font-weight: 500;
@@ -6,7 +17,7 @@
   padding-top: 16px;
 }
 
-#passage-content {
+.passage-content {
   background: #ebebeb;
   min-width: 200px;
   max-width: 600px;
@@ -16,5 +27,5 @@
   color: #000000;
   padding: 8px;
   white-space: pre-line;
-  margin-left:16px;
+  margin-left: 16px;
 }

@@ -59,7 +59,7 @@ describe('PassageComponent', () => {
   });
 
   function testPreStartConditions() {
-    expect(fixture.debugElement.query(By.css('.instructions'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('.container--instructions'))).toBeTruthy();
     expect(fixture.debugElement.query(By.css('.container--passage'))).toBeFalsy();
   }
 
@@ -76,8 +76,8 @@ describe('PassageComponent', () => {
     expect(fixture.debugElement.query(By.css('.passage-title')).nativeElement.textContent).toBe('title01');
     expect(fixture.debugElement.query(By.css('.passage-content')).nativeElement.textContent).toBe(
       '\nOne two. Three.\n\nFour, five; six!\n\nSeven... eight?');
-    expect(fixture.debugElement.query(By.css('.instructions'))).toBeFalsy();
-    expect(fixture.debugElement.query(By.css('.button--start'))).toBeFalsy();
+
+    expect(fixture.debugElement.query(By.css('.container--instructions'))).toBeFalsy();
   });
 
   it('should prompt to take quiz on completion', () => {
