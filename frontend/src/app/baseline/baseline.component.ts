@@ -38,11 +38,8 @@ export class BaselineComponent extends RsvpComponent {
     this.setupIntervalService();
   }
 
-  start() {
-    this.didStart = true;
-  }
-
   playReader() {
+    this.didStart = true;
     this.ngZone.runOutsideAngular(() => {
       this.intervalService.runInterval();
     });

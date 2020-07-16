@@ -21,6 +21,7 @@ describe('PassageComponent', () => {
 
   beforeEach(async(() => {
     intervalService = new IntervalServiceMock();
+    spyOn(intervalService, 'runInterval').and.callThrough();
     rsvpService = new RSVPService();
     rsvpService.hydrate(passageStub, MetricInterface.BASELINE)
 
@@ -71,6 +72,7 @@ describe('PassageComponent', () => {
     fixture.debugElement.query(By.css('.button--start')).nativeElement.click();
     fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('.container--passage'))).toBeTruthy();
+    expect(intervalService.runInterval).toHaveBeenCalled();
     expect(fixture.debugElement.query(By.css('.passage-title')).nativeElement.textContent).toBe('title01');
     expect(fixture.debugElement.query(By.css('.passage-content')).nativeElement.textContent).toBe(
       '\nOne two. Three.\n\nFour, five; six!\n\nSeven... eight?');
