@@ -1,0 +1,46 @@
+.container--instructions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 8px;
+}
+
+.instructions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 8px;
+
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  color: white;
+
+}
+
+.container--passage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.passage-title {
+  font-family: Roboto, sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: #fafafa;
+  padding-top: 16px;
+  margin-bottom: 16px;
+}
+
+.passage-content {
+  background: #ebebeb;
+  min-width: 200px;
+  max-width: 600px;
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  color: #000000;
+  padding: 8px;
+  white-space: pre-line;
+  margin-left: 16px;
+}

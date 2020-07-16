@@ -1,5 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Passage } from './passage';
+import { Component, OnInit } from '@angular/core';
 import { PassageService } from './passage.service';
 import { RSVPService } from './rsvp.service';
 import { MetricsService } from '../metrics/metrics.service';

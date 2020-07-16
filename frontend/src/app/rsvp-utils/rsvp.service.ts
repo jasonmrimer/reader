@@ -244,4 +244,8 @@ export class RSVPService {
     }
     return 0;
   }
+
+  prettyPassage() {
+    return this.removeSectionMarkers(this._passage.content);
+  }
 }

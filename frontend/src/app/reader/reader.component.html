@@ -13,17 +13,8 @@
   </div>
   <button id="play-button" (click)="playReader()">Play</button>
   <button id="pause-button" (click)="pauseReaderByClick()">Pause</button>
-  <div
+  <app-passage-completion
     *ngIf="rsvpService.isComplete"
-    class="completion-message"
-  >
-    Passage Complete
-  </div>
-  <input
-    *ngIf="rsvpService.isComplete"
-    type="button"
-    class="button-quiz btn btn-primary"
-    value="Take Quiz"
-    (click)="takeQuiz()"
-  />
+    [quizRoute]="rsvpService.quizRoute"
+  ></app-passage-completion>
 </div>

@@ -25,8 +25,8 @@ describe('RSVPService', () => {
     expect(service.readableContent).toEqual([
       'One', 'two.', 'Three.', 'Four,', 'five;', 'six!', 'Seven...', 'eight?'
     ])
-    expect(service.percentRead()).toBe(12.5);
-    expect(service.index).toBe(0);
+    expect(service.percentRead()).toBe(0);
+    expect(service.index).toBe(-1);
     expect(service.isComplete).toBeFalsy();
     expect(service.contentLength).toBe(8);
     expect(service.title).toBe('title01');
@@ -39,21 +39,28 @@ describe('RSVPService', () => {
     ]);
   });
 
+  it('should return a pretty passage', () => {
+    expect(service.prettyPassage()).toEqual(
+      '\nOne two. Three.\n\nFour, five; six!\n\nSeven... eight?');
+  });
+
   it('should calculate percent read', () => {
     service.contentLength = 8;
     service.moveAhead();
     service.moveAhead();
-    expect(service.percentRead()).toBe(37.5);
+    expect(service.percentRead()).toBe(25);
   });
 
   it('should be completed at the end', () => {
     service.contentLength = 2;
     expect(service.isComplete).toBeFalse();
     service.moveAhead();
+    service.moveAhead();
     expect(service.isComplete).toBeTrue();
   });
 
   it('should return current word', () => {
+    service.moveAhead();
     service.moveAhead();
     service.moveAhead();
     expect(service.currentWord).toBe('Three.');
@@ -72,6 +79,8 @@ describe('RSVPService', () => {
   });
 
   it('should get the current section based on progress', () => {
+    expect(service.currentSectionRank).toBe(-1);
+    service.moveAhead();
     expect(service.currentSectionRank).toBe(1);
     service.moveAhead();
     service.moveAhead();
@@ -80,6 +89,8 @@ describe('RSVPService', () => {
   });
 
   it('should return percent read of current section', () => {
+    expect(service.currentSectionCompletion).toBeCloseTo(-1, 0);
+    service.moveAhead();
     expect(service.currentSectionCompletion).toBeCloseTo(33, 0);
     service.moveAhead();
     expect(service.currentSectionCompletion).toBeCloseTo(66.6, 0);
@@ -95,6 +106,9 @@ describe('RSVPService', () => {
   });
 
   it('should return percent read of all sections', () => {
+    expect(service.sections[0].percentRead).toBe(0);
+    expect(service.sections[1].percentRead).toBe(0);
+    service.moveAhead();
     expect(service.sections[0].percentRead).toBeCloseTo(33, 0);
     expect(service.sections[1].percentRead).toBe(0);
     service.moveAhead();
@@ -115,6 +129,8 @@ describe('RSVPService', () => {
   });
 
   it('should pause at punctuation', () => {
+    expect(service.currentWord).toBe('');
+    service.moveAhead();
     expect(service.currentWord).toBe('One');
     expect(service.calculatePause()).toBe(0);
     service.moveAhead();
