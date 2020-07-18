@@ -24,21 +24,29 @@ export class HomeComponent implements OnInit {
   }
 
   start() {
-    let interfaceName = this.leastUsedInterface(this.metrics);
+    let interfaceName = this.randomLeastUsedInterface(this.metrics);
     this.router.navigate([`/${interfaceName}/1`]);
   }
 
-  leastUsedInterface(metrics: QuizMetric[]) {
-    let leastQuizCount = Number.MAX_SAFE_INTEGER;
-    let leastUsed: QuizMetric[];
+  randomLeastUsedInterface(metrics: QuizMetric[]) {
+    let minQuizCount = this.findMin(metrics);
+    let leastUsedMetrics = metrics.filter(metric => metric.quizCount === minQuizCount);
+    return this.randomNameFrom(leastUsedMetrics);
+  }
 
+  private randomNameFrom = (metrics) => {
+    return metrics[this.randomIndex(metrics)].interfaceName
+  }
+
+  private findMin = (metrics: QuizMetric[]) => {
+    let min = Number.MAX_SAFE_INTEGER;
     metrics.map(metric => {
-      leastQuizCount = Math.min(metric.quizCount, leastQuizCount);
+      min = Math.min(metric.quizCount, min);
     });
+    return min;
+  };
 
-    leastUsed = metrics.filter(metric => metric.quizCount === leastQuizCount);
-
-    let randomIndex = Math.floor((Math.random() * leastUsed.length) + 1) - 1;
-    return leastUsed[randomIndex].interfaceName;
+  private randomIndex = (leastUsed) => {
+    return Math.floor((Math.random() * leastUsed.length) + 1) - 1
   }
 }
