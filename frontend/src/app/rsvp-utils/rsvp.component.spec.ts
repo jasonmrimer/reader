@@ -69,6 +69,7 @@ describe('RsvpComponent', () => {
     expect(rsvpService.isComplete).toBeFalsy();
     rsvpService.moveAhead();
     rsvpService.moveAhead();
+    rsvpService.moveAhead();
     expect(rsvpService.isComplete).toBeTrue();
     expect(metricsService.postPassageCompletion).toHaveBeenCalledWith(MetricInterface.RSVP_BASIC);
   });

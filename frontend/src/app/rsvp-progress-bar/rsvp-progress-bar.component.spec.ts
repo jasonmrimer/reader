@@ -54,7 +54,7 @@ describe('RSVPProgressBarComponent', () => {
       fixture.detectChanges();
       let completionMeter = fixture.debugElement.query(By.css('#completion-meter'));
       expect(completionMeter).toBeTruthy();
-      expect(completionMeter.attributes['aria-valuenow']).toBe('12.5');
+      expect(completionMeter.attributes['aria-valuenow']).toBe('0');
     })
   });
 });
