@@ -10,6 +10,9 @@ export class PassageCompletionComponent implements OnInit {
   @Input()
   private quizRoute;
 
+  @Input()
+  completionMessage: string;
+
   constructor(
     private router: Router
   ) { }

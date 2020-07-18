@@ -1,11 +1,13 @@
-<div
-  class="completion-message"
->
-  Passage Complete
+<div class="container--completion">
+  <div
+    class="completion-message"
+  >
+    {{completionMessage}}
+  </div>
+  <input
+    type="button"
+    class="button-quiz btn btn-primary"
+    value="Take Quiz"
+    (click)="takeQuiz()"
+  />
 </div>
-<input
-  type="button"
-  class="button-quiz btn btn-primary"
-  value="Take Quiz"
-  (click)="takeQuiz()"
-/>

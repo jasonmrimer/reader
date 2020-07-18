@@ -1,0 +1,9 @@
+.container--completion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.completion-message {
+  color: #ebebeb;
+}

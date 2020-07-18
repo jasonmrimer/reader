@@ -34,7 +34,7 @@ export class BaselineComponent extends RsvpComponent {
 
   ngOnInit() {
     super.ngOnInit();
-    this.rsvpType = MetricInterface.RSVP_BASIC;
+    this.rsvpType = MetricInterface.BASELINE;
     this.setupIntervalService();
   }
 
@@ -43,6 +43,10 @@ export class BaselineComponent extends RsvpComponent {
     this.ngZone.runOutsideAngular(() => {
       this.intervalService.runInterval();
     });
+  }
+
+  displayPassage = () => {
+    return this.didStart && !this.rsvpService.isComplete;
   }
 
   private setupIntervalService() {
