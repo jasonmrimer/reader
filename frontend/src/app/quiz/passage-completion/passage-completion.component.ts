@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class PassageCompletionComponent implements OnInit {
   @Input()
-  private quizRoute;
+  quizRoute;
 
   @Input()
   completionMessage: string;

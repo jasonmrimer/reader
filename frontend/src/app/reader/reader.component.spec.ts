@@ -92,15 +92,6 @@ describe('ReaderComponent', () => {
     expect(fixture.debugElement.query(By.css('input[value="Take Quiz"]'))).toBeTruthy();
   });
 
-  it('should navigate to a quiz on click', async () => {
-    spyOn(router, 'navigate').and.returnValue(true);
-    completePassage();
-    const quizButton = fixture.debugElement.query(By.css('input[value="Take Quiz"]'));
-    quizButton.nativeElement.click();
-    fixture.detectChanges();
-    expect(router.navigate).toHaveBeenCalledWith(['/quiz', 'rsvp-basic']);
-  });
-
   function completePassage() {
     while (!component.rsvpService.isComplete) {
       component.rsvpService.moveAhead();
