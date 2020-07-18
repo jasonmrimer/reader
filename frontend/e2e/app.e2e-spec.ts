@@ -11,14 +11,13 @@ describe('Reader App', () => {
 
   it('should fetch and display a passage on baseline', function () {
     browser.get('/baseline/0');
-    expect(element(by.className('instructions')).getText()).toContain('The average adult reading speed is 250 words per minute.')
-    element(by.className('button-start')).click();
-    browser.sleep(350);
+    expect(element(by.className('instructions')).getText()).toContain('Take about 2 minutes to read the following passage.')
+    element(by.className('button--start')).click();
     expect(element(by.id('passage-title')).getText()).toEqual('Test Passage');
     expect(element(by.id('passage-content')).getText()).toContain('First sentence.');
     expect(element(by.id('passage-content')).getText()).toContain('Last section.');
-    browser.sleep(300);
-    expect(by.className('button-quiz')).toBeDefined();
+    browser.sleep(8000);
+    expect(by.className('button--quiz')).toBeDefined();
   });
 
   it('should use RSVP Basic to read passage, take quiz, and update metrics', async () => {
