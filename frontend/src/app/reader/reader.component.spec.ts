@@ -9,6 +9,7 @@ import { passageStub } from '../rsvp-utils/PassageStub';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { MetricInterface } from '../metrics/metric';
+import { PassageCompletionComponent } from '../quiz/passage-completion/passage-completion.component';
 
 describe('ReaderComponent', () => {
   let component: ReaderComponent;
@@ -26,7 +27,10 @@ describe('ReaderComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [ReaderComponent],
+      declarations: [
+        ReaderComponent,
+        PassageCompletionComponent
+      ],
       providers: [
         {provide: IntervalService, useValue: intervalServiceMock},
       ]

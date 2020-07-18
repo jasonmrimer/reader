@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PassageCompletionComponent } from './passage-completion.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('PassageCompletionComponent', () => {
   let component: PassageCompletionComponent;
@@ -8,6 +9,7 @@ describe('PassageCompletionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
       declarations: [ PassageCompletionComponent ]
     })
     .compileComponents();

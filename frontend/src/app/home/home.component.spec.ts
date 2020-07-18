@@ -22,4 +22,8 @@ describe('HomeComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should take the reader to the least used interface or random in case of tie', () => {
+    expect(false).toBeTruthy();
+  });
 });

@@ -44,6 +44,10 @@ describe('PassageComponent', () => {
       .compileComponents();
   }));
 
+  afterEach(() => {
+    fixture.destroy();
+  });
+
   beforeEach(() => {
     fixture = TestBed.createComponent(BaselineComponent);
     component = fixture.componentInstance;
