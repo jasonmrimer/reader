@@ -9,8 +9,8 @@ import { RSVPService } from '../rsvp-utils/rsvp.service';
 import { PassageService } from '../rsvp-utils/passage.service';
 import { PassageServiceStub } from '../rsvp-utils/passage-stub.service';
 import { passageStub } from '../rsvp-utils/PassageStub';
-import { MetricInterface } from '../metrics/metric';
 import { RouterTestingModule } from '@angular/router/testing';
+import { InterfaceName } from '../session/InterfaceName';
 
 describe('RSVPProgressBarComponent', () => {
   let component: RsvpProgressBarComponent;
@@ -19,7 +19,7 @@ describe('RSVPProgressBarComponent', () => {
 
   beforeEach(async(() => {
     rsvpService = new RSVPService();
-    rsvpService.hydrate(passageStub, MetricInterface.RSVP_BASIC);
+    rsvpService.hydrate(passageStub, InterfaceName.RSVP_BASIC);
 
     TestBed.configureTestingModule({
       imports: [
@@ -52,7 +52,7 @@ describe('RSVPProgressBarComponent', () => {
   it('should have a progress bar', async () => {
     fixture.whenStable().then(() => {
       fixture.detectChanges();
-      let completionMeter = fixture.debugElement.query(By.css('#completion-meter'));
+      let completionMeter = fixture.debugElement.query(By.css('.progress-bar'));
       expect(completionMeter).toBeTruthy();
       expect(completionMeter.attributes['aria-valuenow']).toBe('0');
     })

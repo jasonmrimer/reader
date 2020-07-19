@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { PassageService } from '../rsvp-utils/passage.service';
 import { RsvpComponent } from '../rsvp-utils/rsvp.component';
-import { MetricInterface } from '../metrics/metric';
+import { InterfaceName } from '../session/InterfaceName';
 
 @Component({
   selector: 'app-rsvp-progress-bar',
@@ -12,6 +12,6 @@ import { MetricInterface } from '../metrics/metric';
 export class RsvpProgressBarComponent extends RsvpComponent {
   ngOnInit() {
     super.ngOnInit();
-    this.rsvpType = MetricInterface.RSVP_PROGRESS_BAR;
+    this.rsvpType = InterfaceName.RSVP_PROGRESS_BAR;
   }
 }

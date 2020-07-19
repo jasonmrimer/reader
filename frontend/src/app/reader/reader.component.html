@@ -1,6 +1,6 @@
-<div id="container-reader">
-  <div id="passage-title">{{rsvpService.title}}</div>
-  <div id="passage-content">
+<div class="container--progress-bar">
+  <div class="passage-title">{{rsvpService.title}}</div>
+  <div class="passage-content">
     <span id="text-measurer"></span>
     <div id="border-wrapper">
       <div id="crosshairs"></div>
@@ -11,10 +11,26 @@
       </div>
     </div>
   </div>
-  <button id="play-button" (click)="playReader()">Play</button>
-  <button id="pause-button" (click)="pauseReaderByClick()">Pause</button>
+  <div
+    *ngIf="!didStart"
+    class="container--instructions"
+  >
+    <span
+      class="instructions"
+    >
+      <span>Take about 2 minutes to read the following passage.</span>
+      <span>The words will come one at a time with no pausing.</span>
+      <span>Complete the quiz after reading, thanks!</span>
+    </span>
+    <button
+      class="button--play btn btn-primary"
+      (click)="playReader()"
+    >
+      Press to Start
+    </button>
+  </div>
   <app-passage-completion
-    *ngIf="rsvpService.isComplete"
+    *ngIf="rsvpService.isCompleteSubject"
     [quizRoute]="rsvpService.quizRoute"
   ></app-passage-completion>
 </div>

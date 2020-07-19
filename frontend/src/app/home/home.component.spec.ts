@@ -4,30 +4,36 @@ import { HomeComponent } from './home.component';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
-import { MetricsServiceStub } from '../metrics/metrics-stub.service';
-import { quizMetricsStub } from '../metrics/metric';
+import { QuizMetric } from '../metrics/QuizMetric';
+import { InterfaceName } from '../session/InterfaceName';
+import { QuizMetricsPartialStub } from '../metrics/QuizMetricStub';
 import { MetricsService } from '../metrics/metrics.service';
+import { MetricsServiceStub } from '../metrics/metrics-stub.service';
+import { SessionServiceMock } from '../session/session-stub.service';
+import { SessionService } from '../session/session.service';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
   let router;
-  let metricsService: MetricsServiceStub;
+  let metricsService: MetricsService;
+  let quizMetricsStub: QuizMetric[];
+  let sessionService: SessionServiceMock;
 
   beforeEach(async(() => {
-    quizMetricsStub[0].quizCount = 11;
-    quizMetricsStub[1].quizCount = 22;
-    quizMetricsStub[2].quizCount = 33;
+    quizMetricsStub = QuizMetricsPartialStub()
     metricsService = new MetricsServiceStub();
+    sessionService = new SessionServiceMock();
 
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [ HomeComponent ],
+      declarations: [HomeComponent],
       providers: [
-        {provide: MetricsService, useValue: metricsService}
+        {provide: MetricsService, useValue: metricsService},
+        {provide: SessionService, useValue: sessionService},
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -37,6 +43,10 @@ describe('HomeComponent', () => {
 
     router = TestBed.inject(Router);
   });
+
+  let calledAllTiedInterfaces = (calls) => {
+    return calls.has(`/${InterfaceName.BASELINE}/1`) && calls.has(`/${InterfaceName.RSVP_BASIC}/1`);
+  }
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -53,30 +63,14 @@ describe('HomeComponent', () => {
 
     fixture.debugElement.query(By.css('.button--start')).nativeElement.click();
     fixture.detectChanges();
-    expect(router.navigate).toHaveBeenCalledWith(['/int1/1']);
+    expect(router.navigate).toHaveBeenCalledWith([`/${InterfaceName.BASELINE}/1`]);
   });
 
-  it('should take the reader to a random, least-used interface in case of tie', () => {
-    let calls = new Set();
-    spyOn(router, 'navigate').and.callFake((params) => {
-      calls.add(params[0]);
-    });
-
-    quizMetricsStub[0].quizCount = 22;
-    quizMetricsStub[1].quizCount = 22;
-    quizMetricsStub[2].quizCount = 33;
-    component.ngOnInit();
+  it('should prevent user from continuing after completing all available readings', () => {
+    expect(fixture.debugElement.query(By.css('.container--introduction'))).toBeTruthy();
+    sessionService.isComplete = true;
     fixture.detectChanges();
-
-    while (!calledAllInterfaces(calls)) {
-      fixture.debugElement.query(By.css('.button--start')).nativeElement.click();
-      fixture.detectChanges();
-    }
-
-    expect(calledAllInterfaces(calls)).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('.container--introduction'))).toBeFalsy();
+    expect(fixture.debugElement.query(By.css('.container--outro'))).toBeTruthy();
   });
-
-  let calledAllInterfaces = (calls) => {
-    return calls.has('/int1/1') && calls.has('/int2/1');
-  }
 });

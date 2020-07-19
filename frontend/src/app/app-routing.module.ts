@@ -11,6 +11,7 @@ import { RsvpSubwayComponent } from './rsvp-subway/rsvp-subway.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
+  {path: 'home', component: HomeComponent},
   {path: 'baseline/:passageId', component: BaselineComponent},
   {path: 'rsvp-basic/:passageId', component: RsvpBasicComponent},
   {path: 'rsvp-progress-bar/:passageId', component: RsvpProgressBarComponent},

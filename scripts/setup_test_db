@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -e
+set -o pipefail
+
+BASEDIR=$(dirname "$0")
+
+mongo "$BASEDIR"/truncate_test_db.js
+mongo "$BASEDIR"/seed_test_db.js

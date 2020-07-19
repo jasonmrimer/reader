@@ -5,7 +5,7 @@ export class QuizSubmission {
     public passage: string,
     surveyData: any,
     public interfaceName: string
-  ) {
+    , public user: string, public date: Date) {
     this.answers = this.convertDataToAnswers(surveyData);
   }
 

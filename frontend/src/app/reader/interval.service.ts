@@ -8,11 +8,18 @@ export class IntervalService {
   private _callback: () => void;
   private time: number;
 
-  constructor() { }
+  constructor() {
+    clearInterval(this.interval);
+  }
+
+
+  blankSlate() {
+    clearInterval(this.interval);
+  }
 
   setInterval(wordsPerMinute: number, callback: () => void) {
     this._callback = callback;
-    this.time = this.calculatePace(wordsPerMinute);
+    this.time = IntervalService.calculatePace(wordsPerMinute);
   }
 
   runInterval() {
@@ -27,9 +34,18 @@ export class IntervalService {
     this._callback();
   }
 
-  private calculatePace(wpm: number) {
+  private static calculatePace(wpm: number) {
     let millisecondsPerMinute = 60000;
     return millisecondsPerMinute / wpm;
+  }
+
+  pause(time) {
+    if (time > 0) {
+      clearInterval(this.interval);
+      setTimeout(() => {
+        this.runInterval();
+      }, time)
+    }
   }
 }
 

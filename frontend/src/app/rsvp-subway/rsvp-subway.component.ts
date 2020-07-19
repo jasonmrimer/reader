@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RsvpComponent } from '../rsvp-utils/rsvp.component';
-import { MetricInterface } from '../metrics/metric';
+import { InterfaceName } from '../session/InterfaceName';
 
 @Component({
   selector: 'app-rsvp-subway',
@@ -10,6 +10,6 @@ import { MetricInterface } from '../metrics/metric';
 export class RsvpSubwayComponent extends RsvpComponent {
   ngOnInit() {
     super.ngOnInit();
-    this.rsvpType = MetricInterface.RSVP_SUBWAY;
+    this.rsvpType = InterfaceName.RSVP_SUBWAY;
   }
 }

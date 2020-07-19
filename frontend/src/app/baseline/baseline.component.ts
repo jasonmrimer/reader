@@ -1,11 +1,12 @@
 import { Component, NgZone } from '@angular/core';
 import { RsvpComponent } from '../rsvp-utils/rsvp.component';
-import { MetricInterface } from '../metrics/metric';
 import { IntervalService } from '../reader/interval.service';
 import { MetricsService } from '../metrics/metrics.service';
 import { PassageService } from '../rsvp-utils/passage.service';
 import { RSVPService } from '../rsvp-utils/rsvp.service';
 import { ActivatedRoute } from '@angular/router';
+import { InterfaceName } from '../session/InterfaceName';
+import { SessionService } from '../session/session.service';
 
 @Component({
   selector: 'app-baseline',
@@ -21,6 +22,7 @@ export class BaselineComponent extends RsvpComponent {
     passageService: PassageService,
     rsvpService: RSVPService,
     route: ActivatedRoute,
+    sessionService: SessionService,
     private intervalService: IntervalService,
     private ngZone: NgZone,
   ) {
@@ -28,13 +30,14 @@ export class BaselineComponent extends RsvpComponent {
       metricsService,
       passageService,
       rsvpService,
+      sessionService,
       route
     );
   }
 
   ngOnInit() {
     super.ngOnInit();
-    this.rsvpType = MetricInterface.BASELINE;
+    this.rsvpType = InterfaceName.BASELINE;
     this.setupIntervalService();
   }
 
@@ -46,28 +49,35 @@ export class BaselineComponent extends RsvpComponent {
   }
 
   displayPassage = () => {
-    return this.didStart && !this.rsvpService.isComplete;
+    return this.didStart && !this.rsvpService.isCompleteSubject;
   }
 
   private setupIntervalService() {
     this.intervalService.setInterval(
       this.wpm,
-      () => {
-        this.ngZone.run(() => {
-          this.rsvpService.moveAhead();
-          this.pauseReaderByPunctuation();
-        })
-      }
+      this.playFunctions
     );
   }
 
-  pauseReaderByPunctuation() {
-    let pauseIncrement = this.rsvpService.calculatePause();
-    if (pauseIncrement > 0) {
+  private playFunctions = () => {
+    this.ngZone.run(() => {
+      this.rsvpService.moveAhead();
+      this.pauseReaderByPunctuation();
+      this.checkComplete();
+    })
+  };
+
+  private checkComplete() {
+    if (this.rsvpService.isCompleteSubject) {
       this.intervalService.clearInterval();
-      setTimeout(() => {
-        this.playReader();
-      }, pauseIncrement);
+      this.intervalService.setInterval(0, () => {
+      });
     }
+  }
+
+  pauseReaderByPunctuation() {
+    this.intervalService.pause(
+      this.rsvpService.calculatePauseAmount()
+    );
   }
 }

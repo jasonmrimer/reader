@@ -11,14 +11,20 @@ const port = 4000;
 var app = express();
 
 //connect to mongodb
-mongoose.connection.openUri('mongodb://localhost:27017/reader');
-mongoose.connection.on('connected', ()=>{
-    console.log("Connected to DB");
+mongoose.connection.openUri(
+  'mongodb://localhost:27017/reader',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }
+);
+mongoose.connection.on('connected', () => {
+  console.log("Connected to DB");
 });
-mongoose.connection.on('error', (err)=>{
-    if(err){
-        console.log(`Error while connecting to DB ${err}`);
-    }
+mongoose.connection.on('error', (err) => {
+  if (err) {
+    console.log(`Error while connecting to DB ${err}`);
+  }
 });
 
 //Cross origin support middle
@@ -34,10 +40,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 //routes
 app.use('/api', routes);
 
-app.get('/', (req, res)=>{
-    res.send("Hello World");
+app.get('/', (req, res) => {
+  res.send("Hello World");
 });
 
-app.listen(port , ()=> {
-    console.log(`The server is listening at port ${port}`);
+app.listen(port, () => {
+  console.log(`The server is listening at port ${port}`);
 });

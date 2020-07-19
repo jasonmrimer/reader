@@ -30,7 +30,9 @@ router.post('/quizzes', (request, response, next) => {
   let newSubmission = new submission({
       quizId: request.body.passage,
       answers: request.body.answers,
-      interface: request.body.interfaceName
+      interface: request.body.interfaceName,
+      user: request.body.user,
+      date: request.body.date
     }
   )
   newSubmission.save((err, sub) => {
@@ -43,22 +45,38 @@ router.post('/quizzes', (request, response, next) => {
 });
 
 router.get('/metrics-passage', (request, response, next) => {
-  passageMetric.find((err, metrics) => {
-    response.json(metrics);
+  const aggregatorOptions = [
+    {
+      $group: {
+        _id: "$interfaceName",
+        count: {$sum: 1}
+      },
+    },
+  ]
+
+  passageMetric.aggregate(aggregatorOptions, function (err, sum) {
+    if (err) {
+      response.send(err);
+    } else {
+      response.send(sum);
+    }
   })
 });
 
 router.post('/metrics-passage', (request, response, next) => {
-  let interfaceName = request.body.interfaceName;
-  passageMetric.findOneAndUpdate(
-    {interfaceName: interfaceName},
-    {$inc: {'completionCount': 1}},
-    {upsert: true, new: true},
-    function (err, doc) {
-      if (err) return response.send(500, {error: err});
-      return response.send({message: 'Successfully saved.'});
+  let newMetric = new passageMetric({
+    user: request.body.user,
+    date: request.body.date,
+    interfaceName: request.body.interfaceName,
+  })
+
+  newMetric.save((err, sub) => {
+    if (err) {
+      response.send(err);
+    } else {
+      response.send(sub)
     }
-  )
+  })
 });
 
 router.get('/metrics-quiz', (request, response, next) => {

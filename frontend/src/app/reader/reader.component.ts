@@ -1,9 +1,6 @@
 import { Component, Input, NgZone, OnInit } from '@angular/core';
 import { IntervalService } from './interval.service';
-import { Subscription } from 'rxjs';
-import { skip } from 'rxjs/operators';
 import { RSVPService } from '../rsvp-utils/rsvp.service';
-import { Router } from '@angular/router';
 import { OrpService } from './orp.service';
 
 @Component({
@@ -14,7 +11,7 @@ import { OrpService } from './orp.service';
 export class ReaderComponent implements OnInit {
   @Input()
   rsvpService: RSVPService;
-  subscription: Subscription;
+  didStart: boolean = false;
   wpm = 250;
   textJoiner;
   textMeasurer;
@@ -22,16 +19,15 @@ export class ReaderComponent implements OnInit {
 
   constructor(
     private ngZone: NgZone,
-    private _intervalService: IntervalService,
+    private intervalService: IntervalService,
     private orpService: OrpService,
-    private router: Router
   ) {
+    this.intervalService.blankSlate();
   }
 
   ngOnInit() {
     this.assignElementsById();
     this.setupIntervalService();
-    this.setupCompletionActions();
   }
 
   private assignElementsById() {
@@ -45,54 +41,44 @@ export class ReaderComponent implements OnInit {
   }
 
   private setupIntervalService() {
-    this._intervalService.setInterval(
+    this.intervalService.setInterval(
       this.wpm,
-      () => {
-        this.ngZone.run(() => {
-          this.rsvpService.moveAhead();
-          this.orpService.separateAndAlign(
-            this.rsvpService.currentWord,
-            this.textMeasurer,
-            this.textElements,
-            this.textJoiner
-          );
-          this.pauseReaderByPunctuation();
-        })
-      }
+      this.playFunctions
     );
   }
 
-  private setupCompletionActions() {
-    this.subscription = this.rsvpService.isComplete$
-      .pipe(skip(1))
-      .subscribe(this.finishReading);
-  }
-
-  private finishReading = () => {
-    this._intervalService.clearInterval();
-  }
-
-  playReader() {
-    this.ngZone.runOutsideAngular(() => {
-      this._intervalService.runInterval();
+  private playFunctions = () => {
+    this.ngZone.run(() => {
+      this.rsvpService.moveAhead();
+      this.orpService.separateAndAlign(
+        this.rsvpService.currentWord,
+        this.textMeasurer,
+        this.textElements,
+        this.textJoiner
+      );
+      this.pauseReaderByPunctuation();
+      this.checkComplete();
     });
   }
 
-  pauseReaderByClick() {
-    this._intervalService.clearInterval();
+  playReader() {
+    this.didStart = true;
+    this.ngZone.runOutsideAngular(() => {
+      this.intervalService.runInterval();
+    });
   }
 
   pauseReaderByPunctuation() {
-    let pauseIncrement = this.rsvpService.calculatePause();
-    if (pauseIncrement > 0) {
-      this._intervalService.clearInterval();
-      setTimeout(() => {
-        this.playReader();
-      }, pauseIncrement);
-    }
+    this.intervalService.pause(
+      this.rsvpService.calculatePauseAmount()
+    );
   }
 
-  takeQuiz() {
-    this.router.navigate(['/quiz', this.rsvpService.quizRoute]);
+  private checkComplete() {
+    if (this.rsvpService.isCompleteSubject) {
+      this.intervalService.clearInterval();
+      this.intervalService.setInterval(0, () => {
+      });
+    }
   }
 }

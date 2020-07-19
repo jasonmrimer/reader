@@ -1,6 +1,9 @@
-<div class="container-subway">
+<div class="container--subway">
+  <app-reader
+    [rsvpService]="rsvpService"
+  ></app-reader>
   <div
-    class="container-cyto"
+    class="container--cyto"
   >
     <cytoscape-component
       [elements]="graphData"
@@ -9,7 +12,4 @@
       [currentSection]="rsvpService.currentSection"
     ></cytoscape-component>
   </div>
-  <app-reader
-    [rsvpService]="rsvpService"
-  ></app-reader>
 </div>

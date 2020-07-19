@@ -3,7 +3,8 @@ import { ReactSurveyModel, SurveyModel, SurveyNG } from 'survey-angular';
 import { QuizService } from './quiz.service';
 import { Choice, Question, Quiz } from './Quiz';
 import { QuizSubmission } from './QuizSubmission';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SessionService } from '../session/session.service';
 
 
 SurveyNG.apply({theme: 'modern'});
@@ -17,10 +18,14 @@ export class QuizComponent implements OnInit {
   quiz: Quiz;
   private quizService: QuizService;
   interfaceName: string;
+  didSubmit: boolean = false;
+
 
   constructor(
     private _quizService: QuizService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public sessionService: SessionService,
+    private router: Router
   ) {
     this.quizService = _quizService;
   }
@@ -71,12 +76,19 @@ export class QuizComponent implements OnInit {
   }
 
   private submitAnswers = (surveyModel: SurveyModel) => {
+    this.didSubmit = true;
     const quizSubmission = new QuizSubmission(
       this.quiz.passage,
       surveyModel.data,
-      this.interfaceName
+      this.interfaceName,
+      this.sessionService.sessionId,
+      new Date()
     )
+    this.sessionService.completeCurrentPair();
     this.quizService.postAnswers(quizSubmission)
       .subscribe();
+  }
+  tryNew = () => {
+    this.router.navigate([`/home`]);
   }
 }

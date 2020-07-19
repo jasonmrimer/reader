@@ -9,11 +9,11 @@ import { By } from '@angular/platform-browser';
 import { IntervalServiceMock } from '../reader/interval.service.mock.spec';
 import { IntervalService } from '../reader/interval.service';
 import { RSVPService } from '../rsvp-utils/rsvp.service';
-import { MetricInterface } from '../metrics/metric';
 import { PassageCompletionComponent } from '../quiz/passage-completion/passage-completion.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { InterfaceName } from '../session/InterfaceName';
 
-describe('PassageComponent', () => {
+describe('BaselineComponent', () => {
   let component: BaselineComponent;
   let fixture: ComponentFixture<BaselineComponent>;
   let rsvpService: RSVPService;
@@ -21,9 +21,9 @@ describe('PassageComponent', () => {
 
   beforeEach(async(() => {
     intervalService = new IntervalServiceMock();
-    spyOn(intervalService, 'runInterval').and.callThrough();
     rsvpService = new RSVPService();
-    rsvpService.hydrate(passageStub, MetricInterface.BASELINE)
+    rsvpService.hydrate(passageStub, InterfaceName.BASELINE)
+    spyOn(intervalService, 'runInterval').and.callThrough();
 
 
     TestBed.configureTestingModule({
@@ -64,7 +64,8 @@ describe('PassageComponent', () => {
 
   function testPreStartConditions() {
     expect(fixture.debugElement.query(By.css('.container--instructions'))).toBeTruthy();
-    expect(fixture.debugElement.query(By.css('.container--passage'))).toBeFalsy();
+    expect(fixture.debugElement.query(By.css('.container--passage'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('.passage-title'))).toBeTruthy();
   }
 
   it('should start with instructions', () => {
@@ -73,24 +74,28 @@ describe('PassageComponent', () => {
 
   it('should turn instructions off and begin reading on start', () => {
     testPreStartConditions();
-    fixture.debugElement.query(By.css('.button--start')).nativeElement.click();
+    fixture.debugElement.query(By.css('.button--play')).nativeElement.click();
     fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('.container--passage'))).toBeTruthy();
     expect(intervalService.runInterval).toHaveBeenCalled();
     expect(fixture.debugElement.query(By.css('.passage-title')).nativeElement.textContent).toBe('title01');
-    expect(fixture.debugElement.query(By.css('.passage-content')).nativeElement.textContent).toBe(
+    expect(fixture.debugElement.query(By.css('.passage-content')).nativeElement.textContent).toContain(
       '\nOne two. Three.\n\nFour, five; six!\n\nSeven... eight?');
 
     expect(fixture.debugElement.query(By.css('.container--instructions'))).toBeFalsy();
   });
 
   it('should prompt to take quiz on completion', () => {
-    expect(rsvpService.isComplete).toBeFalsy();
-    for (let i = 0; i < 8; i++) {
-      intervalService.tick();
-    }
-    expect(rsvpService.isComplete).toBeTruthy();
-    fixture.detectChanges();
+    completePassage(rsvpService, intervalService, fixture);
     expect(fixture.debugElement.nativeElement.querySelector('app-passage-completion')).toBeTruthy();
   });
 });
+
+function completePassage(rsvpService: RSVPService, intervalService: IntervalServiceMock, fixture: ComponentFixture<BaselineComponent>) {
+  expect(rsvpService.isCompleteSubject).toBeFalsy();
+  for (let i = 0; i < 9; i++) {
+    intervalService.tick();
+  }
+  expect(rsvpService.isCompleteSubject).toBeTruthy();
+  fixture.detectChanges();
+}

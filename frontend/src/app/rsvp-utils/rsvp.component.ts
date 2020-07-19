@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { PassageService } from './passage.service';
 import { RSVPService } from './rsvp.service';
-import { MetricsService } from '../metrics/metrics.service';
-import { MetricInterface } from '../metrics/metric';
-import { skip } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { InterfaceName } from '../session/InterfaceName';
+import { MetricsService } from '../metrics/metrics.service';
+import { SessionService } from '../session/session.service';
 
 @Component({
   selector: 'app-rsvp-component',
@@ -13,14 +13,15 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./rsvp.component.css'],
 })
 export class RsvpComponent implements OnInit {
-  rsvpType: MetricInterface;
-  private subscription: Subscription;
+  rsvpType: InterfaceName;
+  protected subscription: Subscription;
   private passageId: number;
 
   constructor(
     private metricsService: MetricsService,
     private passageService: PassageService,
     public rsvpService: RSVPService,
+    public sessionService: SessionService,
     private route: ActivatedRoute
   ) {
   }
@@ -37,15 +38,19 @@ export class RsvpComponent implements OnInit {
           passage,
           this.rsvpType
         );
+        this.subscription = this.rsvpService.isComplete$
+          .subscribe(() => {
+            this.postMetric();
+          });
       })
 
-    this.subscription = this.rsvpService.isComplete$
-      .pipe(skip(1))
-      .subscribe(this.postMetric);
   }
 
   private postMetric = () => {
-    this.metricsService.postPassageCompletion(this.rsvpType)
+    this.metricsService.postPassageCompletion(
+      this.rsvpType,
+      this.sessionService.sessionId
+    )
       .subscribe();
     this.subscription.unsubscribe();
   }

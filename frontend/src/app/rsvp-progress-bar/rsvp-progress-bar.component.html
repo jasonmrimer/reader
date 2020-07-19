@@ -1,10 +1,10 @@
-<div id="container-reader">
+<div class="container--progress-bar">
   <app-reader
     [rsvpService]="rsvpService"
   >
   </app-reader>
   <mat-progress-bar
-    id="completion-meter"
+    class="progress-bar"
     mode="determinate"
     value="{{rsvpService.percentRead()}}"
   >

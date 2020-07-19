@@ -1,35 +1,36 @@
 import { Injectable } from '@angular/core';
 import { Passage } from './passage';
 import { isNotNullOrUndefined } from 'codelyzer/util/isNotNullOrUndefined';
-import { BehaviorSubject } from 'rxjs';
-import { MetricInterface } from '../metrics/metric';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Section } from './Section';
+import { InterfaceName } from '../session/InterfaceName';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RSVPService {
-  private _index = -1;
   private _contentLength = Number.MAX_SAFE_INTEGER;
-
-  private _isComplete = new BehaviorSubject<boolean>(false);
+  private _index = -1;
+  private _interfaceType: InterfaceName;
+  private _isCompleteSubject;
+  private _isComplete: boolean = false;
+  isComplete$;
   private _passage: Passage;
-  isComplete$ = this._isComplete.asObservable();
   private _readableContent: string[];
-  private _title: string;
+  private _sections: Section[] = [];
+  private _sectionLengths: number[];
   private _sectionMarkerIndexes: number[];
   private _sectionMarkerPositions: number[];
-  private _interfaceType: MetricInterface;
-  private _sectionLengths: number[];
-  private _sections: Section[] = [];
+  private _title: string;
 
-  constructor() {
-  }
+  hydrate(passage: Passage, interfaceType: InterfaceName) {
+    this._index = -1;
+    this._isComplete = false;
+    this._isCompleteSubject = new Subject();
+    this.isComplete$ = this._isCompleteSubject.asObservable();
 
-  hydrate(passage: Passage, interfaceType: MetricInterface) {
     this._passage = passage;
-    this._readableContent =
-      this.transformToReadableContent(passage.content);
+    this._readableContent = this.transformToReadableContent(passage.content);
     this._contentLength = this.readableContent.length;
     this._title = passage.title;
     this._sectionMarkerIndexes = this.calculateSectionMarkerIndexes(
@@ -70,15 +71,18 @@ export class RSVPService {
     }).filter(isNotNullOrUndefined);
   }
 
-  calculateRelativePositionsOfIndexes(indexes: number[], contentLength: number) {
-    return indexes.map((value: number) => {
+  calculateRelativePositionsOfIndexes(indexes: number[], contentLength: number): number[] {
+    let positions = indexes.map((value: number) => {
       return value * 100 / contentLength;
     });
+    positions.push(100);
+    return positions;
   }
 
   moveAhead() {
     if (this._index === this._contentLength - 1) {
-      this._isComplete.next(true);
+      this._isComplete = true;
+      this._isCompleteSubject.next(true);
       return;
     }
     this._index++;
@@ -119,8 +123,8 @@ export class RSVPService {
     return this._index
   }
 
-  get isComplete(): boolean {
-    return this._index + 1 >= this._contentLength;
+  get isCompleteSubject(): boolean {
+    return this._isComplete;
   }
 
   get passage(): Passage {
@@ -219,7 +223,7 @@ export class RSVPService {
   }
 
 
-  calculatePause() {
+  calculatePauseAmount() {
 
     let lastLetter = this.currentWord[this.currentWord.length - 1];
 

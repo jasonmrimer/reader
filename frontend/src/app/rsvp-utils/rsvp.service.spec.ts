@@ -2,8 +2,8 @@ import { inject, TestBed } from '@angular/core/testing';
 
 import { RSVPService } from './rsvp.service';
 import { passageStub } from './PassageStub';
-import { MetricInterface } from '../metrics/metric';
 import { Section } from './Section';
+import { InterfaceName } from '../session/InterfaceName';
 
 describe('RSVPService', () => {
   let service: RSVPService;
@@ -14,7 +14,7 @@ describe('RSVPService', () => {
     });
 
     service = TestBed.inject(RSVPService);
-    service.hydrate(passageStub, MetricInterface.RSVP_BASIC);
+    service.hydrate(passageStub, InterfaceName.RSVP_BASIC);
   });
 
   it('should be created', inject([RSVPService], (service: RSVPService) => {
@@ -27,11 +27,11 @@ describe('RSVPService', () => {
     ])
     expect(service.percentRead()).toBe(0);
     expect(service.index).toBe(-1);
-    expect(service.isComplete).toBeFalsy();
+    expect(service.isCompleteSubject).toBeFalsy();
     expect(service.contentLength).toBe(8);
     expect(service.title).toBe('title01');
     expect(service.sectionMarkerIndexes).toEqual([0, 3]);
-    expect(service.sectionMarkerPositions).toEqual([0, 37.5]);
+    expect(service.sectionMarkerPositions).toEqual([0, 37.5, 100]);
     expect(service.quizRoute).toBe('rsvp-basic');
     expect(service.sections).toEqual([
       new Section(1, 0, 2, 0),
@@ -51,12 +51,15 @@ describe('RSVPService', () => {
     expect(service.percentRead()).toBe(25);
   });
 
-  it('should be completed at the end', () => {
-    service.contentLength = 2;
-    expect(service.isComplete).toBeFalse();
+  it('should start with a blank and be completed after moving to the end', () => {
+    expect(service.isCompleteSubject).toBeFalse();
+
     service.moveAhead();
-    service.moveAhead();
-    expect(service.isComplete).toBeTrue();
+    for (let i = 0; i < service.contentLength; i++) {
+      service.moveAhead();
+    }
+
+    expect(service.isCompleteSubject).toBeTrue();
   });
 
   it('should return current word', () => {
@@ -68,9 +71,9 @@ describe('RSVPService', () => {
 
   it('should return a quiz route', () => {
     expect(service.quizRoute).toBe('rsvp-basic');
-    service.hydrate(passageStub, MetricInterface.RSVP_SECTION_MARK);
+    service.hydrate(passageStub, InterfaceName.RSVP_SECTION_MARK);
     expect(service.quizRoute).toBe('rsvp-section-mark');
-    service.hydrate(passageStub, MetricInterface.RSVP_PROGRESS_BAR);
+    service.hydrate(passageStub, InterfaceName.RSVP_PROGRESS_BAR);
     expect(service.quizRoute).toBe('rsvp-progress-bar');
   });
 
@@ -132,28 +135,28 @@ describe('RSVPService', () => {
     expect(service.currentWord).toBe('');
     service.moveAhead();
     expect(service.currentWord).toBe('One');
-    expect(service.calculatePause()).toBe(0);
+    expect(service.calculatePauseAmount()).toBe(0);
     service.moveAhead();
     expect(service.currentWord).toBe('two.');
-    expect(service.calculatePause()).toBe(500);
+    expect(service.calculatePauseAmount()).toBe(500);
     service.moveAhead();
     expect(service.currentWord).toBe('Three.');
-    expect(service.calculatePause()).toBe(1000);
+    expect(service.calculatePauseAmount()).toBe(1000);
     service.moveAhead();
     expect(service.currentWord).toBe('Four,');
-    expect(service.calculatePause()).toBe(400);
+    expect(service.calculatePauseAmount()).toBe(400);
     service.moveAhead();
     expect(service.currentWord).toBe('five;');
-    expect(service.calculatePause()).toBe(400);
+    expect(service.calculatePauseAmount()).toBe(400);
     service.moveAhead();
     expect(service.currentWord).toBe('six!');
-    expect(service.calculatePause()).toBe(500);
+    expect(service.calculatePauseAmount()).toBe(500);
     service.moveAhead();
     expect(service.currentWord).toBe('Seven...');
-    expect(service.calculatePause()).toBe(500);
+    expect(service.calculatePauseAmount()).toBe(500);
     service.moveAhead();
     expect(service.currentWord).toBe('eight?');
-    expect(service.calculatePause()).toBe(500);
+    expect(service.calculatePauseAmount()).toBe(500);
     service.moveAhead();
   });
 });

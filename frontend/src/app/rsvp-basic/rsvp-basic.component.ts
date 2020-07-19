@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { MetricInterface } from '../metrics/metric';
 import { RsvpComponent } from '../rsvp-utils/rsvp.component';
+import { InterfaceName } from '../session/InterfaceName';
 
 @Component({
   selector: 'app-basic-rsvp',
@@ -10,6 +10,6 @@ import { RsvpComponent } from '../rsvp-utils/rsvp.component';
 export class RsvpBasicComponent extends RsvpComponent {
   ngOnInit() {
     super.ngOnInit();
-    this.rsvpType = MetricInterface.RSVP_BASIC;
+    this.rsvpType = InterfaceName.RSVP_BASIC;
   }
 }

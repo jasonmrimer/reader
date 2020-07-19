@@ -8,7 +8,7 @@ describe('QuizSubmission', () => {
         q2: 'a2'
       }
 
-    const quizSubmission = new QuizSubmission('qId', surveyData, "");
+    const quizSubmission = new QuizSubmission('qId', surveyData, "", "fakeUser", new Date());
 
     expect(quizSubmission.passage).toEqual('qId');
     expect(quizSubmission.answers).toEqual([
