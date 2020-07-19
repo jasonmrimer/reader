@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MetricsService } from './metrics.service';
-import { Metric } from './metric';
 import { forkJoin } from 'rxjs';
 
 class Row {

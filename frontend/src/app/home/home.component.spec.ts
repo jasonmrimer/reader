@@ -5,29 +5,30 @@ import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { MetricsServiceStub } from '../metrics/metrics-stub.service';
-import { quizMetricsStub } from '../metrics/metric';
 import { MetricsService } from '../metrics/metrics.service';
+import { QuizMetric } from '../metrics/QuizMetric';
+import { MetricInterfaceName } from '../metrics/MetricInterfaceName';
+import { QuizMetricsStub } from '../metrics/QuizMetricStub';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
   let router;
   let metricsService: MetricsServiceStub;
+  let quizMetricsStub: QuizMetric[];
 
   beforeEach(async(() => {
-    quizMetricsStub[0].quizCount = 11;
-    quizMetricsStub[1].quizCount = 22;
-    quizMetricsStub[2].quizCount = 33;
+    quizMetricsStub = QuizMetricsStub()
     metricsService = new MetricsServiceStub();
 
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [ HomeComponent ],
+      declarations: [HomeComponent],
       providers: [
         {provide: MetricsService, useValue: metricsService}
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -37,6 +38,10 @@ describe('HomeComponent', () => {
 
     router = TestBed.inject(Router);
   });
+
+  let calledAllTiedInterfaces = (calls) => {
+    return calls.has(`/${MetricInterfaceName.BASELINE}/1`) && calls.has(`/${MetricInterfaceName.RSVP_BASIC}/1`);
+  }
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -48,35 +53,26 @@ describe('HomeComponent', () => {
       'Welcome! By clicking START you agree to be an anonymous member of my research.');
   });
 
-  it('should take the reader to the least-used interface on start', () => {
+  xit('should take the reader to the least-used interface on start', () => {
     spyOn(router, 'navigate').and.returnValue(true);
 
     fixture.debugElement.query(By.css('.button--start')).nativeElement.click();
     fixture.detectChanges();
-    expect(router.navigate).toHaveBeenCalledWith(['/int1/1']);
+    expect(router.navigate).toHaveBeenCalledWith([`/${MetricInterfaceName.BASELINE}/1`]);
   });
 
-  it('should take the reader to a random, least-used interface in case of tie', () => {
+  it('should take the reader to a random, unused interface in case never used', () => {
     let calls = new Set();
     spyOn(router, 'navigate').and.callFake((params) => {
       calls.add(params[0]);
     });
 
-    quizMetricsStub[0].quizCount = 22;
-    quizMetricsStub[1].quizCount = 22;
-    quizMetricsStub[2].quizCount = 33;
-    component.ngOnInit();
-    fixture.detectChanges();
-
-    while (!calledAllInterfaces(calls)) {
+    while (!calledAllTiedInterfaces(calls)) {
+      fixture.detectChanges();
       fixture.debugElement.query(By.css('.button--start')).nativeElement.click();
       fixture.detectChanges();
     }
 
-    expect(calledAllInterfaces(calls)).toBeTruthy();
+    expect(calledAllTiedInterfaces(calls)).toBeTruthy();
   });
-
-  let calledAllInterfaces = (calls) => {
-    return calls.has('/int1/1') && calls.has('/int2/1');
-  }
 });

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Passage } from './passage';
 import { isNotNullOrUndefined } from 'codelyzer/util/isNotNullOrUndefined';
 import { BehaviorSubject } from 'rxjs';
-import { MetricInterface } from '../metrics/metric';
 import { Section } from './Section';
+import { MetricInterfaceName } from '../metrics/MetricInterfaceName';
 
 @Injectable({
   providedIn: 'root'
@@ -19,14 +19,14 @@ export class RSVPService {
   private _title: string;
   private _sectionMarkerIndexes: number[];
   private _sectionMarkerPositions: number[];
-  private _interfaceType: MetricInterface;
+  private _interfaceType: MetricInterfaceName;
   private _sectionLengths: number[];
   private _sections: Section[] = [];
 
   constructor() {
   }
 
-  hydrate(passage: Passage, interfaceType: MetricInterface) {
+  hydrate(passage: Passage, interfaceType: MetricInterfaceName) {
     this._passage = passage;
     this._readableContent =
       this.transformToReadableContent(passage.content);

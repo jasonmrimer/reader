@@ -5,7 +5,7 @@ set -o pipefail
 BASEDIR=$(dirname "$0")
 
 mongo "$BASEDIR"/truncate_db.js
-mongo "$BASEDIR"/truncate_db_metrics.js
+mongo "$BASEDIR"/reset_metrics.js
 mongo "$BASEDIR"/seed_db.js
 cd ./frontend
 ng e2e --port 4201 --specs ./e2e/journey.e2e-spec.ts

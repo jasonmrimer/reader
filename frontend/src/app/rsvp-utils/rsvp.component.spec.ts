@@ -6,11 +6,11 @@ import { PassageService } from './passage.service';
 import { PassageServiceStub } from './passage-stub.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RSVPService } from './rsvp.service';
-import { MetricInterface } from '../metrics/metric';
 import { MetricsService } from '../metrics/metrics.service';
 import { MetricsServiceStub } from '../metrics/metrics-stub.service';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { of } from 'rxjs';
+import { MetricInterfaceName } from '../metrics/MetricInterfaceName';
 
 describe('RsvpComponent', () => {
   let component: RsvpComponent;
@@ -48,7 +48,7 @@ describe('RsvpComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RsvpComponent);
     component = fixture.componentInstance;
-    component.rsvpType = MetricInterface.RSVP_BASIC;
+    component.rsvpType = MetricInterfaceName.RSVP_BASIC;
     fixture.detectChanges();
   });
 
@@ -61,7 +61,7 @@ describe('RsvpComponent', () => {
   });
 
   it('should hydrate the rsvp rsvpService', () => {
-    expect(rsvpService.hydrate).toHaveBeenCalledWith(passageStub, MetricInterface.RSVP_BASIC);
+    expect(rsvpService.hydrate).toHaveBeenCalledWith(passageStub, MetricInterfaceName.RSVP_BASIC);
   });
 
   it('should fire a metrics post on passage complete', () => {
@@ -71,6 +71,6 @@ describe('RsvpComponent', () => {
     rsvpService.moveAhead();
     rsvpService.moveAhead();
     expect(rsvpService.isComplete).toBeTrue();
-    expect(metricsService.postPassageCompletion).toHaveBeenCalledWith(MetricInterface.RSVP_BASIC);
+    expect(metricsService.postPassageCompletion).toHaveBeenCalledWith(MetricInterfaceName.RSVP_BASIC);
   });
 });

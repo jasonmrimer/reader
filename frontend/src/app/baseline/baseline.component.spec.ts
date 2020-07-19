@@ -9,9 +9,9 @@ import { By } from '@angular/platform-browser';
 import { IntervalServiceMock } from '../reader/interval.service.mock.spec';
 import { IntervalService } from '../reader/interval.service';
 import { RSVPService } from '../rsvp-utils/rsvp.service';
-import { MetricInterface } from '../metrics/metric';
 import { PassageCompletionComponent } from '../quiz/passage-completion/passage-completion.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MetricInterfaceName } from '../metrics/MetricInterfaceName';
 
 describe('PassageComponent', () => {
   let component: BaselineComponent;
@@ -23,7 +23,7 @@ describe('PassageComponent', () => {
     intervalService = new IntervalServiceMock();
     spyOn(intervalService, 'runInterval').and.callThrough();
     rsvpService = new RSVPService();
-    rsvpService.hydrate(passageStub, MetricInterface.BASELINE)
+    rsvpService.hydrate(passageStub, MetricInterfaceName.BASELINE)
 
 
     TestBed.configureTestingModule({

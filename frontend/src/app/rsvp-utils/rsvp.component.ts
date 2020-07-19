@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { PassageService } from './passage.service';
 import { RSVPService } from './rsvp.service';
 import { MetricsService } from '../metrics/metrics.service';
-import { MetricInterface } from '../metrics/metric';
 import { skip } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { MetricInterfaceName } from '../metrics/MetricInterfaceName';
 
 @Component({
   selector: 'app-rsvp-component',
@@ -13,7 +13,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./rsvp.component.css'],
 })
 export class RsvpComponent implements OnInit {
-  rsvpType: MetricInterface;
+  rsvpType: MetricInterfaceName;
   private subscription: Subscription;
   private passageId: number;
 

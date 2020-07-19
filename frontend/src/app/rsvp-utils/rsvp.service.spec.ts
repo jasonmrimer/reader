@@ -2,8 +2,8 @@ import { inject, TestBed } from '@angular/core/testing';
 
 import { RSVPService } from './rsvp.service';
 import { passageStub } from './PassageStub';
-import { MetricInterface } from '../metrics/metric';
 import { Section } from './Section';
+import { MetricInterfaceName } from '../metrics/MetricInterfaceName';
 
 describe('RSVPService', () => {
   let service: RSVPService;
@@ -14,7 +14,7 @@ describe('RSVPService', () => {
     });
 
     service = TestBed.inject(RSVPService);
-    service.hydrate(passageStub, MetricInterface.RSVP_BASIC);
+    service.hydrate(passageStub, MetricInterfaceName.RSVP_BASIC);
   });
 
   it('should be created', inject([RSVPService], (service: RSVPService) => {
@@ -68,9 +68,9 @@ describe('RSVPService', () => {
 
   it('should return a quiz route', () => {
     expect(service.quizRoute).toBe('rsvp-basic');
-    service.hydrate(passageStub, MetricInterface.RSVP_SECTION_MARK);
+    service.hydrate(passageStub, MetricInterfaceName.RSVP_SECTION_MARK);
     expect(service.quizRoute).toBe('rsvp-section-mark');
-    service.hydrate(passageStub, MetricInterface.RSVP_PROGRESS_BAR);
+    service.hydrate(passageStub, MetricInterfaceName.RSVP_PROGRESS_BAR);
     expect(service.quizRoute).toBe('rsvp-progress-bar');
   });
 

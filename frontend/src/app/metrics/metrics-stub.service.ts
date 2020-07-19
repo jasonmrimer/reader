@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { MetricsService } from './metrics.service';
 import { Observable, of } from 'rxjs';
-import { Metric, PassageMetric, passageMetricsStub, QuizMetric, quizMetricsStub } from './metric';
+import { PassageMetric } from './PassageMetric';
+import { QuizMetric } from './QuizMetric';
+import { passageMetricsStub } from './PassageMetricStub';
+import { QuizMetricsStub } from './QuizMetricStub';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +17,6 @@ export class MetricsServiceStub extends MetricsService {
     return of(passageMetricsStub);
   }
   fetchQuizMetrics(): Observable<QuizMetric[]> {
-    return of(quizMetricsStub);
+    return of(QuizMetricsStub());
   }
 }

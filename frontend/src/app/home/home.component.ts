@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MetricsService } from '../metrics/metrics.service';
-import { QuizMetric } from '../metrics/metric';
+import { QuizMetric } from '../metrics/QuizMetric';
 
 @Component({
   selector: 'app-home',

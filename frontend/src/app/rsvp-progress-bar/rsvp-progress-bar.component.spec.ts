@@ -9,8 +9,8 @@ import { RSVPService } from '../rsvp-utils/rsvp.service';
 import { PassageService } from '../rsvp-utils/passage.service';
 import { PassageServiceStub } from '../rsvp-utils/passage-stub.service';
 import { passageStub } from '../rsvp-utils/PassageStub';
-import { MetricInterface } from '../metrics/metric';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MetricInterfaceName } from '../metrics/MetricInterfaceName';
 
 describe('RSVPProgressBarComponent', () => {
   let component: RsvpProgressBarComponent;
@@ -19,7 +19,7 @@ describe('RSVPProgressBarComponent', () => {
 
   beforeEach(async(() => {
     rsvpService = new RSVPService();
-    rsvpService.hydrate(passageStub, MetricInterface.RSVP_BASIC);
+    rsvpService.hydrate(passageStub, MetricInterfaceName.RSVP_BASIC);
 
     TestBed.configureTestingModule({
       imports: [
