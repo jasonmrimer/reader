@@ -1,5 +1,6 @@
 import { browser, by, element } from 'protractor';
 import * as _ from 'lodash';
+import { useAndTestInterface } from './e2e-helpers';
 
 describe('Reader App', () => {
   it('should take a user on a multi-interface journey', () => {
@@ -25,35 +26,31 @@ describe('Reader App', () => {
     //  }
     //  expect logged interfaces to contain all the interfaces
     //  expect completion message because user cannot take any more (taints results)
-
-    // for (let i = 0; i < 20; i++) {
-    //   browser.get('/').then(() => {
-    //     element(by.className('button--start')).click().then(() => {
-    //       let url = 'undefined';
-    //       browser.getCurrentUrl().then((u) => {
-    //         url = u;
-    //         urlSet.add(u);
-    //         console.log('==================' + urlSet.size);
-    //         element(by.className('button--play')).click()
-    //         if (urlSet.size === 5) {
-    //
-    //         }
-    //       });
-    //     }).catch((err) => console.log(err));
-    //   })
   });
-  // }
+
   let visitAllPages = (expectedUrls, actualUrls) => {
+    if (actualUrls.size > 30) {
+      expect(false).toBeTruthy('Visiting all page took more than 50 attempts.');
+    }
+
     if (_.isEqual(expectedUrls, actualUrls)) {
-      return actualUrls;
+      return;
     }
     browser.get('/')
       .then(() => element(by.className('button--start')).click())
       .then(() => browser.getCurrentUrl())
       .then((u) => {
         actualUrls.add(u);
-        element(by.className('button--play')).click()
-        visitAllPages(expectedUrls, actualUrls);
+        useAndTestInterface(u, expectedUrls).then(() => {
+          visitAllPages(expectedUrls, actualUrls);
+        });
       });
+    // browser.get('/')
+    //   .then(() => element(by.className('button--start')).click())
+    //   .then(() => browser.getCurrentUrl())
+    //   .then((u) => {
+    //     actualUrls.add(u);
+    //     useAndTestInterface(u, expectedUrls).then(() => visitAllPages(expectedUrls, actualUrls));
+    //   });
   }
 });

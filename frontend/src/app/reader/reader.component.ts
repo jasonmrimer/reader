@@ -15,7 +15,7 @@ export class ReaderComponent implements OnInit {
   @Input()
   rsvpService: RSVPService;
   subscription: Subscription;
-  wpm = 250;
+  wpm = 6000;
   textJoiner;
   textMeasurer;
   textElements;

@@ -12,10 +12,10 @@ describe('Reader App', () => {
   it('should fetch and display a passage on baseline', function () {
     browser.get('/baseline/0');
     expect(element(by.className('instructions')).getText()).toContain('Take about 2 minutes to read the following passage.')
-    element(by.className('button--start')).click();
-    expect(element(by.id('passage-title')).getText()).toEqual('Test Passage');
-    expect(element(by.id('passage-content')).getText()).toContain('First sentence.');
-    expect(element(by.id('passage-content')).getText()).toContain('Last section.');
+    element(by.className('button--play')).click();
+    expect(element(by.className('passage-title')).getText()).toEqual('Test Passage');
+    expect(element(by.className('passage-content')).getText()).toContain('First sentence.');
+    expect(element(by.className('passage-content')).getText()).toContain('Last section.');
     browser.sleep(8000);
     expect(by.className('button--quiz')).toBeDefined();
   });
@@ -23,7 +23,7 @@ describe('Reader App', () => {
   it('should use RSVP Basic to read passage, take quiz, and update metrics', async () => {
     await journeyReadAndQuiz(
       'rsvp-basic',
-      ['rsvp-progress-bar', 'rsvp-section-mark']
+      ['rsvp-progress-bar', 'rsvp-section-mark', 'rsvp-subway', 'baseline']
     );
   });
 
