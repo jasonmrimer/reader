@@ -1,4 +1,5 @@
 import { browser, by, element, protractor } from 'protractor';
+import { of } from 'rxjs';
 
 function extractInterfaceNameFromUrl(fullUrl: string) {
   return fullUrl
@@ -105,13 +106,12 @@ export async function getMetricsFor(
   metricTitle: string,
   interfaces: string[]
 ) {
-
   return browser.get('/metrics').then(() => {
     let counts = [];
     for (let i = 0; i < interfaces.length; i++) {
-      getMetricCountFor(interfaces[i], metricTitle).then((count) => {
-        counts.push(count);
-      });
+      getMetricCountFor(interfaces[i], metricTitle)
+        .then((count) => counts.push(count))
+        .catch((err) => console.error(err));
     }
 
     return counts;
@@ -146,6 +146,26 @@ export function takeQuiz() {
   element(by.className('sv_complete_btn')).click();
 }
 
+
+function testMetricsZ(
+  metricType: string,
+  metricCountStart: number[],
+  metricCountEnd: number[],
+  interfaces: string[]
+) {
+  expect(metricCountEnd[0]).toBe(
+    metricCountStart[0] + 1,
+    `Metrics did not a ${metricType} for ${interfaces['primary']}`
+  );
+
+  for (let i = 1; i < interfaces.length; i++) {
+    expect(metricCountEnd[i]).toBe(
+      metricCountEnd[i],
+      `Metrics erroneously added a ${metricType} to ${interfaces[i]}`
+    );
+  }
+}
+
 function testMetrics(
   metricType: string,
   metricCountStart: number[],
@@ -176,25 +196,23 @@ function getMetricRowByInterfaceName(rows, interfaceName: string) {
   return metricRow;
 }
 
-export function getMetricCountFor(interfaceName: string, metricHeader: string) {
+export function getMetricCountFor(interfaceName: string, metricHeader: string): Promise<number> {
   let rows = element.all(by.className('metrics-row'));
   let metricRow = getMetricRowByInterfaceName(rows, interfaceName);
   let completionCountFromRow = getMetricCountFromRow(metricRow, metricHeader);
   return completionCountFromRow;
 }
 
-async function getMetricCountFromRow(metricRow, metricHeader: string) {
-  let cellText = '0';
-  let rowCount = await metricRow.count().then(count => {
-    return count;
-  });
-  if (rowCount > 0) {
-    cellText = await metricRow.get(0)
-      .element(by.className(metricHeader))
-      .getText()
-      .then((text) => {
-        return text;
-      });
-  }
-  return Number.parseInt(cellText);
+async function getMetricCountFromRow(metricRow, metricHeader: string): Promise<number> {
+  return metricRow.count().then(count => {
+    if (count > 0) {
+      return metricRow.get(0)
+        .element(by.className(metricHeader))
+        .getText()
+        .then(text => {
+          return Number.parseInt(text)
+        })
+        .catch((err) => console.error(err))
+    }
+  })
 }
