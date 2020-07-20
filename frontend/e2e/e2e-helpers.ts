@@ -67,7 +67,7 @@ export function verifyRSVPWorks() {
 
   let content = element(by.id('passage-content'));
   expect(content.getText()).toBe(' ');
-  element(by.id('play-button')).click();
+  element(by.className('button--play')).click();
   browser.sleep(400);
   expect(content.getText()).not.toBe(' ');
   browser.wait(

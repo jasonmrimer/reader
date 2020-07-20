@@ -18,7 +18,7 @@
   background: #ebebeb;
 }
 
-#play-button {
+.button--play {
   border: none;
   margin-top: 8px;
   background: #A1E8AF;
@@ -28,7 +28,7 @@
   border-radius: 64px;
 }
 
-#play-button:hover {
+#button--play:hover {
   border: 2px solid #fafafa;
   color: #fafafa;
   font-weight: bold;

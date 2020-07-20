@@ -59,7 +59,7 @@ describe('ReaderComponent', () => {
 
   it('should move to the next word as the interval ticks', () => {
     expect(contentBox.nativeElement.textContent).toEqual(' ');
-    const playButton = fixture.debugElement.query(By.css('#play-button'));
+    const playButton = fixture.debugElement.query(By.css('#button--play'));
     playButton.nativeElement.click();
     fixture.detectChanges();
     expect(contentBox.nativeElement.textContent).toBe('One');
