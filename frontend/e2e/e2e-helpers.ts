@@ -1,5 +1,4 @@
 import { browser, by, element, protractor } from 'protractor';
-import { of } from 'rxjs';
 
 function extractInterfaceNameFromUrl(fullUrl: string) {
   return fullUrl
@@ -14,7 +13,6 @@ export async function useAndTestInterface(currentUrl: string, allUrls: Set<strin
     secondaryInterfaces.push(extractInterfaceNameFromUrl(url));
   })
   secondaryInterfaces = secondaryInterfaces.filter((interfaceName) => interfaceName !== primaryInterface);
-  console.log(primaryInterface);
   switch (primaryInterface) {
     case 'baseline':
       baselineJourney();
@@ -76,7 +74,7 @@ export async function journeyReadAndQuiz(
   });
   let allInterfaces = [primaryInterface];
   allInterfaces = allInterfaces.concat(secondaryInterfaces);
-
+  console.log(allInterfaces);
   const completionCountStart = await getMetricsFor('completion-count', allInterfaces);
   const quizCountStart = await getMetricsFor('quiz-count', allInterfaces);
 
@@ -199,13 +197,16 @@ function getMetricRowByInterfaceName(rows, interfaceName: string) {
 export function getMetricCountFor(interfaceName: string, metricHeader: string): Promise<number> {
   let rows = element.all(by.className('metrics-row'));
   let metricRow = getMetricRowByInterfaceName(rows, interfaceName);
-  let completionCountFromRow = getMetricCountFromRow(metricRow, metricHeader);
-  return completionCountFromRow;
+  return getMetricCountFromRow(metricRow, metricHeader);
 }
 
 async function getMetricCountFromRow(metricRow, metricHeader: string): Promise<number> {
+  function rowExists(count) {
+    return count > 0;
+  }
+
   return metricRow.count().then(count => {
-    if (count > 0) {
+    if (rowExists(count)) {
       return metricRow.get(0)
         .element(by.className(metricHeader))
         .getText()
