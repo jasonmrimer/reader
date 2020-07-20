@@ -73,16 +73,18 @@ export async function journeyReadAndQuiz(
   secondaryInterfaces.map((interfaceName, index) => {
     Object.assign(interfaces, {[`secondary${index + 1}`]: interfaceName});
   });
+  let allInterfaces = [primaryInterface];
+  allInterfaces = allInterfaces.concat(secondaryInterfaces);
 
-  const completionCountStart = await getMetricsFor('completion-count', interfaces);
-  const quizCountStart = await getMetricsFor('quiz-count', interfaces);
+  const completionCountStart = await getMetricsFor('completion-count', allInterfaces);
+  const quizCountStart = await getMetricsFor('quiz-count', allInterfaces);
 
   browser.get(`/${primaryInterface}/0`);
   verifyRSVPWorks();
   takeQuiz();
 
-  const completionCountEnd = await getMetricsFor('completion-count', interfaces);
-  const quizCountEnd = await getMetricsFor('quiz-count', interfaces);
+  const completionCountEnd = await getMetricsFor('completion-count', allInterfaces);
+  const quizCountEnd = await getMetricsFor('quiz-count', allInterfaces);
 
   testMetrics(
     'completion-count',
@@ -101,22 +103,19 @@ export async function journeyReadAndQuiz(
 
 export async function getMetricsFor(
   metricTitle: string,
-  interfaces: { [key: string]: string }
+  interfaces: string[]
 ) {
-  let subjectInterfaceNameCount: number;
-  let staticInterfaceName1Count: number;
-  let staticInterfaceName2Count: number;
 
-  browser.get('/metrics');
-  subjectInterfaceNameCount = await getMetricCountFor(interfaces['primary'], metricTitle);
-  staticInterfaceName1Count = await getMetricCountFor(interfaces['secondary1'], metricTitle);
-  staticInterfaceName2Count = await getMetricCountFor(interfaces['secondary2'], metricTitle);
+  return browser.get('/metrics').then(() => {
+    let counts = [];
+    for (let i = 0; i < interfaces.length; i++) {
+      getMetricCountFor(interfaces[i], metricTitle).then((count) => {
+        counts.push(count);
+      });
+    }
 
-  return [
-    subjectInterfaceNameCount,
-    staticInterfaceName1Count,
-    staticInterfaceName2Count
-  ];
+    return counts;
+  });
 }
 
 export function verifyRSVPWorks() {
