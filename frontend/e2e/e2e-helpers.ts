@@ -74,7 +74,7 @@ export async function journeyReadAndQuiz(
   });
   let allInterfaces = [primaryInterface];
   allInterfaces = allInterfaces.concat(secondaryInterfaces);
-  console.log(allInterfaces);
+
   const completionCountStart = await getMetricsFor('completion-count', allInterfaces);
   const quizCountStart = await getMetricsFor('quiz-count', allInterfaces);
 
@@ -85,18 +85,18 @@ export async function journeyReadAndQuiz(
   const completionCountEnd = await getMetricsFor('completion-count', allInterfaces);
   const quizCountEnd = await getMetricsFor('quiz-count', allInterfaces);
 
-  testMetrics(
+  compareMetrics(
     'completion-count',
     completionCountStart,
     completionCountEnd,
-    interfaces
+    allInterfaces
   );
 
-  testMetrics(
+  compareMetrics(
     'quiz-count',
     quizCountStart,
     quizCountEnd,
-    interfaces
+    allInterfaces
   );
 }
 
@@ -144,8 +144,7 @@ export function takeQuiz() {
   element(by.className('sv_complete_btn')).click();
 }
 
-
-function testMetricsZ(
+function compareMetrics(
   metricType: string,
   metricCountStart: number[],
   metricCountEnd: number[],
@@ -162,28 +161,6 @@ function testMetricsZ(
       `Metrics erroneously added a ${metricType} to ${interfaces[i]}`
     );
   }
-}
-
-function testMetrics(
-  metricType: string,
-  metricCountStart: number[],
-  metricCountEnd: number[],
-  interfaces: { [key: string]: string }
-) {
-  expect(metricCountEnd[0]).toBe(
-    metricCountStart[0] + 1,
-    `Metrics did not a ${metricType} for ${interfaces['primary']}`
-  );
-
-  expect(metricCountEnd[1]).toBe(
-    metricCountEnd[1],
-    `Metrics erroneously added a ${metricType} to ${interfaces['secondary1']}`
-  );
-
-  expect(metricCountEnd[2]).toBe(
-    metricCountEnd[2],
-    `Metrics erroneously added a ${metricType} to ${interfaces['secondary2']}`
-  );
 }
 
 function getMetricRowByInterfaceName(rows, interfaceName: string) {
