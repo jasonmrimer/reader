@@ -109,7 +109,11 @@ export async function getMetricsFor(
     for (let i = 0; i < interfaces.length; i++) {
       getMetricCountFor(interfaces[i], metricTitle)
         .then((count) => counts.push(count))
-        .catch((err) => console.error(err));
+        .catch((err) => {
+          console.error('____getting metrics for ' + interfaces[i])
+          console.error(err)
+          console.error('____get metrics error end_______________')
+        });
     }
 
     return counts;
@@ -190,7 +194,11 @@ async function getMetricCountFromRow(metricRow, metricHeader: string): Promise<n
         .then(text => {
           return Number.parseInt(text)
         })
-        .catch((err) => console.error(err))
+        .catch((err) => {
+          console.error('____error getting metric count from row for ' + metricHeader);
+          console.error(err)
+          console.error('____end error getting metric count from row__________ ');
+        })
     }
   })
 }
