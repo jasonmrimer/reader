@@ -1,6 +1,6 @@
 import { FrontendPage } from './app.po';
 import { browser, by, element } from 'protractor';
-import { journeyReadAndQuiz } from './e2e-helpers';
+import { journey, journeyReadAndQuiz } from './e2e-helpers';
 
 describe('Reader App', () => {
   let page: FrontendPage;
@@ -16,45 +16,38 @@ describe('Reader App', () => {
     page = new FrontendPage();
   });
 
-  it('should fetch and display a passage on baseline', function () {
-    browser.get('/baseline/0');
-    expect(element(by.className('instructions')).getText()).toContain('Take about 2 minutes to read the following passage.')
-    element(by.className('button--play')).click();
-    expect(element(by.className('passage-title')).getText()).toEqual('Test Passage');
-    expect(element(by.className('passage-content')).getText()).toContain('First sentence.');
-    expect(element(by.className('passage-content')).getText()).toContain('Last section.');
-    browser.sleep(8000);
-    expect(by.className('button--quiz')).toBeDefined();
+  it('should use Baseline to read passage, take quiz, and update metrics', async () => {
+    await journey('baseline', allInterfaces);
+    // browser.get('/baseline/0');
+    // expect(element(by.className('instructions')).getText()).toContain('Take about 2 minutes to read the following passage.')
+    // element(by.className('button--play')).click();
+    // expect(element(by.className('passage-title')).getText()).toEqual('Test Passage');
+    // expect(element(by.className('passage-content')).getText()).toContain('First sentence.');
+    // expect(element(by.className('passage-content')).getText()).toContain('Last section.');
+    // browser.sleep(8000);
+    // expect(by.className('button--quiz')).toBeDefined();
   });
 
-  const journey = async (interfaceName: string) => {
-    let otherInterfaceNames = allInterfaces.filter(intName => intName !== interfaceName);
-    console.log(otherInterfaceNames);
 
-    await journeyReadAndQuiz(
-      interfaceName,
-      otherInterfaceNames
-    );
-  }
   it('should use RSVP Basic to read passage, take quiz, and update metrics', async () => {
-    await journey('rsvp-basic');
+    await journey('rsvp-basic', allInterfaces);
   });
 
   it('should use RSVP Progress Bar to read passage, take quiz, and update metrics', async () => {
-    await journey('rsvp-progress-bar');
+    await journey('rsvp-progress-bar', allInterfaces);
     browser.get('/rsvp-progress-bar/0');
     expect(element(by.id('progress-bar'))).toBeDefined();
   });
 
   it('should use RSVP Section Mark to read passage, take quiz, and update metrics', async () => {
-    await journey('rsvp-section-mark');
+    await journey('rsvp-section-mark', allInterfaces);
     browser.get('/rsvp-section-mark/0');
     expect(element(by.id('completion-meter'))).toBeDefined();
     expect(element.all(by.className('slider-tick')).count()).toBe(4);
   });
 
   it('should use RSVP Subway to read passage, take quiz, and update metrics', async () => {
-    await journey('rsvp-subway');
+    await journey('rsvp-subway', allInterfaces);
   });
 });
 

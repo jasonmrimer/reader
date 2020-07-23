@@ -1,16 +1,64 @@
 import { browser, by, element, protractor } from 'protractor';
+import * as _ from 'lodash';
 
-function extractInterfaceNameFromUrl(fullUrl: string) {
+function urlToInterfaceName(fullUrl: string) {
   return fullUrl
     .replace('http://localhost:4200/', '')
     .replace('/1', '');
 }
 
+export const visitAllPages = (
+  allInterfaces: string[],
+  actualUrls: Set<string>,
+  expectedUrls: Set<string>
+) => {
+  if (actualUrls.size > 30) {
+    expect(false).toBeTruthy('Visiting all page took more than 50 attempts.');
+  }
+
+  if (_.isEqual(expectedUrls, actualUrls)) {
+    return;
+  }
+  browser.get('/')
+    .then(() => element(by.className('button--start')).click())
+    .then(() => browser.getCurrentUrl())
+    .then((u) => {
+      expect(actualUrls.has(u)).toBeFalsy(
+        'App randomizer attempted to visit interface that is not the least used'
+      );
+      actualUrls.add(u);
+      journey(
+        urlToInterfaceName(u),
+        allInterfaces
+      ).then(() => {
+        visitAllPages([], actualUrls, expectedUrls);
+      });
+    });
+  // browser.get('/')
+  //   .then(() => element(by.className('button--start')).click())
+  //   .then(() => browser.getCurrentUrl())
+  //   .then((u) => {
+  //     actualUrls.add(u);
+  //     useAndTestInterface(u, expectedUrls).then(() => visitAllPages(expectedUrls, actualUrls));
+  //   });
+}
+
+export const journey = async (subjectInterface: string, allInterfaces: string[]) => {
+  let otherInterfaceNames = allInterfaces.filter(intName => intName !== subjectInterface);
+  console.log(subjectInterface);
+  console.log(otherInterfaceNames);
+
+  await journeyReadAndQuiz(
+    subjectInterface,
+    otherInterfaceNames
+  );
+}
+
 export async function useAndTestInterface(currentUrl: string, allUrls: Set<string>) {
-  let primaryInterface = extractInterfaceNameFromUrl(currentUrl);
+  let primaryInterface = urlToInterfaceName(currentUrl);
   let secondaryInterfaces: string[] = [];
   allUrls.forEach((url) => {
-    secondaryInterfaces.push(extractInterfaceNameFromUrl(url));
+    secondaryInterfaces.push(urlToInterfaceName(url));
   })
   secondaryInterfaces = secondaryInterfaces.filter((interfaceName) => interfaceName !== primaryInterface);
   switch (primaryInterface) {
@@ -61,17 +109,10 @@ const baselineJourney = () => {
   expect(by.className('button--quiz')).toBeDefined();
 }
 
-
 export async function journeyReadAndQuiz(
   primaryInterface: string,
   secondaryInterfaces: string[]
 ) {
-  const interfaces: { [key: string]: string; } = {
-    primary: primaryInterface,
-  };
-  secondaryInterfaces.map((interfaceName, index) => {
-    Object.assign(interfaces, {[`secondary${index + 1}`]: interfaceName});
-  });
   let allInterfaces = [primaryInterface];
   allInterfaces = allInterfaces.concat(secondaryInterfaces);
 
@@ -121,8 +162,16 @@ export async function getMetricsFor(
   });
 }
 
+function readInstructionsAndStart() {
+  expect(element(by.className('instructions'))).toBeTruthy();
+  element(by.className('button--play')).click();
+}
+
 export function verifyRSVPWorks() {
   browser.waitForAngularEnabled(false);
+
+  readInstructionsAndStart();
+
   var until = protractor.ExpectedConditions;
   browser.wait(
     until.presenceOf(element(by.className('passage-title'))),
@@ -131,17 +180,12 @@ export function verifyRSVPWorks() {
   );
   expect(element(by.className('passage-title')).getText()).toEqual('Test Passage');
 
-  let content = element(by.className('passage-content'));
-  expect(content.getText()).toBe(' ');
-  element(by.className('button--play')).click();
-  browser.sleep(400);
-  expect(content.getText()).not.toBe(' ');
   browser.wait(
     until.presenceOf(element(by.className('container--completion'))),
-    5000,
+    10000,
     'Passage Completion message taking too long to appear'
   );
-  browser.sleep(400);
+  browser.sleep(400); // to let the metric trigger
 }
 
 export function takeQuiz(interfaceName: string) {
@@ -162,7 +206,7 @@ function compareMetrics(
 ) {
   expect(metricCountEnd[0]).toBe(
     metricCountStart[0] + 1,
-    `Metrics did not a ${metricType} for ${interfaces['primary']}`
+    `Metrics did not a ${metricType} for ${interfaces[0]}`
   );
 
   for (let i = 1; i < interfaces.length; i++) {

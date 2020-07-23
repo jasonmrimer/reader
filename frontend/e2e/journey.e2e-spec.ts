@@ -1,10 +1,18 @@
 import { browser, by, element } from 'protractor';
 import * as _ from 'lodash';
-import { useAndTestInterface } from './e2e-helpers';
+import { useAndTestInterface, visitAllPages } from './e2e-helpers';
 
 describe('Reader App', () => {
   it('should take a user on a multi-interface journey', () => {
     browser.waitForAngularEnabled(false);
+    const allInterfaces = [
+      'baseline',
+      'rsvp-basic',
+      'rsvp-progress-bar',
+      'rsvp-section-mark',
+      'rsvp-subway'
+    ]
+
     let expectUrls = new Set([
       'http://localhost:4200/baseline/1',
       'http://localhost:4200/rsvp-basic/1',
@@ -12,8 +20,11 @@ describe('Reader App', () => {
       'http://localhost:4200/rsvp-section-mark/1',
       'http://localhost:4200/rsvp-subway/1',
     ]);
-    let actualUrls = new Set();
-    visitAllPages(expectUrls, actualUrls)
+
+    let actualUrls = new Set<string>();
+
+    visitAllPages(allInterfaces, actualUrls, expectUrls);
+
     //    nav to homepage
     //    start
     //    log to which interface it takes us
@@ -28,29 +39,5 @@ describe('Reader App', () => {
     //  expect completion message because user cannot take any more (taints results)
   });
 
-  let visitAllPages = (expectedUrls, actualUrls) => {
-    if (actualUrls.size > 30) {
-      expect(false).toBeTruthy('Visiting all page took more than 50 attempts.');
-    }
 
-    if (_.isEqual(expectedUrls, actualUrls)) {
-      return;
-    }
-    browser.get('/')
-      .then(() => element(by.className('button--start')).click())
-      .then(() => browser.getCurrentUrl())
-      .then((u) => {
-        actualUrls.add(u);
-        useAndTestInterface(u, expectedUrls).then(() => {
-          visitAllPages(expectedUrls, actualUrls);
-        });
-      });
-    // browser.get('/')
-    //   .then(() => element(by.className('button--start')).click())
-    //   .then(() => browser.getCurrentUrl())
-    //   .then((u) => {
-    //     actualUrls.add(u);
-    //     useAndTestInterface(u, expectedUrls).then(() => visitAllPages(expectedUrls, actualUrls));
-    //   });
-  }
 });
