@@ -54,9 +54,9 @@ const baselineJourney = () => {
   browser.get('/baseline/0');
   expect(element(by.className('instructions')).getText()).toContain('Take about 2 minutes to read the following passage.')
   element(by.className('button--play')).click();
-  expect(element(by.id('passage-title')).getText()).toEqual('Test Passage');
-  expect(element(by.id('passage-content')).getText()).toContain('First sentence.');
-  expect(element(by.id('passage-content')).getText()).toContain('Last section.');
+  expect(element(by.className('passage-title')).getText()).toEqual('Test Passage');
+  expect(element(by.className('passage-content')).getText()).toContain('First sentence.');
+  expect(element(by.className('passage-content')).getText()).toContain('Last section.');
   browser.sleep(8000);
   expect(by.className('button--quiz')).toBeDefined();
 }
@@ -78,9 +78,10 @@ export async function journeyReadAndQuiz(
   const completionCountStart = await getMetricsFor('completion-count', allInterfaces);
   const quizCountStart = await getMetricsFor('quiz-count', allInterfaces);
 
-  browser.get(`/${primaryInterface}/0`);
-  verifyRSVPWorks();
-  takeQuiz();
+  browser.get(`/${primaryInterface}/0`).then(() => {
+    verifyRSVPWorks();
+    takeQuiz(primaryInterface);
+  });
 
   const completionCountEnd = await getMetricsFor('completion-count', allInterfaces);
   const quizCountEnd = await getMetricsFor('quiz-count', allInterfaces);
@@ -121,15 +122,16 @@ export async function getMetricsFor(
 }
 
 export function verifyRSVPWorks() {
+  browser.waitForAngularEnabled(false);
   var until = protractor.ExpectedConditions;
   browser.wait(
-    until.presenceOf(element(by.id('passage-title'))),
+    until.presenceOf(element(by.className('passage-title'))),
     5000,
     'Passage Title taking too long to appear in the DOM'
   );
-  expect(element(by.id('passage-title')).getText()).toEqual('Test Passage');
+  expect(element(by.className('passage-title')).getText()).toEqual('Test Passage');
 
-  let content = element(by.id('passage-content'));
+  let content = element(by.className('passage-content'));
   expect(content.getText()).toBe(' ');
   element(by.className('button--play')).click();
   browser.sleep(400);
@@ -139,9 +141,13 @@ export function verifyRSVPWorks() {
     5000,
     'Passage Completion message taking too long to appear'
   );
+  browser.sleep(400);
 }
 
-export function takeQuiz() {
+export function takeQuiz(interfaceName: string) {
+  if (interfaceName === 'rsvp-subway') {
+    browser.waitForAngularEnabled(false);
+  }
   element(by.className('button--quiz')).click();
   element(by.css('[aria-label="fox"]')).click();
   element(by.css('[aria-label="Augusta"]')).click();

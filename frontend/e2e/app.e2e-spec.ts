@@ -28,9 +28,12 @@ describe('Reader App', () => {
   });
 
   const journey = async (interfaceName: string) => {
+    let otherInterfaceNames = allInterfaces.filter(intName => intName !== interfaceName);
+    console.log(otherInterfaceNames);
+
     await journeyReadAndQuiz(
       interfaceName,
-      allInterfaces.filter(intName => intName !== interfaceName)
+      otherInterfaceNames
     );
   }
   it('should use RSVP Basic to read passage, take quiz, and update metrics', async () => {

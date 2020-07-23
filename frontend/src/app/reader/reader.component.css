@@ -1,10 +1,10 @@
-#container-reader {
+.container--reader {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-#passage-title {
+.passage-title {
   font-family: Roboto, sans-serif;
   font-size: 24px;
   font-weight: 500;
@@ -12,7 +12,7 @@
   padding-top: 16px;
 }
 
-#passage-content {
+.passage-content {
   display: flex;
   margin-top: 16px;
   background: #ebebeb;
