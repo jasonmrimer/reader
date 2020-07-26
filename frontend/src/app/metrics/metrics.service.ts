@@ -37,10 +37,7 @@ export class MetricsService {
       new QuizMetric(MetricInterfaceName.RSVP_SECTION_MARK, 0),
       new QuizMetric(MetricInterfaceName.RSVP_PROGRESS_BAR, 0),
     ];
-    console.log(metrics);
     metrics.map(metric => {
-      console.log(metric.interfaceName);
-      console.log(metric.quizCount);
       let matchingMetric = blankMetrics.find(m => m.interfaceName === metric.interfaceName);
       matchingMetric.quizCount = metric.quizCount;
     })

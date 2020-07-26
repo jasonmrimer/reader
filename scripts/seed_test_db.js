@@ -8,7 +8,7 @@ filePathPassageTest5 = pwd() + '/models/passageTest5';
 filePathPassage1 = pwd() + '/models/passage1';
 db.passages.insert(
   {
-    _id: '-1',
+    _id: '1',
     title: 'Test Passage',
     content: cat(filePathPassageTest1),
     coordinates: [
@@ -22,7 +22,7 @@ db.passages.insert(
 );
 db.passages.insert(
   {
-    _id: '-2',
+    _id: '2',
     title: 'Test Passage',
     content: cat(filePathPassageTest2),
     coordinates: [
@@ -36,7 +36,7 @@ db.passages.insert(
 );
 db.passages.insert(
   {
-    _id: '-3',
+    _id: '3',
     title: 'Test Passage',
     content: cat(filePathPassageTest3),
     coordinates: [
@@ -50,7 +50,7 @@ db.passages.insert(
 );
 db.passages.insert(
   {
-    _id: '-4',
+    _id: '4',
     title: 'Test Passage',
     content: cat(filePathPassageTest4),
     coordinates: [
@@ -64,7 +64,7 @@ db.passages.insert(
 );
 db.passages.insert(
   {
-    _id: '-5',
+    _id: '5',
     title: 'Test Passage',
     content: cat(filePathPassageTest5),
     coordinates: [
@@ -76,23 +76,9 @@ db.passages.insert(
     ]
   }
 );
-db.passages.insert(
-  {
-    _id: '1',
-    title: 'For SpaceX, Third Launch is Charm',
-    content: cat(filePathPassage1),
-    coordinates: [
-      {x: 0, y: 0},
-      {x: -285.3, y: 92.7},
-      {x: -559.7, y: 367.1},
-      {x: 138.6, y: 318.2},
-      {x: 64.3, y: 302.4},
-    ]
-  }
-);
 db.quizzes.insert(
   {
-    passage: -1,
+    passage: 1,
     questions: [
       {
         question: 'what is a red mammal?',
@@ -117,7 +103,7 @@ db.quizzes.insert(
 );
 db.quizzes.insert(
   {
-    passage: -2,
+    passage: 2,
     questions: [
       {
         question: 'what is a red mammal?',
@@ -142,7 +128,7 @@ db.quizzes.insert(
 );
 db.quizzes.insert(
   {
-    passage: -3,
+    passage: 3,
     questions: [
       {
         question: 'what is a red mammal?',
@@ -167,7 +153,7 @@ db.quizzes.insert(
 );
 db.quizzes.insert(
   {
-    passage: -4,
+    passage: 4,
     questions: [
       {
         question: 'what is a red mammal?',
@@ -192,7 +178,7 @@ db.quizzes.insert(
 );
 db.quizzes.insert(
   {
-    passage: -5,
+    passage: 5,
     questions: [
       {
         question: 'what is a red mammal?',
