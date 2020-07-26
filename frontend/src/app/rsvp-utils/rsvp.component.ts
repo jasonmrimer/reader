@@ -14,7 +14,7 @@ import { MetricInterfaceName } from '../metrics/MetricInterfaceName';
 })
 export class RsvpComponent implements OnInit {
   rsvpType: MetricInterfaceName;
-  private subscription: Subscription;
+  protected subscription: Subscription;
   private passageId: number;
 
   constructor(

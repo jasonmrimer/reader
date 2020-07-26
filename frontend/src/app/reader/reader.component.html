@@ -11,8 +11,24 @@
       </div>
     </div>
   </div>
-  <button class="button--play" (click)="playReader()">Play</button>
-  <button id="pause-button" (click)="pauseReaderByClick()">Pause</button>
+  <div
+    *ngIf="!didStart"
+    class="container--instructions"
+  >
+    <span
+      class="instructions"
+    >
+      <span>Take about 2 minutes to read the following passage.</span>
+      <span>The words will come one at a time with no pausing.</span>
+      <span>Complete the quiz after reading, thanks!</span>
+    </span>
+    <button
+      class="button--play btn btn-primary"
+      (click)="playReader()"
+    >
+      Press to Start
+    </button>
+  </div>
   <app-passage-completion
     *ngIf="rsvpService.isComplete"
     [quizRoute]="rsvpService.quizRoute"

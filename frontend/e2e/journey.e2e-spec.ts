@@ -1,6 +1,5 @@
-import { browser, by, element } from 'protractor';
-import * as _ from 'lodash';
-import { useAndTestInterface, visitAllPages } from './e2e-helpers';
+import { browser } from 'protractor';
+import { visitAllPages } from './e2e-helpers';
 
 describe('Reader App', () => {
   it('should take a user on a multi-interface journey', () => {

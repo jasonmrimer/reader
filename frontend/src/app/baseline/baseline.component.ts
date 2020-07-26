@@ -6,6 +6,7 @@ import { PassageService } from '../rsvp-utils/passage.service';
 import { RSVPService } from '../rsvp-utils/rsvp.service';
 import { ActivatedRoute } from '@angular/router';
 import { MetricInterfaceName } from '../metrics/MetricInterfaceName';
+import { skip } from 'rxjs/operators';
 
 @Component({
   selector: 'app-baseline',

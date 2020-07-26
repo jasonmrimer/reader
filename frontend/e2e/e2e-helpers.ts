@@ -34,13 +34,6 @@ export const visitAllPages = (
         visitAllPages([], actualUrls, expectedUrls);
       });
     });
-  // browser.get('/')
-  //   .then(() => element(by.className('button--start')).click())
-  //   .then(() => browser.getCurrentUrl())
-  //   .then((u) => {
-  //     actualUrls.add(u);
-  //     useAndTestInterface(u, expectedUrls).then(() => visitAllPages(expectedUrls, actualUrls));
-  //   });
 }
 
 export const journey = async (subjectInterface: string, allInterfaces: string[]) => {
@@ -54,65 +47,15 @@ export const journey = async (subjectInterface: string, allInterfaces: string[])
   );
 }
 
-export async function useAndTestInterface(currentUrl: string, allUrls: Set<string>) {
-  let primaryInterface = urlToInterfaceName(currentUrl);
-  let secondaryInterfaces: string[] = [];
-  allUrls.forEach((url) => {
-    secondaryInterfaces.push(urlToInterfaceName(url));
-  })
-  secondaryInterfaces = secondaryInterfaces.filter((interfaceName) => interfaceName !== primaryInterface);
-  switch (primaryInterface) {
-    case 'baseline':
-      baselineJourney();
-      break;
-    case 'rsvp-basic':
-      await journeyReadAndQuiz(
-        'rsvp-basic',
-        ['rsvp-progress-bar', 'rsvp-section-mark']
-      );
-      break;
-    case 'rsvp-progress-bar':
-      await journeyReadAndQuiz(
-        'rsvp-progress-bar',
-        ['rsvp-basic', 'rsvp-section-mark']
-      );
-      browser.get('/rsvp-progress-bar/0');
-      expect(element(by.id('progress-bar'))).toBeDefined();
-      break;
-    case 'rsvp-section-mark':
-      await journeyReadAndQuiz(
-        'rsvp-section-mark',
-        ['rsvp-basic', 'rsvp-progress-bar']
-      );
-      browser.get('/rsvp-section-mark/0');
-      expect(element(by.id('completion-meter'))).toBeDefined();
-      expect(element.all(by.className('slider-tick')).count()).toBe(4);
-      break;
-    default:
-      console.log('subway');
-    // case 'rsvp-subway':
-    //   await journeyReadAndQuiz(
-    //     'rsvp-subway',
-    //     ['rsvp-basic', 'rsvp-section-mark']
-    //   );
-  }
-}
-
-const baselineJourney = () => {
-  browser.get('/baseline/0');
-  expect(element(by.className('instructions')).getText()).toContain('Take about 2 minutes to read the following passage.')
-  element(by.className('button--play')).click();
-  expect(element(by.className('passage-title')).getText()).toEqual('Test Passage');
-  expect(element(by.className('passage-content')).getText()).toContain('First sentence.');
-  expect(element(by.className('passage-content')).getText()).toContain('Last section.');
-  browser.sleep(8000);
-  expect(by.className('button--quiz')).toBeDefined();
+function isAngular(primaryInterface: string) {
+  return primaryInterface != 'rsvp-subway';
 }
 
 export async function journeyReadAndQuiz(
   primaryInterface: string,
   secondaryInterfaces: string[]
 ) {
+
   let allInterfaces = [primaryInterface];
   allInterfaces = allInterfaces.concat(secondaryInterfaces);
 
@@ -120,7 +63,7 @@ export async function journeyReadAndQuiz(
   const quizCountStart = await getMetricsFor('quiz-count', allInterfaces);
 
   browser.get(`/${primaryInterface}/0`).then(() => {
-    verifyRSVPWorks();
+    verifyRSVPWorks(primaryInterface);
     takeQuiz(primaryInterface);
   });
 
@@ -167,35 +110,39 @@ function readInstructionsAndStart() {
   element(by.className('button--play')).click();
 }
 
-export function verifyRSVPWorks() {
-  browser.waitForAngularEnabled(false);
+export function verifyRSVPWorks(primaryInterface: string) {
+  browser.waitForAngularEnabled(isAngular(primaryInterface)).then(() => {
+    const until = protractor.ExpectedConditions;
+    browser.wait(
+      until.presenceOf(element(by.className('passage-title'))),
+      5000,
+      'Passage Title taking too long to appear in the DOM'
+    );
+    expect(element(by.className('passage-title')).getText()).toEqual('Test Passage');
 
-  readInstructionsAndStart();
+    readInstructionsAndStart();
 
-  var until = protractor.ExpectedConditions;
-  browser.wait(
-    until.presenceOf(element(by.className('passage-title'))),
-    5000,
-    'Passage Title taking too long to appear in the DOM'
-  );
-  expect(element(by.className('passage-title')).getText()).toEqual('Test Passage');
-
-  browser.wait(
-    until.presenceOf(element(by.className('container--completion'))),
-    10000,
-    'Passage Completion message taking too long to appear'
-  );
-  browser.sleep(400); // to let the metric trigger
+    browser.wait(
+      until.presenceOf(element(by.className('container--completion'))),
+      20000,
+      'Passage Completion message taking too long to appear'
+    );
+    if (!isAngular(primaryInterface)) {
+      browser.sleep(3000).then(() => {
+        console.log('waited for non angular completion metric post')
+      });
+    }
+  });
 }
 
 export function takeQuiz(interfaceName: string) {
-  if (interfaceName === 'rsvp-subway') {
-    browser.waitForAngularEnabled(false);
-  }
-  element(by.className('button--quiz')).click();
-  element(by.css('[aria-label="fox"]')).click();
-  element(by.css('[aria-label="Augusta"]')).click();
-  element(by.className('sv_complete_btn')).click();
+  browser.waitForAngularEnabled(isAngular(interfaceName))
+    .then(() => {
+      element(by.className('button--quiz')).click();
+      element(by.css('[aria-label="fox"]')).click();
+      element(by.css('[aria-label="Augusta"]')).click();
+      element(by.className('sv_complete_btn')).click();
+    });
 }
 
 function compareMetrics(

@@ -1,6 +1,10 @@
 <div
-  *ngIf="!didStart" class="container--instructions"
+  class="container--passage"
 >
+  <div class="passage-title">{{rsvpService.title}}</div>
+  <div
+    *ngIf="!didStart" class="container--instructions"
+  >
   <span
     class="instructions"
   >
@@ -8,19 +12,19 @@
     <span>It is timed: if you finish before the timer, please wait...</span>
     <span>Complete the quiz after reading, thanks!</span>
   </span>
-  <button
-    class="button--play btn btn-primary"
-    (click)="playReader()"
+    <button
+      class="button--play btn btn-primary"
+      (click)="playReader()"
+    >
+      Press to Start
+    </button>
+  </div>
+  <div
+    *ngIf="displayPassage()"
+    class="passage-content"
   >
-    Press to Start
-  </button>
-</div>
-<div
-  *ngIf="displayPassage()"
-  class="container--passage"
->
-  <div class="passage-title">{{rsvpService.title}}</div>
-  <div class="passage-content">{{rsvpService.prettyPassage()}}</div>
+    {{rsvpService.prettyPassage()}}
+  </div>
 </div>
 <app-passage-completion
   *ngIf="rsvpService.isComplete"

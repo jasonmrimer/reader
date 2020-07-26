@@ -1,6 +1,6 @@
 import { FrontendPage } from './app.po';
 import { browser, by, element } from 'protractor';
-import { journey, journeyReadAndQuiz } from './e2e-helpers';
+import { journey } from './e2e-helpers';
 
 describe('Reader App', () => {
   let page: FrontendPage;
@@ -18,14 +18,6 @@ describe('Reader App', () => {
 
   it('should use Baseline to read passage, take quiz, and update metrics', async () => {
     await journey('baseline', allInterfaces);
-    // browser.get('/baseline/0');
-    // expect(element(by.className('instructions')).getText()).toContain('Take about 2 minutes to read the following passage.')
-    // element(by.className('button--play')).click();
-    // expect(element(by.className('passage-title')).getText()).toEqual('Test Passage');
-    // expect(element(by.className('passage-content')).getText()).toContain('First sentence.');
-    // expect(element(by.className('passage-content')).getText()).toContain('Last section.');
-    // browser.sleep(8000);
-    // expect(by.className('button--quiz')).toBeDefined();
   });
 
 

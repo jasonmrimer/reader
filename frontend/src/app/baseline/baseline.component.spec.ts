@@ -12,6 +12,18 @@ import { RSVPService } from '../rsvp-utils/rsvp.service';
 import { PassageCompletionComponent } from '../quiz/passage-completion/passage-completion.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MetricInterfaceName } from '../metrics/MetricInterfaceName';
+import { MetricsServiceStub } from '../metrics/metrics-stub.service';
+import { MetricsService } from '../metrics/metrics.service';
+import { metricsStub } from '../metrics/MetricStub';
+
+function completePassage(rsvpService: RSVPService, intervalService: IntervalServiceMock, fixture: ComponentFixture<BaselineComponent>) {
+  expect(rsvpService.isComplete).toBeFalsy();
+  for (let i = 0; i < 8; i++) {
+    intervalService.tick();
+  }
+  expect(rsvpService.isComplete).toBeTruthy();
+  fixture.detectChanges();
+}
 
 describe('PassageComponent', () => {
   let component: BaselineComponent;
@@ -21,9 +33,9 @@ describe('PassageComponent', () => {
 
   beforeEach(async(() => {
     intervalService = new IntervalServiceMock();
-    spyOn(intervalService, 'runInterval').and.callThrough();
     rsvpService = new RSVPService();
     rsvpService.hydrate(passageStub, MetricInterfaceName.BASELINE)
+    spyOn(intervalService, 'runInterval').and.callThrough();
 
 
     TestBed.configureTestingModule({
@@ -73,7 +85,7 @@ describe('PassageComponent', () => {
 
   it('should turn instructions off and begin reading on start', () => {
     testPreStartConditions();
-    fixture.debugElement.query(By.css('.button--start')).nativeElement.click();
+    fixture.debugElement.query(By.css('.button--play')).nativeElement.click();
     fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('.container--passage'))).toBeTruthy();
     expect(intervalService.runInterval).toHaveBeenCalled();
@@ -85,12 +97,7 @@ describe('PassageComponent', () => {
   });
 
   it('should prompt to take quiz on completion', () => {
-    expect(rsvpService.isComplete).toBeFalsy();
-    for (let i = 0; i < 8; i++) {
-      intervalService.tick();
-    }
-    expect(rsvpService.isComplete).toBeTruthy();
-    fixture.detectChanges();
+    completePassage(rsvpService, intervalService, fixture);
     expect(fixture.debugElement.nativeElement.querySelector('app-passage-completion')).toBeTruthy();
   });
 });

@@ -14,6 +14,7 @@ import { OrpService } from './orp.service';
 export class ReaderComponent implements OnInit {
   @Input()
   rsvpService: RSVPService;
+  didStart: boolean = false;
   subscription: Subscription;
   wpm = 6000;
   textJoiner;
@@ -24,7 +25,6 @@ export class ReaderComponent implements OnInit {
     private ngZone: NgZone,
     private _intervalService: IntervalService,
     private orpService: OrpService,
-    private router: Router
   ) {
   }
 
@@ -73,13 +73,10 @@ export class ReaderComponent implements OnInit {
   }
 
   playReader() {
+    this.didStart = true;
     this.ngZone.runOutsideAngular(() => {
       this._intervalService.runInterval();
     });
-  }
-
-  pauseReaderByClick() {
-    this._intervalService.clearInterval();
   }
 
   pauseReaderByPunctuation() {
@@ -90,9 +87,5 @@ export class ReaderComponent implements OnInit {
         this.playReader();
       }, pauseIncrement);
     }
-  }
-
-  takeQuiz() {
-    this.router.navigate(['/quiz', this.rsvpService.quizRoute]);
   }
 }

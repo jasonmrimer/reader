@@ -44,7 +44,7 @@ describe('ReaderComponent', () => {
     component.rsvpService = rsvpService;
     fixture.detectChanges();
 
-    titleBox = fixture.debugElement.query(By.css('#passage-title'));
+    titleBox = fixture.debugElement.query(By.css('.passage-title'));
     contentBox = fixture.debugElement.query(By.css('#text-joiner'));
     router = TestBed.inject(Router);
   });
@@ -57,11 +57,18 @@ describe('ReaderComponent', () => {
     expect(titleBox.nativeElement.textContent).toBe('title01');
   });
 
-  it('should move to the next word as the interval ticks', () => {
+  it('should display instructions before start', () => {
+    let instructions = fixture.debugElement.query(By.css('.container--instructions'));
+    expect(instructions).toBeTruthy();
+  });
+
+  it('should remove instructions and present one word at a time on play', () => {
     expect(contentBox.nativeElement.textContent).toEqual(' ');
-    const playButton = fixture.debugElement.query(By.css('#button--play'));
+    const playButton = fixture.debugElement.query(By.css('.button--play'));
     playButton.nativeElement.click();
     fixture.detectChanges();
+    let instructions = fixture.debugElement.query(By.css('.container--instructions'));
+    expect(instructions).toBeFalsy();
     expect(contentBox.nativeElement.textContent).toBe('One');
   });
 
@@ -70,12 +77,6 @@ describe('ReaderComponent', () => {
     while (!component.rsvpService.isComplete) {
       intervalServiceMock.tick();
     }
-    expect(intervalServiceMock.clearInterval).toHaveBeenCalled();
-  });
-
-  it('should pause the display', () => {
-    const pauseButton = fixture.debugElement.query(By.css('#pause-button'));
-    pauseButton.nativeElement.click();
     expect(intervalServiceMock.clearInterval).toHaveBeenCalled();
   });
 
