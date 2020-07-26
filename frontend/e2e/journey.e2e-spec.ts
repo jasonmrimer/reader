@@ -3,7 +3,6 @@ import { browser } from 'protractor';
 
 describe('Reader App', () => {
   it('should take a user on a multi-interface journey', async () => {
-    browser.waitForAngularEnabled(false);
     const allInterfaces = [
       'baseline',
       'rsvp-basic',
@@ -28,7 +27,6 @@ describe('Reader App', () => {
       actualUrls = urls;
       expect(actualUrls).toEqual(expectedUrls);
     });
-    console.log('3');
     //    nav to homepage
     //    start
     //    log to which interface it takes us

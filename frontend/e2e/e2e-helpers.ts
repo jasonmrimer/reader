@@ -35,8 +35,12 @@ export const visitAllPages = async (
 
   return browser.get('/')
     .then(() => element(by.className('button--start')).click())
-    .then(() => browser.getCurrentUrl())
+    .then(() => {
+      browser.waitForAngularEnabled(false);
+      return browser.getCurrentUrl()
+    })
     .then((randomizedUrl) => {
+
       console.log(('at url: ' + randomizedUrl));
       expect(actualUrls.has(randomizedUrl)).toBeFalsy(
         'App randomizer attempted to visit interface that is not the least used'
@@ -52,10 +56,7 @@ export const journey = async (subjectInterface: string, allInterfaces: string[])
   console.log('subject: ' + subjectInterface);
   let otherInterfaceNames = allInterfaces.filter(intName => intName !== subjectInterface);
 
-  await journeyReadAndQuiz(
-    subjectInterface,
-    otherInterfaceNames
-  );
+  await journeyReadAndQuiz(subjectInterface, otherInterfaceNames);
 }
 
 function isAngular(primaryInterface: string) {
@@ -66,7 +67,6 @@ export async function journeyReadAndQuiz(
   primaryInterface: string,
   secondaryInterfaces: string[]
 ) {
-
   let allInterfaces = [primaryInterface];
   allInterfaces = allInterfaces.concat(secondaryInterfaces);
 
