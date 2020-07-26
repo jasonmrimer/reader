@@ -52,14 +52,24 @@ export class MetricsService {
   }
 
   mergeMetrics(passageMetrics: PassageMetric[], quizMetrics: QuizMetric[]): DisplayMetric[] {
-    let metrics = passageMetrics.map(metric => {
-      return new DisplayMetric(metric.interfaceName, metric.completionCount, -1);
-    });
-    quizMetrics.map(qm => {
-      if (metrics.find(m => m.interfaceName === qm.interfaceName)) {
-        metrics.find(m => m.interfaceName === qm.interfaceName).quizCount = qm.quizCount;
-      }
+    let displayMetrics = [
+      new DisplayMetric(MetricInterfaceName.BASELINE, 0, 0),
+      new DisplayMetric(MetricInterfaceName.RSVP_BASIC, 0, 0),
+      new DisplayMetric(MetricInterfaceName.RSVP_PROGRESS_BAR, 0, 0),
+      new DisplayMetric(MetricInterfaceName.RSVP_SECTION_MARK, 0, 0),
+      new DisplayMetric(MetricInterfaceName.RSVP_SUBWAY, 0, 0),
+    ];
+
+    displayMetrics.map((displayMetric) => {
+      let matchingMetric = passageMetrics.find(metric => metric.interfaceName === displayMetric.interfaceName);
+      displayMetric.completionCount = matchingMetric ? matchingMetric.completionCount : 0;
     })
-    return metrics;
+
+    displayMetrics.map((displayMetric) => {
+      let matchingMetric = quizMetrics.find(metric => metric.interfaceName === displayMetric.interfaceName);
+      displayMetric.quizCount = matchingMetric ? matchingMetric.quizCount : 0;
+    })
+
+    return displayMetrics;
   }
 }

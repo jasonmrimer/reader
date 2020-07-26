@@ -8,6 +8,7 @@ import { MetricInterfaceName } from './MetricInterfaceName';
 import { passageMetricsStub } from './PassageMetricStub';
 import { QuizMetricsStub } from './QuizMetricStub';
 import { metricsStub } from './MetricStub';
+import { DisplayMetric } from './DisplayMetric';
 
 describe('MetricsService', () => {
   let service: MetricsService;
@@ -23,6 +24,17 @@ describe('MetricsService', () => {
 
   it('should be created', () => {
     expect(service).toBeTruthy();
+  });
+
+  it('should start with 0 metrics for all interfaces when none exist', () => {
+    const metrics = service.mergeMetrics([], []);
+    expect(metrics).toEqual([
+      new DisplayMetric(MetricInterfaceName.BASELINE, 0, 0),
+      new DisplayMetric(MetricInterfaceName.RSVP_BASIC, 0, 0),
+      new DisplayMetric(MetricInterfaceName.RSVP_PROGRESS_BAR, 0, 0),
+      new DisplayMetric(MetricInterfaceName.RSVP_SECTION_MARK, 0, 0),
+      new DisplayMetric(MetricInterfaceName.RSVP_SUBWAY, 0, 0),
+    ]);
   });
 
   it('should get passage completion metrics', () => {
