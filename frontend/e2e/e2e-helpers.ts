@@ -7,39 +7,50 @@ function urlToInterfaceName(fullUrl: string) {
     .replace('/1', '');
 }
 
-export const visitAllPages = (
+function timeoutOnVisits(actualUrls: Set<string>) {
+  if (actualUrls.size > 30) {
+    expect(false).toBeTruthy('Visiting all page took more than 50 attempts.');
+  }
+}
+
+const startFromHomePage = async () => {
+  return browser.get('/')
+    .then(() => element(by.className('button--start')).click())
+    .then(() => {
+      return browser.getCurrentUrl()
+    });
+}
+
+export const visitAllPages = async (
   allInterfaces: string[],
   actualUrls: Set<string>,
   expectedUrls: Set<string>
 ) => {
-  if (actualUrls.size > 30) {
-    expect(false).toBeTruthy('Visiting all page took more than 50 attempts.');
-  }
+  timeoutOnVisits(actualUrls);
 
   if (_.isEqual(expectedUrls, actualUrls)) {
-    return;
+    console.log('all equal');
+    return actualUrls;
   }
-  browser.get('/')
+
+  return browser.get('/')
     .then(() => element(by.className('button--start')).click())
     .then(() => browser.getCurrentUrl())
-    .then((u) => {
-      expect(actualUrls.has(u)).toBeFalsy(
+    .then((randomizedUrl) => {
+      console.log(('at url: ' + randomizedUrl));
+      expect(actualUrls.has(randomizedUrl)).toBeFalsy(
         'App randomizer attempted to visit interface that is not the least used'
       );
-      actualUrls.add(u);
-      journey(
-        urlToInterfaceName(u),
-        allInterfaces
-      ).then(() => {
-        visitAllPages([], actualUrls, expectedUrls);
+      actualUrls.add(randomizedUrl);
+      return journey(urlToInterfaceName(randomizedUrl), allInterfaces).then(() => {
+        return visitAllPages(allInterfaces, actualUrls, expectedUrls);
       });
     });
 }
 
 export const journey = async (subjectInterface: string, allInterfaces: string[]) => {
+  console.log('subject: ' + subjectInterface);
   let otherInterfaceNames = allInterfaces.filter(intName => intName !== subjectInterface);
-  console.log(subjectInterface);
-  console.log(otherInterfaceNames);
 
   await journeyReadAndQuiz(
     subjectInterface,

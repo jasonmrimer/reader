@@ -1,8 +1,8 @@
-import { browser } from 'protractor';
 import { visitAllPages } from './e2e-helpers';
+import { browser } from 'protractor';
 
 describe('Reader App', () => {
-  it('should take a user on a multi-interface journey', () => {
+  it('should take a user on a multi-interface journey', async () => {
     browser.waitForAngularEnabled(false);
     const allInterfaces = [
       'baseline',
@@ -12,7 +12,7 @@ describe('Reader App', () => {
       'rsvp-subway'
     ]
 
-    let expectUrls = new Set([
+    let expectedUrls = new Set([
       'http://localhost:4200/baseline/1',
       'http://localhost:4200/rsvp-basic/1',
       'http://localhost:4200/rsvp-progress-bar/1',
@@ -22,8 +22,13 @@ describe('Reader App', () => {
 
     let actualUrls = new Set<string>();
 
-    visitAllPages(allInterfaces, actualUrls, expectUrls);
-
+    console.log('1');
+    visitAllPages(allInterfaces, actualUrls, expectedUrls).then((urls) => {
+      console.log('2');
+      actualUrls = urls;
+      expect(actualUrls).toEqual(expectedUrls);
+    });
+    console.log('3');
     //    nav to homepage
     //    start
     //    log to which interface it takes us
