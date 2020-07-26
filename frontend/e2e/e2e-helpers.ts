@@ -13,14 +13,6 @@ function timeoutOnVisits(actualUrls: Set<string>) {
   }
 }
 
-const startFromHomePage = async () => {
-  return browser.get('/')
-    .then(() => element(by.className('button--start')).click())
-    .then(() => {
-      return browser.getCurrentUrl()
-    });
-}
-
 export const visitAllPages = async (
   allInterfaces: string[],
   actualUrls: Set<string>,

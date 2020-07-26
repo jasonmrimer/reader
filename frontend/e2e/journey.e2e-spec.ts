@@ -1,5 +1,4 @@
 import { visitAllPages } from './e2e-helpers';
-import { browser } from 'protractor';
 
 describe('Reader App', () => {
   it('should take a user on a multi-interface journey', async () => {
