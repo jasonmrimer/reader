@@ -74,5 +74,15 @@ export class SessionService {
   private getRandomAvailablePassage(availablePassages: PassageName[]) {
     return availablePassages[this.randomIndex(availablePassages)];
   }
+
+  processSessionPair(sessionPair: SessionPair) {
+    this._availableInterfaces = this._availableInterfaces.filter((interfaceName) => {
+      return interfaceName !== sessionPair.interfaceName;
+    })
+
+    this._availablePassages = this._availablePassages.filter((passageName) => {
+      return passageName !== sessionPair.passageName;
+    })
+  }
 }
 

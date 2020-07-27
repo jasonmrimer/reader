@@ -5,7 +5,6 @@ import { AllInterfaces, InterfaceName } from './InterfaceName';
 import { AllPassages, PassageName } from './PassageName';
 import { SessionPair } from './SessionPair';
 import { MetricsServiceStub } from '../metrics/metrics-stub.service';
-import { QuizMetricsPartialStub } from '../metrics/QuizMetricStub';
 import { HttpTestingController } from '@angular/common/http/testing';
 
 describe('SessionService', () => {
@@ -49,5 +48,22 @@ describe('SessionService', () => {
       expect(expectedPairs).toContain(actualPair);
     });
 
+  });
+
+  it('should process a pairing and remove from available', () => {
+    let sessionPair = new SessionPair(InterfaceName.RSVP_SUBWAY, PassageName.FOUR);
+    service.processSessionPair(sessionPair);
+    expect(service.availableInterfaces).toEqual(jasmine.arrayWithExactContents([
+      InterfaceName.BASELINE,
+      InterfaceName.RSVP_BASIC,
+      InterfaceName.RSVP_PROGRESS_BAR,
+      InterfaceName.RSVP_SECTION_MARK
+    ]));
+    expect(service.availablePassages).toEqual(jasmine.arrayWithExactContents([
+      PassageName.ONE,
+      PassageName.TWO,
+      PassageName.THREE,
+      PassageName.FIVE,
+    ]))
   });
 });
