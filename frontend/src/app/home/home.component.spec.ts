@@ -4,21 +4,21 @@ import { HomeComponent } from './home.component';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
-import { MetricsServiceStub } from '../metrics/metrics-stub.service';
-import { MetricsService } from '../metrics/metrics.service';
 import { QuizMetric } from '../metrics/QuizMetric';
-import { MetricInterfaceName } from '../metrics/MetricInterfaceName';
-import { QuizMetricsStub } from '../metrics/QuizMetricStub';
+import { InterfaceName } from '../session/InterfaceName';
+import { QuizMetricsPartialStub } from '../metrics/QuizMetricStub';
+import { MetricsService } from '../metrics/metrics.service';
+import { MetricsServiceStub } from '../metrics/metrics-stub.service';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
   let router;
-  let metricsService: MetricsServiceStub;
+  let metricsService: MetricsService;
   let quizMetricsStub: QuizMetric[];
 
   beforeEach(async(() => {
-    quizMetricsStub = QuizMetricsStub()
+    quizMetricsStub = QuizMetricsPartialStub()
     metricsService = new MetricsServiceStub();
 
     TestBed.configureTestingModule({
@@ -40,7 +40,7 @@ describe('HomeComponent', () => {
   });
 
   let calledAllTiedInterfaces = (calls) => {
-    return calls.has(`/${MetricInterfaceName.BASELINE}/1`) && calls.has(`/${MetricInterfaceName.RSVP_BASIC}/1`);
+    return calls.has(`/${InterfaceName.BASELINE}/1`) && calls.has(`/${InterfaceName.RSVP_BASIC}/1`);
   }
 
   it('should create', () => {
@@ -58,7 +58,7 @@ describe('HomeComponent', () => {
 
     fixture.debugElement.query(By.css('.button--start')).nativeElement.click();
     fixture.detectChanges();
-    expect(router.navigate).toHaveBeenCalledWith([`/${MetricInterfaceName.BASELINE}/1`]);
+    expect(router.navigate).toHaveBeenCalledWith([`/${InterfaceName.BASELINE}/1`]);
   });
 
   it('should take the reader to a random, unused interface in case never used', () => {

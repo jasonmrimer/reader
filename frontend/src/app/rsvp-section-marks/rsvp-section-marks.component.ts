@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RSVPService } from '../rsvp-utils/rsvp.service';
 import { PassageService } from '../rsvp-utils/passage.service';
 import { RsvpComponent } from '../rsvp-utils/rsvp.component';
-import { MetricInterfaceName } from '../metrics/MetricInterfaceName';
+import { InterfaceName } from '../session/InterfaceName';
 
 @Component({
   selector: 'app-rsvp-section-marks',
@@ -13,6 +13,6 @@ import { MetricInterfaceName } from '../metrics/MetricInterfaceName';
 export class RsvpSectionMarksComponent extends RsvpComponent {
   ngOnInit(): void {
     super.ngOnInit();
-    this.rsvpType = MetricInterfaceName.RSVP_SECTION_MARK;
+    this.rsvpType = InterfaceName.RSVP_SECTION_MARK;
   }
 }

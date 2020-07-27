@@ -4,9 +4,9 @@ import { MetricsService } from './metrics.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { PassageMetric } from './PassageMetric';
 import { QuizMetric } from './QuizMetric';
-import { MetricInterfaceName } from './MetricInterfaceName';
+import { InterfaceName } from '../session/InterfaceName';
 import { passageMetricsStub } from './PassageMetricStub';
-import { QuizMetricsStub } from './QuizMetricStub';
+import { QuizMetricsPartialStub } from './QuizMetricStub';
 import { metricsStub } from './MetricStub';
 import { DisplayMetric } from './DisplayMetric';
 
@@ -29,11 +29,11 @@ describe('MetricsService', () => {
   it('should start with 0 metrics for all interfaces when none exist', () => {
     const metrics = service.mergeMetrics([], []);
     expect(metrics).toEqual([
-      new DisplayMetric(MetricInterfaceName.BASELINE, 0, 0),
-      new DisplayMetric(MetricInterfaceName.RSVP_BASIC, 0, 0),
-      new DisplayMetric(MetricInterfaceName.RSVP_PROGRESS_BAR, 0, 0),
-      new DisplayMetric(MetricInterfaceName.RSVP_SECTION_MARK, 0, 0),
-      new DisplayMetric(MetricInterfaceName.RSVP_SUBWAY, 0, 0),
+      new DisplayMetric(InterfaceName.BASELINE, 0, 0),
+      new DisplayMetric(InterfaceName.RSVP_BASIC, 0, 0),
+      new DisplayMetric(InterfaceName.RSVP_PROGRESS_BAR, 0, 0),
+      new DisplayMetric(InterfaceName.RSVP_SECTION_MARK, 0, 0),
+      new DisplayMetric(InterfaceName.RSVP_SUBWAY, 0, 0),
     ]);
   });
 
@@ -46,7 +46,7 @@ describe('MetricsService', () => {
   });
 
   it('should update a passage completion metric', () => {
-    service.postPassageCompletion(MetricInterfaceName.RSVP_BASIC)
+    service.postPassageCompletion(InterfaceName.RSVP_BASIC)
       .subscribe(() => {
       });
     passagePOSTStub();
@@ -54,22 +54,22 @@ describe('MetricsService', () => {
 
   it('should fetch the quiz metrics and zeroize all non-used interfaces', () => {
     let expectedQuizMetrics = [
-      new QuizMetric(MetricInterfaceName.BASELINE, 11),
-      new QuizMetric(MetricInterfaceName.RSVP_BASIC, 11),
-      new QuizMetric(MetricInterfaceName.RSVP_SUBWAY, 33),
-      new QuizMetric(MetricInterfaceName.RSVP_SECTION_MARK, 0),
-      new QuizMetric(MetricInterfaceName.RSVP_PROGRESS_BAR, 0),
+      new QuizMetric(InterfaceName.BASELINE, 11),
+      new QuizMetric(InterfaceName.RSVP_BASIC, 11),
+      new QuizMetric(InterfaceName.RSVP_SUBWAY, 33),
+      new QuizMetric(InterfaceName.RSVP_SECTION_MARK, 0),
+      new QuizMetric(InterfaceName.RSVP_PROGRESS_BAR, 0),
     ];
 
     service.fetchQuizMetrics().subscribe((response: QuizMetric[]) => {
-      expect(response).toEqual(expectedQuizMetrics);
+      expect(response).toEqual(jasmine.arrayWithExactContents(expectedQuizMetrics));
     });
 
     quizGETStub();
   });
 
   it('should combine the quiz and completion metrics into a single metric', () => {
-    const metrics = service.mergeMetrics(passageMetricsStub, QuizMetricsStub());
+    const metrics = service.mergeMetrics(passageMetricsStub, QuizMetricsPartialStub());
     expect(metrics).toEqual(metricsStub);
   });
 
@@ -88,6 +88,6 @@ describe('MetricsService', () => {
   function quizGETStub() {
     const request = httpMock.expectOne('http://localhost:4000/api/metrics-quiz');
     expect(request.request.method).toBe('GET');
-    request.flush(QuizMetricsStub());
+    request.flush(QuizMetricsPartialStub());
   }
 });

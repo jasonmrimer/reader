@@ -5,7 +5,7 @@ import { MetricsService } from '../metrics/metrics.service';
 import { PassageService } from '../rsvp-utils/passage.service';
 import { RSVPService } from '../rsvp-utils/rsvp.service';
 import { ActivatedRoute } from '@angular/router';
-import { MetricInterfaceName } from '../metrics/MetricInterfaceName';
+import { InterfaceName } from '../session/InterfaceName';
 import { skip } from 'rxjs/operators';
 
 @Component({
@@ -35,7 +35,7 @@ export class BaselineComponent extends RsvpComponent {
 
   ngOnInit() {
     super.ngOnInit();
-    this.rsvpType = MetricInterfaceName.BASELINE;
+    this.rsvpType = InterfaceName.BASELINE;
     this.setupIntervalService();
   }
 

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PassageMetric } from './PassageMetric';
 import { QuizMetric } from './QuizMetric';
-import { MetricInterfaceName } from './MetricInterfaceName';
+import { AllInterfaces, InterfaceName } from '../session/InterfaceName';
 
 @Injectable({
   providedIn: 'root'
@@ -29,22 +29,18 @@ export class MetricsService {
       )
   }
 
-  private static presetAllInterfacesForQuiz(metrics: QuizMetric[]) {
-    let blankMetrics: QuizMetric[] = [
-      new QuizMetric(MetricInterfaceName.BASELINE, 0),
-      new QuizMetric(MetricInterfaceName.RSVP_BASIC, 0),
-      new QuizMetric(MetricInterfaceName.RSVP_SUBWAY, 0),
-      new QuizMetric(MetricInterfaceName.RSVP_SECTION_MARK, 0),
-      new QuizMetric(MetricInterfaceName.RSVP_PROGRESS_BAR, 0),
-    ];
-    metrics.map(metric => {
-      let matchingMetric = blankMetrics.find(m => m.interfaceName === metric.interfaceName);
+  private static presetAllInterfacesForQuiz(fetchedMetrics: QuizMetric[]) {
+    let quizMetrics: QuizMetric[] = AllInterfaces.map((interfaceName: InterfaceName) => {
+      return new QuizMetric(interfaceName, 0);
+    });
+    fetchedMetrics.map(metric => {
+      let matchingMetric = quizMetrics.find(m => m.interfaceName === metric.interfaceName);
       matchingMetric.quizCount = metric.quizCount;
     })
-    return blankMetrics;
+    return quizMetrics;
   }
 
-  postPassageCompletion(metricInterface: MetricInterfaceName) {
+  postPassageCompletion(metricInterface: InterfaceName) {
     return this._http.post(
       `${environment.apiUrl}/metrics-passage`,
       {interfaceName: metricInterface}
@@ -52,13 +48,9 @@ export class MetricsService {
   }
 
   mergeMetrics(passageMetrics: PassageMetric[], quizMetrics: QuizMetric[]): DisplayMetric[] {
-    let displayMetrics = [
-      new DisplayMetric(MetricInterfaceName.BASELINE, 0, 0),
-      new DisplayMetric(MetricInterfaceName.RSVP_BASIC, 0, 0),
-      new DisplayMetric(MetricInterfaceName.RSVP_PROGRESS_BAR, 0, 0),
-      new DisplayMetric(MetricInterfaceName.RSVP_SECTION_MARK, 0, 0),
-      new DisplayMetric(MetricInterfaceName.RSVP_SUBWAY, 0, 0),
-    ];
+    let displayMetrics: DisplayMetric[] = AllInterfaces.map((interfaceName: InterfaceName) => {
+      return new DisplayMetric(interfaceName, 0, 0);
+    });
 
     displayMetrics.map((displayMetric) => {
       let matchingMetric = passageMetrics.find(metric => metric.interfaceName === displayMetric.interfaceName);

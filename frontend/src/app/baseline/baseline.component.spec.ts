@@ -11,10 +11,7 @@ import { IntervalService } from '../reader/interval.service';
 import { RSVPService } from '../rsvp-utils/rsvp.service';
 import { PassageCompletionComponent } from '../quiz/passage-completion/passage-completion.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MetricInterfaceName } from '../metrics/MetricInterfaceName';
-import { MetricsServiceStub } from '../metrics/metrics-stub.service';
-import { MetricsService } from '../metrics/metrics.service';
-import { metricsStub } from '../metrics/MetricStub';
+import { InterfaceName } from '../session/InterfaceName';
 
 function completePassage(rsvpService: RSVPService, intervalService: IntervalServiceMock, fixture: ComponentFixture<BaselineComponent>) {
   expect(rsvpService.isComplete).toBeFalsy();
@@ -34,7 +31,7 @@ describe('PassageComponent', () => {
   beforeEach(async(() => {
     intervalService = new IntervalServiceMock();
     rsvpService = new RSVPService();
-    rsvpService.hydrate(passageStub, MetricInterfaceName.BASELINE)
+    rsvpService.hydrate(passageStub, InterfaceName.BASELINE)
     spyOn(intervalService, 'runInterval').and.callThrough();
 
 

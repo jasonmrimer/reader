@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MetricsService } from '../metrics/metrics.service';
 import { QuizMetric } from '../metrics/QuizMetric';
+import { SessionService } from '../session/session.service';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private metricsService: MetricsService
+    private metricsService: MetricsService,
+    private sessionService: SessionService
   ) {
     this.metricsService.fetchQuizMetrics().subscribe((metrics) => {
       this.metrics = metrics;

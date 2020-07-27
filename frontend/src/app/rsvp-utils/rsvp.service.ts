@@ -3,7 +3,7 @@ import { Passage } from './passage';
 import { isNotNullOrUndefined } from 'codelyzer/util/isNotNullOrUndefined';
 import { BehaviorSubject } from 'rxjs';
 import { Section } from './Section';
-import { MetricInterfaceName } from '../metrics/MetricInterfaceName';
+import { InterfaceName } from '../session/InterfaceName';
 
 @Injectable({
   providedIn: 'root'
@@ -19,14 +19,14 @@ export class RSVPService {
   private _title: string;
   private _sectionMarkerIndexes: number[];
   private _sectionMarkerPositions: number[];
-  private _interfaceType: MetricInterfaceName;
+  private _interfaceType: InterfaceName;
   private _sectionLengths: number[];
   private _sections: Section[] = [];
 
   constructor() {
   }
 
-  hydrate(passage: Passage, interfaceType: MetricInterfaceName) {
+  hydrate(passage: Passage, interfaceType: InterfaceName) {
     this._passage = passage;
     this._readableContent =
       this.transformToReadableContent(passage.content);

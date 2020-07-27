@@ -9,7 +9,7 @@ import { passageStub } from '../rsvp-utils/PassageStub';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { PassageCompletionComponent } from '../quiz/passage-completion/passage-completion.component';
-import { MetricInterfaceName } from '../metrics/MetricInterfaceName';
+import { InterfaceName } from '../session/InterfaceName';
 
 describe('ReaderComponent', () => {
   let component: ReaderComponent;
@@ -23,7 +23,7 @@ describe('ReaderComponent', () => {
   beforeEach(async(() => {
     intervalServiceMock = new IntervalServiceMock();
     rsvpService = new RSVPService();
-    rsvpService.hydrate(passageStub, MetricInterfaceName.RSVP_BASIC);
+    rsvpService.hydrate(passageStub, InterfaceName.RSVP_BASIC);
 
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
