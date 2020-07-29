@@ -87,7 +87,9 @@ describe('SessionService', () => {
     sessionPairsToRemove.map((pair) => service.makeSessionPairUnavailable(pair));
 
     service.generateSessionPair().subscribe((pair) => {
-      expect(pair).toEqual(new SessionPair(InterfaceName.RSVP_PROGRESS_BAR, PassageName.FOUR));
+      let expectedPair = new SessionPair(InterfaceName.RSVP_PROGRESS_BAR, PassageName.FOUR);
+      expect(pair).toEqual(expectedPair);
+      expect(service.currentPair).toEqual(expectedPair);
     })
   });
 
@@ -102,5 +104,13 @@ describe('SessionService', () => {
     ]
     sessionPairsToRemove.map((pair) => service.makeSessionPairUnavailable(pair))
     expect(service.completedSession).toBeTruthy();
+  });
+
+  it('should remove the current pair from available and clear current pair', () => {
+    service.generateSessionPair().subscribe((pair) => {
+      service.completeCurrentPair();
+      expect(service.availableInterfaces).not.toContain(pair.interfaceName);
+      expect(service.availablePassages).not.toContain(pair.passageName);
+    })
   });
 });

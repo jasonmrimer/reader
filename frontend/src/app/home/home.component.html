@@ -1,3 +1,4 @@
+<div>{{sessionService.sessionId}}</div>
 <div
   *ngIf="!sessionService.completedSession"
   class="container--introduction"
@@ -13,11 +14,9 @@
   >
     START
   </button>
-  <div>{{sessionService.sessionId}}</div>
 </div>
 <div
   *ngIf="sessionService.completedSession"
   class="container--outro"
 >
-
 </div>

@@ -18,5 +18,8 @@ export class SessionServiceMock extends SessionService {
   generateSessionPair = () => {
     return of(new SessionPair(InterfaceName.BASELINE, PassageName.ONE));
   }
+
+  completeCurrentPair() {
+  }
 }
 

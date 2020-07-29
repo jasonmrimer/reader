@@ -11,9 +11,11 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root'
 })
 export class SessionService {
+  private _currentPair: SessionPair;
   private _sessionId: string;
   private _availableInterfaces: InterfaceName[];
   private _availablePassages: PassageName[];
+
   private _metricsService: MetricsService;
 
   hydrate(metricsService: MetricsService) {
@@ -38,10 +40,11 @@ export class SessionService {
   generateSessionPair = (): Observable<SessionPair> => {
     return this._metricsService.fetchQuizMetrics().pipe(
       flatMap(quizMetrics => {
-        return of(new SessionPair(
+        this._currentPair = new SessionPair(
           this.getRandomLeastUsedAvailableInterface(quizMetrics),
           this.getRandomAvailablePassage(this._availablePassages)
-        ));
+        );
+        return of(this._currentPair);
       })
     )
   };
@@ -109,6 +112,14 @@ export class SessionService {
 
   get completedSession(): boolean {
     return this._availableInterfaces.length === 0;
+  }
+
+  get currentPair() {
+    return this._currentPair;
+  }
+
+  completeCurrentPair() {
+    this.makeSessionPairUnavailable(this._currentPair);
   }
 }
 

@@ -1,3 +1,7 @@
+* {
+  color: white;
+}
+
 .container--introduction {
   display: flex;
   flex-direction: column;

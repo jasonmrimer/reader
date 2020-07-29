@@ -4,6 +4,7 @@ import { QuizService } from './quiz.service';
 import { Choice, Question, Quiz } from './Quiz';
 import { QuizSubmission } from './QuizSubmission';
 import { ActivatedRoute } from '@angular/router';
+import { SessionService } from '../session/session.service';
 
 
 SurveyNG.apply({theme: 'modern'});
@@ -20,7 +21,8 @@ export class QuizComponent implements OnInit {
 
   constructor(
     private _quizService: QuizService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private sessionService: SessionService
   ) {
     this.quizService = _quizService;
   }
@@ -76,6 +78,7 @@ export class QuizComponent implements OnInit {
       surveyModel.data,
       this.interfaceName
     )
+    this.sessionService.completeCurrentPair();
     this.quizService.postAnswers(quizSubmission)
       .subscribe();
   }
