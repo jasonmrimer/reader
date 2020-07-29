@@ -22,7 +22,7 @@ function completePassage(rsvpService: RSVPService, intervalService: IntervalServ
   fixture.detectChanges();
 }
 
-describe('PassageComponent', () => {
+describe('BaselineComponent', () => {
   let component: BaselineComponent;
   let fixture: ComponentFixture<BaselineComponent>;
   let rsvpService: RSVPService;
@@ -73,7 +73,8 @@ describe('PassageComponent', () => {
 
   function testPreStartConditions() {
     expect(fixture.debugElement.query(By.css('.container--instructions'))).toBeTruthy();
-    expect(fixture.debugElement.query(By.css('.container--passage'))).toBeFalsy();
+    expect(fixture.debugElement.query(By.css('.container--passage'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('.passage-title'))).toBeTruthy();
   }
 
   it('should start with instructions', () => {
