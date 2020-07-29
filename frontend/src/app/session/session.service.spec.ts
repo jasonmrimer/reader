@@ -52,7 +52,7 @@ describe('SessionService', () => {
 
   it('should process a pairing and remove from available', () => {
     let sessionPair = new SessionPair(InterfaceName.RSVP_SUBWAY, PassageName.FOUR);
-    service.processSessionPair(sessionPair);
+    service.makeSessionPairUnavailable(sessionPair);
     expect(service.availableInterfaces).toEqual(jasmine.arrayWithExactContents([
       InterfaceName.BASELINE,
       InterfaceName.RSVP_BASIC,
@@ -65,5 +65,19 @@ describe('SessionService', () => {
       PassageName.THREE,
       PassageName.FIVE,
     ]))
+  });
+
+  it('should generate a random, least-used starting from session availability', () => {
+    let sessionPair = new SessionPair(InterfaceName.RSVP_SUBWAY, PassageName.FOUR);
+    service.makeSessionPairUnavailable(sessionPair);
+    for (let i = 0; i < 100; i++) {
+      service.generateSessionPair().subscribe((pair) => {
+        expect(pair.interfaceName).toBe(InterfaceName.RSVP_SECTION_MARK);
+      })
+    }
+  });
+
+  it('should allow user to take non-least used if only remaining interfaces for session', () => {
+    //  setup only available to be
   });
 });
