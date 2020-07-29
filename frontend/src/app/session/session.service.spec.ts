@@ -78,6 +78,29 @@ describe('SessionService', () => {
   });
 
   it('should allow user to take non-least used if only remaining interfaces for session', () => {
-    //  setup only available to be
+    let sessionPairsToRemove = [
+     new SessionPair(InterfaceName.BASELINE, PassageName.ONE),
+     new SessionPair(InterfaceName.RSVP_BASIC, PassageName.TWO),
+     new SessionPair(InterfaceName.RSVP_SECTION_MARK, PassageName.THREE),
+     new SessionPair(InterfaceName.RSVP_SUBWAY, PassageName.FIVE),
+    ]
+    sessionPairsToRemove.map((pair) => service.makeSessionPairUnavailable(pair));
+
+    service.generateSessionPair().subscribe((pair) => {
+      expect(pair).toEqual(new SessionPair(InterfaceName.RSVP_PROGRESS_BAR, PassageName.FOUR));
+    })
+  });
+
+  it('should stop the user from continuing if completed all interfaces/passages', () => {
+    expect(service.completedSession).toBeFalsy();
+    let sessionPairsToRemove = [
+      new SessionPair(InterfaceName.BASELINE, PassageName.ONE),
+      new SessionPair(InterfaceName.RSVP_BASIC, PassageName.TWO),
+      new SessionPair(InterfaceName.RSVP_SECTION_MARK, PassageName.THREE),
+      new SessionPair(InterfaceName.RSVP_PROGRESS_BAR, PassageName.FOUR),
+      new SessionPair(InterfaceName.RSVP_SUBWAY, PassageName.FIVE),
+    ]
+    sessionPairsToRemove.map((pair) => service.makeSessionPairUnavailable(pair))
+    expect(service.completedSession).toBeTruthy();
   });
 });

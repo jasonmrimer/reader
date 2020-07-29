@@ -16,9 +16,6 @@ export class SessionService {
   private _availablePassages: PassageName[];
   private _metricsService: MetricsService;
 
-  constructor() {
-  }
-
   hydrate(metricsService: MetricsService) {
     this._sessionId = `${Date.now()}${Math.random()}`
     this._availableInterfaces = [...AllInterfaces];
@@ -50,15 +47,30 @@ export class SessionService {
   };
 
   getRandomLeastUsedAvailableInterface = (quizMetrics: QuizMetric[]) => {
-    let leastUsed = SessionService.leastUsed(quizMetrics);
-    leastUsed = leastUsed.filter(qm => this._availableInterfaces.includes(qm.interfaceName));
-    return this.randomNameFrom(leastUsed);
+    let leastUsedAvailable = SessionService.convertToInterfaceNames(
+      this.filterFromAvailable(
+        SessionService.leastUsed(quizMetrics)
+      )
+    );
+
+    return SessionService.noMoreLeastAvailable(leastUsedAvailable)
+      ? this.randomNameFrom(this._availableInterfaces)
+      : this.randomNameFrom(leastUsedAvailable);
   }
 
-  getRandomLeastInterface = (quizMetrics: QuizMetric[]) =>
-    this.randomNameFrom(
-      SessionService.leastUsed(quizMetrics)
-    )
+  private static noMoreLeastAvailable(leastUsedAvailable: InterfaceName[]) {
+    return leastUsedAvailable.length == 0;
+  }
+
+  private static convertToInterfaceNames(leastUsedAvailable: QuizMetric[]) {
+    let names = leastUsedAvailable.map(({interfaceName}) => interfaceName);
+    return names;
+  }
+
+  private filterFromAvailable(leastUsed: QuizMetric[]) {
+    leastUsed = leastUsed.filter(qm => this._availableInterfaces.includes(qm.interfaceName));
+    return leastUsed;
+  }
 
   private static leastUsed(quizMetrics: QuizMetric[]): QuizMetric[] {
     let minQuizCount = SessionService.findMin(quizMetrics);
@@ -73,8 +85,8 @@ export class SessionService {
     return min;
   };
 
-  private randomNameFrom = (metrics) => {
-    return metrics[this.randomIndex(metrics)].interfaceName
+  private randomNameFrom = (interfaceNames: InterfaceName[]): InterfaceName => {
+    return interfaceNames[this.randomIndex(interfaceNames)]
   }
 
   private randomIndex = (array) => {
@@ -93,6 +105,10 @@ export class SessionService {
     this._availablePassages = this._availablePassages.filter((passageName) => {
       return passageName !== sessionPair.passageName;
     })
+  }
+
+  get completedSession(): boolean {
+    return this._availableInterfaces.length === 0;
   }
 }
 
