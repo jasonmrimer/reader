@@ -10,45 +10,19 @@ import { SessionService } from '../session/session.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  metrics: QuizMetric[];
 
   constructor(
     private router: Router,
-    private metricsService: MetricsService,
     private sessionService: SessionService
   ) {
-    this.metricsService.fetchQuizMetrics().subscribe((metrics) => {
-      this.metrics = metrics;
-    });
   }
 
   ngOnInit(): void {
   }
 
   start() {
-    let interfaceName = this.randomLeastUsedInterface(this.metrics);
-    this.router.navigate([`/${interfaceName}/1`]);
-  }
-
-  randomLeastUsedInterface(metrics: QuizMetric[]) {
-    let minQuizCount = this.findMin(metrics);
-    let leastUsedMetrics = metrics.filter(metric => metric.quizCount === minQuizCount);
-    return this.randomNameFrom(leastUsedMetrics);
-  }
-
-  private randomNameFrom = (metrics) => {
-    return metrics[this.randomIndex(metrics)].interfaceName
-  }
-
-  private findMin = (metrics: QuizMetric[]) => {
-    let min = Number.MAX_SAFE_INTEGER;
-    metrics.map(metric => {
-      min = Math.min(metric.quizCount, min);
-    });
-    return min;
-  };
-
-  private randomIndex = (leastUsed) => {
-    return Math.floor((Math.random() * leastUsed.length) + 1) - 1
+    this.sessionService.generateSessionPair().subscribe((pair) => {
+      this.router.navigate([`/${pair.interfaceName}/1`]);
+    })
   }
 }

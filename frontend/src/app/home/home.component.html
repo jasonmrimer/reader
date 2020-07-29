@@ -1,4 +1,7 @@
-<div class="container--introduction">
+<div
+  *ngIf="!sessionService.completedSession"
+  class="container--introduction"
+>
   <div class="introduction">
     <span>Welcome! By clicking START you agree to be an anonymous member of my research.</span>
     <span>Each reading trial takes about 5 minutes to complete.</span>
@@ -10,5 +13,11 @@
   >
     START
   </button>
-  <div>{{this.sessionService.sessionId}}</div>
+  <div>{{sessionService.sessionId}}</div>
+</div>
+<div
+  *ngIf="sessionService.completedSession"
+  class="container--outro"
+>
+
 </div>

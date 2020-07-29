@@ -9,6 +9,8 @@ import { InterfaceName } from '../session/InterfaceName';
 import { QuizMetricsPartialStub } from '../metrics/QuizMetricStub';
 import { MetricsService } from '../metrics/metrics.service';
 import { MetricsServiceStub } from '../metrics/metrics-stub.service';
+import { SessionServiceMock } from '../session/session-stub.service';
+import { SessionService } from '../session/session.service';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -16,16 +18,19 @@ describe('HomeComponent', () => {
   let router;
   let metricsService: MetricsService;
   let quizMetricsStub: QuizMetric[];
+  let sessionService: SessionServiceMock;
 
   beforeEach(async(() => {
     quizMetricsStub = QuizMetricsPartialStub()
     metricsService = new MetricsServiceStub();
+    sessionService = new SessionServiceMock();
 
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
       declarations: [HomeComponent],
       providers: [
-        {provide: MetricsService, useValue: metricsService}
+        {provide: MetricsService, useValue: metricsService},
+        {provide: SessionService, useValue: sessionService},
       ]
     })
       .compileComponents();
@@ -53,7 +58,7 @@ describe('HomeComponent', () => {
       'Welcome! By clicking START you agree to be an anonymous member of my research.');
   });
 
-  xit('should take the reader to the least-used interface on start', () => {
+  it('should take the reader to the least-used interface on start', () => {
     spyOn(router, 'navigate').and.returnValue(true);
 
     fixture.debugElement.query(By.css('.button--start')).nativeElement.click();
@@ -61,18 +66,11 @@ describe('HomeComponent', () => {
     expect(router.navigate).toHaveBeenCalledWith([`/${InterfaceName.BASELINE}/1`]);
   });
 
-  it('should take the reader to a random, unused interface in case never used', () => {
-    let calls = new Set();
-    spyOn(router, 'navigate').and.callFake((params) => {
-      calls.add(params[0]);
-    });
-
-    while (!calledAllTiedInterfaces(calls)) {
-      fixture.detectChanges();
-      fixture.debugElement.query(By.css('.button--start')).nativeElement.click();
-      fixture.detectChanges();
-    }
-
-    expect(calledAllTiedInterfaces(calls)).toBeTruthy();
+  it('should prevent user from continuing after completing all available readings', () => {
+    expect(fixture.debugElement.query(By.css('.container--introduction'))).toBeTruthy();
+    sessionService.isComplete = true;
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css('.container--introduction'))).toBeFalsy();
+    expect(fixture.debugElement.query(By.css('.container--outro'))).toBeTruthy();
   });
 });
