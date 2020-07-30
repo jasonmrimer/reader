@@ -62,7 +62,7 @@ export class BaselineComponent extends RsvpComponent {
   }
 
   pauseReaderByPunctuation() {
-    let pauseIncrement = this.rsvpService.calculatePause();
+    let pauseIncrement = this.rsvpService.calculatePauseAmount();
     if (pauseIncrement > 0) {
       this.intervalService.clearInterval();
       setTimeout(() => {

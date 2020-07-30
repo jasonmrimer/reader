@@ -1,9 +1,6 @@
 import { Component, Input, NgZone, OnInit } from '@angular/core';
 import { IntervalService } from './interval.service';
-import { Subscription } from 'rxjs';
-import { skip } from 'rxjs/operators';
 import { RSVPService } from '../rsvp-utils/rsvp.service';
-import { Router } from '@angular/router';
 import { OrpService } from './orp.service';
 
 @Component({
@@ -15,7 +12,6 @@ export class ReaderComponent implements OnInit {
   @Input()
   rsvpService: RSVPService;
   didStart: boolean = false;
-  subscription: Subscription;
   wpm = 6000;
   textJoiner;
   textMeasurer;
@@ -26,12 +22,12 @@ export class ReaderComponent implements OnInit {
     private _intervalService: IntervalService,
     private orpService: OrpService,
   ) {
+    this._intervalService.blankSlate();
   }
 
   ngOnInit() {
     this.assignElementsById();
     this.setupIntervalService();
-    this.setupCompletionActions();
   }
 
   private assignElementsById() {
@@ -47,29 +43,22 @@ export class ReaderComponent implements OnInit {
   private setupIntervalService() {
     this._intervalService.setInterval(
       this.wpm,
-      () => {
-        this.ngZone.run(() => {
-          this.rsvpService.moveAhead();
-          this.orpService.separateAndAlign(
-            this.rsvpService.currentWord,
-            this.textMeasurer,
-            this.textElements,
-            this.textJoiner
-          );
-          this.pauseReaderByPunctuation();
-        })
-      }
+      this.playFunctions
     );
   }
 
-  private setupCompletionActions() {
-    this.subscription = this.rsvpService.isComplete$
-      .pipe(skip(1))
-      .subscribe(this.finishReading);
-  }
-
-  private finishReading = () => {
-    this._intervalService.clearInterval();
+  private playFunctions = () => {
+    this.ngZone.run(() => {
+      this.rsvpService.moveAhead();
+      this.orpService.separateAndAlign(
+        this.rsvpService.currentWord,
+        this.textMeasurer,
+        this.textElements,
+        this.textJoiner
+      );
+      this.pauseReaderByPunctuation();
+      this.checkComplete();
+    });
   }
 
   playReader() {
@@ -80,12 +69,16 @@ export class ReaderComponent implements OnInit {
   }
 
   pauseReaderByPunctuation() {
-    let pauseIncrement = this.rsvpService.calculatePause();
-    if (pauseIncrement > 0) {
+    this._intervalService.pause(
+      this.rsvpService.calculatePauseAmount()
+    );
+  }
+
+  private checkComplete() {
+    if (this.rsvpService.isComplete) {
       this._intervalService.clearInterval();
-      setTimeout(() => {
-        this.playReader();
-      }, pauseIncrement);
+      this._intervalService.setInterval(0, () => {
+      });
     }
   }
 }

@@ -221,7 +221,7 @@ export class RSVPService {
   }
 
 
-  calculatePause() {
+  calculatePauseAmount() {
 
     let lastLetter = this.currentWord[this.currentWord.length - 1];
 
