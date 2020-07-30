@@ -1,3 +1,9 @@
 <div>{{sessionService.sessionId}}</div>
 <div id="surveyContainer"></div>
-<li><a routerLink="/home" routerLinkActive="active">Home</a></li>
+<button
+  *ngIf="didSubmit"
+  class="button--try-again btn-primary btn"
+  (click)="tryNew()"
+  >
+  Try a different interface
+</button>

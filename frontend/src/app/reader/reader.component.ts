@@ -19,10 +19,10 @@ export class ReaderComponent implements OnInit {
 
   constructor(
     private ngZone: NgZone,
-    private _intervalService: IntervalService,
+    private intervalService: IntervalService,
     private orpService: OrpService,
   ) {
-    this._intervalService.blankSlate();
+    this.intervalService.blankSlate();
   }
 
   ngOnInit() {
@@ -41,7 +41,7 @@ export class ReaderComponent implements OnInit {
   }
 
   private setupIntervalService() {
-    this._intervalService.setInterval(
+    this.intervalService.setInterval(
       this.wpm,
       this.playFunctions
     );
@@ -64,20 +64,20 @@ export class ReaderComponent implements OnInit {
   playReader() {
     this.didStart = true;
     this.ngZone.runOutsideAngular(() => {
-      this._intervalService.runInterval();
+      this.intervalService.runInterval();
     });
   }
 
   pauseReaderByPunctuation() {
-    this._intervalService.pause(
+    this.intervalService.pause(
       this.rsvpService.calculatePauseAmount()
     );
   }
 
   private checkComplete() {
     if (this.rsvpService.isComplete) {
-      this._intervalService.clearInterval();
-      this._intervalService.setInterval(0, () => {
+      this.intervalService.clearInterval();
+      this.intervalService.setInterval(0, () => {
       });
     }
   }

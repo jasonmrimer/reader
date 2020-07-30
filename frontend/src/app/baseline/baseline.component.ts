@@ -52,22 +52,29 @@ export class BaselineComponent extends RsvpComponent {
   private setupIntervalService() {
     this.intervalService.setInterval(
       this.wpm,
-      () => {
-        this.ngZone.run(() => {
-          this.rsvpService.moveAhead();
-          this.pauseReaderByPunctuation();
-        })
-      }
+      this.playFunctions
     );
   }
 
-  pauseReaderByPunctuation() {
-    let pauseIncrement = this.rsvpService.calculatePauseAmount();
-    if (pauseIncrement > 0) {
+  private playFunctions = () => {
+    this.ngZone.run(() => {
+      this.rsvpService.moveAhead();
+      this.pauseReaderByPunctuation();
+      this.checkComplete();
+    })
+  };
+
+  private checkComplete() {
+    if (this.rsvpService.isComplete) {
       this.intervalService.clearInterval();
-      setTimeout(() => {
-        this.playReader();
-      }, pauseIncrement);
+      this.intervalService.setInterval(0, () => {
+      });
     }
+  }
+
+  pauseReaderByPunctuation() {
+    this.intervalService.pause(
+      this.rsvpService.calculatePauseAmount()
+    );
   }
 }
