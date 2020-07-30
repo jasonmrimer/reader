@@ -9,27 +9,29 @@ import { InterfaceName } from '../session/InterfaceName';
   providedIn: 'root'
 })
 export class RSVPService {
-  private _index = -1;
   private _contentLength = Number.MAX_SAFE_INTEGER;
-
+  private _index = -1;
+  private _interfaceType: InterfaceName;
   private _isComplete = new BehaviorSubject<boolean>(false);
-  private _passage: Passage;
   isComplete$ = this._isComplete.asObservable();
+  private _passage: Passage;
   private _readableContent: string[];
-  private _title: string;
+  private _sections: Section[] = [];
+  private _sectionLengths: number[];
   private _sectionMarkerIndexes: number[];
   private _sectionMarkerPositions: number[];
-  private _interfaceType: InterfaceName;
-  private _sectionLengths: number[];
-  private _sections: Section[] = [];
+  private _title: string;
 
   constructor() {
   }
 
   hydrate(passage: Passage, interfaceType: InterfaceName) {
+    this._index = -1;
+    this._isComplete = new BehaviorSubject<boolean>(false);
+    this.isComplete$ = this._isComplete.asObservable();
+
     this._passage = passage;
-    this._readableContent =
-      this.transformToReadableContent(passage.content);
+    this._readableContent = this.transformToReadableContent(passage.content);
     this._contentLength = this.readableContent.length;
     this._title = passage.title;
     this._sectionMarkerIndexes = this.calculateSectionMarkerIndexes(
