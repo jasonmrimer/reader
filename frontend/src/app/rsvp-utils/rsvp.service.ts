@@ -71,10 +71,12 @@ export class RSVPService {
     }).filter(isNotNullOrUndefined);
   }
 
-  calculateRelativePositionsOfIndexes(indexes: number[], contentLength: number) {
-    return indexes.map((value: number) => {
+  calculateRelativePositionsOfIndexes(indexes: number[], contentLength: number): number[] {
+    let positions = indexes.map((value: number) => {
       return value * 100 / contentLength;
     });
+    positions.push(100);
+    return positions;
   }
 
   moveAhead() {
@@ -122,7 +124,6 @@ export class RSVPService {
   }
 
   get isCompleteSubject(): boolean {
-    // return this._index + 1 >= this._contentLength ;
     return this._isComplete;
   }
 

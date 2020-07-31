@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PassageService } from './passage.service';
 import { RSVPService } from './rsvp.service';
-import { skip } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { InterfaceName } from '../session/InterfaceName';

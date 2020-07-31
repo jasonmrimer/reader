@@ -31,7 +31,7 @@ describe('RSVPService', () => {
     expect(service.contentLength).toBe(8);
     expect(service.title).toBe('title01');
     expect(service.sectionMarkerIndexes).toEqual([0, 3]);
-    expect(service.sectionMarkerPositions).toEqual([0, 37.5]);
+    expect(service.sectionMarkerPositions).toEqual([0, 37.5, 100]);
     expect(service.quizRoute).toBe('rsvp-basic');
     expect(service.sections).toEqual([
       new Section(1, 0, 2, 0),

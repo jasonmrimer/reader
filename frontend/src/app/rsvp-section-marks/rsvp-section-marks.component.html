@@ -4,11 +4,11 @@
 </app-reader>
 <mv-slider
   *ngIf="rsvpService.sectionMarkerIndexes"
-  [value]="rsvpService.index"
+  [value]="rsvpService.index + 1"
   [min]="0"
   [max]="rsvpService.contentLength"
   [ticks]="rsvpService.sectionMarkerIndexes"
-  [ticksPositions]="rsvpService.sectionMarkerPositions"
+  [ticksPositions]="100"
   step="1"
   [ticksSnapBounds]="200"
 >

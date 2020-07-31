@@ -12,7 +12,7 @@ export class ReaderComponent implements OnInit {
   @Input()
   rsvpService: RSVPService;
   didStart: boolean = false;
-  wpm = 6000;
+  wpm = 250;
   textJoiner;
   textMeasurer;
   textElements;
@@ -75,7 +75,6 @@ export class ReaderComponent implements OnInit {
   }
 
   private checkComplete() {
-    console.log(this.rsvpService.isCompleteSubject);
     if (this.rsvpService.isCompleteSubject) {
       this.intervalService.clearInterval();
       this.intervalService.setInterval(0, () => {
