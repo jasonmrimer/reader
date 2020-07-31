@@ -1,12 +1,16 @@
 const mongoose = require('mongoose');
 
 const passageMetric = mongoose.Schema({
-  interfaceName: {
+  user: {
     type: String,
     required: true
   },
-  completionCount: {
-    type: Number,
+  date: {
+    type: Date,
+    required: true
+  },
+  interfaceName: {
+    type: String,
     required: true
   },
 });

@@ -46,7 +46,7 @@ describe('MetricsService', () => {
   });
 
   it('should update a passage completion metric', () => {
-    service.postPassageCompletion(InterfaceName.RSVP_BASIC)
+    service.postPassageCompletion(InterfaceName.RSVP_BASIC, "")
       .subscribe(() => {
       });
     passagePOSTStub();

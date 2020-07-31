@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { InterfaceName } from '../session/InterfaceName';
 import { MetricsService } from '../metrics/metrics.service';
+import { SessionService } from '../session/session.service';
 
 @Component({
   selector: 'app-rsvp-component',
@@ -20,6 +21,7 @@ export class RsvpComponent implements OnInit {
     private metricsService: MetricsService,
     private passageService: PassageService,
     public rsvpService: RSVPService,
+    public sessionService: SessionService,
     private route: ActivatedRoute
   ) {
   }
@@ -45,7 +47,10 @@ export class RsvpComponent implements OnInit {
   }
 
   private postMetric = () => {
-    this.metricsService.postPassageCompletion(this.rsvpType)
+    this.metricsService.postPassageCompletion(
+      this.rsvpType,
+      this.sessionService.sessionId
+    )
       .subscribe();
     this.subscription.unsubscribe();
   }

@@ -49,16 +49,28 @@ router.get('/metrics-passage', (request, response, next) => {
 });
 
 router.post('/metrics-passage', (request, response, next) => {
-  let interfaceName = request.body.interfaceName;
-  passageMetric.findOneAndUpdate(
-    {interfaceName: interfaceName},
-    {$inc: {'completionCount': 1}},
-    {upsert: true, new: true},
-    function (err, doc) {
-      if (err) return response.send(500, {error: err});
-      return response.send({message: 'Successfully saved.'});
+  let newMetric = new passageMetric({
+    user: request.body.user,
+    date: request.body.date,
+    interfaceName: request.body.interfaceName,
+  })
+
+  newMetric.save((err, sub) => {
+    if (err) {
+      response.send(err);
+    } else {
+      response.send(sub)
     }
-  )
+  })
+  // passageMetric.findOneAndUpdate(
+  //   {interfaceName: interfaceName},
+  //   {$inc: {'completionCount': 1}},
+  //   {upsert: true, new: true},
+  //   function (err, doc) {
+  //     if (err) return response.send(500, {error: err});
+  //     return response.send({message: 'Successfully saved.'});
+  //   }
+  // )
 });
 
 router.get('/metrics-quiz', (request, response, next) => {

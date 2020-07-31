@@ -6,6 +6,7 @@ import { PassageService } from '../rsvp-utils/passage.service';
 import { RSVPService } from '../rsvp-utils/rsvp.service';
 import { ActivatedRoute } from '@angular/router';
 import { InterfaceName } from '../session/InterfaceName';
+import { SessionService } from '../session/session.service';
 
 @Component({
   selector: 'app-baseline',
@@ -21,6 +22,7 @@ export class BaselineComponent extends RsvpComponent {
     passageService: PassageService,
     rsvpService: RSVPService,
     route: ActivatedRoute,
+    sessionService: SessionService,
     private intervalService: IntervalService,
     private ngZone: NgZone,
   ) {
@@ -28,6 +30,7 @@ export class BaselineComponent extends RsvpComponent {
       metricsService,
       passageService,
       rsvpService,
+      sessionService,
       route
     );
   }

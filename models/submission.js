@@ -1,6 +1,14 @@
 const mongoose = require('mongoose');
 
 const submission = mongoose.Schema({
+  user: {
+    type: String,
+    require: true
+  },
+  date: {
+    type: Date,
+    require: true
+  },
   quizId: {
     type: String,
     required: true

@@ -40,10 +40,15 @@ export class MetricsService {
     return quizMetrics;
   }
 
-  postPassageCompletion(metricInterface: InterfaceName) {
+  postPassageCompletion(metricInterface: InterfaceName, user: string) {
+
     return this._http.post(
       `${environment.apiUrl}/metrics-passage`,
-      {interfaceName: metricInterface}
+      {
+        interfaceName: metricInterface,
+        date: new Date(),
+        user: user
+      }
     )
   }
 
