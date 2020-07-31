@@ -27,7 +27,7 @@
   </div>
 </div>
 <app-passage-completion
-  *ngIf="rsvpService.isComplete"
+  *ngIf="rsvpService.isCompleteSubject"
   [quizRoute]="rsvpService.quizRoute"
   [completionMessage]="'Your time expired.'"
 ></app-passage-completion>

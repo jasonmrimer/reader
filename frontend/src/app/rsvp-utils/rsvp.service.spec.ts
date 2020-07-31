@@ -27,7 +27,7 @@ describe('RSVPService', () => {
     ])
     expect(service.percentRead()).toBe(0);
     expect(service.index).toBe(-1);
-    expect(service.isComplete).toBeFalsy();
+    expect(service.isCompleteSubject).toBeFalsy();
     expect(service.contentLength).toBe(8);
     expect(service.title).toBe('title01');
     expect(service.sectionMarkerIndexes).toEqual([0, 3]);
@@ -51,12 +51,15 @@ describe('RSVPService', () => {
     expect(service.percentRead()).toBe(25);
   });
 
-  it('should be completed at the end', () => {
-    service.contentLength = 2;
-    expect(service.isComplete).toBeFalse();
+  it('should start with a blank and be completed after moving to the end', () => {
+    expect(service.isCompleteSubject).toBeFalse();
+
     service.moveAhead();
-    service.moveAhead();
-    expect(service.isComplete).toBeTrue();
+    for (let i = 0; i < service.contentLength; i++) {
+      service.moveAhead();
+    }
+
+    expect(service.isCompleteSubject).toBeTrue();
   });
 
   it('should return current word', () => {

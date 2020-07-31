@@ -46,7 +46,7 @@ export class BaselineComponent extends RsvpComponent {
   }
 
   displayPassage = () => {
-    return this.didStart && !this.rsvpService.isComplete;
+    return this.didStart && !this.rsvpService.isCompleteSubject;
   }
 
   private setupIntervalService() {
@@ -65,7 +65,7 @@ export class BaselineComponent extends RsvpComponent {
   };
 
   private checkComplete() {
-    if (this.rsvpService.isComplete) {
+    if (this.rsvpService.isCompleteSubject) {
       this.intervalService.clearInterval();
       this.intervalService.setInterval(0, () => {
       });

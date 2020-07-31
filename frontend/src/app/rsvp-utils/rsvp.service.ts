@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Passage } from './passage';
 import { isNotNullOrUndefined } from 'codelyzer/util/isNotNullOrUndefined';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Section } from './Section';
 import { InterfaceName } from '../session/InterfaceName';
 
@@ -12,8 +12,9 @@ export class RSVPService {
   private _contentLength = Number.MAX_SAFE_INTEGER;
   private _index = -1;
   private _interfaceType: InterfaceName;
-  private _isComplete = new BehaviorSubject<boolean>(false);
-  isComplete$ = this._isComplete.asObservable();
+  private _isCompleteSubject;
+  private _isComplete: boolean = false;
+  isComplete$;
   private _passage: Passage;
   private _readableContent: string[];
   private _sections: Section[] = [];
@@ -22,13 +23,11 @@ export class RSVPService {
   private _sectionMarkerPositions: number[];
   private _title: string;
 
-  constructor() {
-  }
-
   hydrate(passage: Passage, interfaceType: InterfaceName) {
     this._index = -1;
-    this._isComplete = new BehaviorSubject<boolean>(false);
-    this.isComplete$ = this._isComplete.asObservable();
+    this._isComplete = false;
+    this._isCompleteSubject = new Subject();
+    this.isComplete$ = this._isCompleteSubject.asObservable();
 
     this._passage = passage;
     this._readableContent = this.transformToReadableContent(passage.content);
@@ -80,7 +79,8 @@ export class RSVPService {
 
   moveAhead() {
     if (this._index === this._contentLength - 1) {
-      this._isComplete.next(true);
+      this._isComplete = true;
+      this._isCompleteSubject.next(true);
       return;
     }
     this._index++;
@@ -121,8 +121,9 @@ export class RSVPService {
     return this._index
   }
 
-  get isComplete(): boolean {
-    return this._index + 1 >= this._contentLength;
+  get isCompleteSubject(): boolean {
+    // return this._index + 1 >= this._contentLength ;
+    return this._isComplete;
   }
 
   get passage(): Passage {

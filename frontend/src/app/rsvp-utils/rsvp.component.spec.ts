@@ -66,11 +66,11 @@ describe('RsvpComponent', () => {
 
   it('should fire a metrics post on passage complete', () => {
     rsvpService.contentLength = 2;
-    expect(rsvpService.isComplete).toBeFalsy();
+    expect(rsvpService.isCompleteSubject).toBeFalsy();
     rsvpService.moveAhead();
     rsvpService.moveAhead();
     rsvpService.moveAhead();
-    expect(rsvpService.isComplete).toBeTrue();
+    expect(rsvpService.isCompleteSubject).toBeTrue();
     expect(metricsService.postPassageCompletion).toHaveBeenCalledWith(InterfaceName.RSVP_BASIC);
   });
 });

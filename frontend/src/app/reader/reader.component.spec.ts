@@ -74,7 +74,7 @@ describe('ReaderComponent', () => {
 
   it('should stop moving ahead on completion', () => {
     component.playReader();
-    while (!component.rsvpService.isComplete) {
+    while (!component.rsvpService.isCompleteSubject) {
       intervalServiceMock.tick();
     }
     expect(intervalServiceMock.clearInterval).toHaveBeenCalled();
@@ -94,7 +94,7 @@ describe('ReaderComponent', () => {
   });
 
   function completePassage() {
-    while (!component.rsvpService.isComplete) {
+    while (!component.rsvpService.isCompleteSubject) {
       component.rsvpService.moveAhead();
     }
     fixture.detectChanges();

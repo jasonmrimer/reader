@@ -14,11 +14,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { InterfaceName } from '../session/InterfaceName';
 
 function completePassage(rsvpService: RSVPService, intervalService: IntervalServiceMock, fixture: ComponentFixture<BaselineComponent>) {
-  expect(rsvpService.isComplete).toBeFalsy();
+  expect(rsvpService.isCompleteSubject).toBeFalsy();
   for (let i = 0; i < 8; i++) {
     intervalService.tick();
   }
-  expect(rsvpService.isComplete).toBeTruthy();
+  expect(rsvpService.isCompleteSubject).toBeTruthy();
   fixture.detectChanges();
 }
 

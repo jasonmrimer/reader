@@ -75,7 +75,8 @@ export class ReaderComponent implements OnInit {
   }
 
   private checkComplete() {
-    if (this.rsvpService.isComplete) {
+    console.log(this.rsvpService.isCompleteSubject);
+    if (this.rsvpService.isCompleteSubject) {
       this.intervalService.clearInterval();
       this.intervalService.setInterval(0, () => {
       });

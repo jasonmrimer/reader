@@ -37,11 +37,12 @@ export class RsvpComponent implements OnInit {
           passage,
           this.rsvpType
         );
+        this.subscription = this.rsvpService.isComplete$
+          .subscribe(() => {
+            this.postMetric();
+          });
       })
 
-    this.subscription = this.rsvpService.isComplete$
-      .pipe(skip(1))
-      .subscribe(this.postMetric);
   }
 
   private postMetric = () => {
