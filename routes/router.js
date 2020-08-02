@@ -43,8 +43,21 @@ router.post('/quizzes', (request, response, next) => {
 });
 
 router.get('/metrics-passage', (request, response, next) => {
-  passageMetric.find((err, metrics) => {
-    response.json(metrics);
+  const aggregatorOptions = [
+    {
+      $group: {
+        _id: "$interfaceName",
+        count: {$sum: 1}
+      },
+    },
+  ]
+
+  passageMetric.aggregate(aggregatorOptions, function (err, sum) {
+    if (err) {
+      response.send(err);
+    } else {
+      response.send(sum);
+    }
   })
 });
 

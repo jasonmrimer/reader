@@ -52,7 +52,7 @@ describe('RSVPProgressBarComponent', () => {
   it('should have a progress bar', async () => {
     fixture.whenStable().then(() => {
       fixture.detectChanges();
-      let completionMeter = fixture.debugElement.query(By.css('#completion-meter'));
+      let completionMeter = fixture.debugElement.query(By.css('.progress-bar'));
       expect(completionMeter).toBeTruthy();
       expect(completionMeter.attributes['aria-valuenow']).toBe('0');
     })

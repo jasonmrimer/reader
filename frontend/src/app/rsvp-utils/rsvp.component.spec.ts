@@ -11,6 +11,8 @@ import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { of } from 'rxjs';
 import { InterfaceName } from '../session/InterfaceName';
 import { MetricsService } from '../metrics/metrics.service';
+import { SessionService } from '../session/session.service';
+import { SessionServiceMock } from '../session/session-stub.service';
 
 describe('RsvpComponent', () => {
   let component: RsvpComponent;
@@ -33,6 +35,7 @@ describe('RsvpComponent', () => {
         {provide: PassageService, useValue: passageService},
         {provide: RSVPService, useValue: rsvpService},
         {provide: MetricsService, useValue: metricsService},
+        {provide: SessionService, useValue: new SessionServiceMock()},
         {
           provide: ActivatedRoute, useValue: {
             paramMap: of(convertToParamMap({
@@ -71,6 +74,6 @@ describe('RsvpComponent', () => {
     rsvpService.moveAhead();
     rsvpService.moveAhead();
     expect(rsvpService.isCompleteSubject).toBeTrue();
-    expect(metricsService.postPassageCompletion).toHaveBeenCalledWith(InterfaceName.RSVP_BASIC);
+    expect(metricsService.postPassageCompletion).toHaveBeenCalledWith(InterfaceName.RSVP_BASIC, 'fakeUser');
   });
 });

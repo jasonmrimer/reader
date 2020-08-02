@@ -9,6 +9,7 @@ import { of } from 'rxjs';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { SessionServiceMock } from '../session/session-stub.service';
 import { SessionService } from '../session/session.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('QuizComponent', () => {
   let component: QuizComponent;
@@ -21,7 +22,7 @@ describe('QuizComponent', () => {
     sessionService = new SessionServiceMock();
 
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule, RouterTestingModule],
       providers: [
         {provide: QuizService, useValue: quizServiceSpy},
         {provide: SessionService, useValue: sessionService},

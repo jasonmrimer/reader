@@ -13,15 +13,6 @@ import { PassageCompletionComponent } from '../quiz/passage-completion/passage-c
 import { RouterTestingModule } from '@angular/router/testing';
 import { InterfaceName } from '../session/InterfaceName';
 
-function completePassage(rsvpService: RSVPService, intervalService: IntervalServiceMock, fixture: ComponentFixture<BaselineComponent>) {
-  expect(rsvpService.isCompleteSubject).toBeFalsy();
-  for (let i = 0; i < 8; i++) {
-    intervalService.tick();
-  }
-  expect(rsvpService.isCompleteSubject).toBeTruthy();
-  fixture.detectChanges();
-}
-
 describe('BaselineComponent', () => {
   let component: BaselineComponent;
   let fixture: ComponentFixture<BaselineComponent>;
@@ -88,7 +79,7 @@ describe('BaselineComponent', () => {
     expect(fixture.debugElement.query(By.css('.container--passage'))).toBeTruthy();
     expect(intervalService.runInterval).toHaveBeenCalled();
     expect(fixture.debugElement.query(By.css('.passage-title')).nativeElement.textContent).toBe('title01');
-    expect(fixture.debugElement.query(By.css('.passage-content')).nativeElement.textContent).toBe(
+    expect(fixture.debugElement.query(By.css('.passage-content')).nativeElement.textContent).toContain(
       '\nOne two. Three.\n\nFour, five; six!\n\nSeven... eight?');
 
     expect(fixture.debugElement.query(By.css('.container--instructions'))).toBeFalsy();
@@ -99,3 +90,12 @@ describe('BaselineComponent', () => {
     expect(fixture.debugElement.nativeElement.querySelector('app-passage-completion')).toBeTruthy();
   });
 });
+
+function completePassage(rsvpService: RSVPService, intervalService: IntervalServiceMock, fixture: ComponentFixture<BaselineComponent>) {
+  expect(rsvpService.isCompleteSubject).toBeFalsy();
+  for (let i = 0; i < 9; i++) {
+    intervalService.tick();
+  }
+  expect(rsvpService.isCompleteSubject).toBeTruthy();
+  fixture.detectChanges();
+}

@@ -26,11 +26,11 @@ export class MetricsComponent implements OnInit {
 
   ngOnInit(): void {
     forkJoin([
-      this.metricsService.fetchPassageMetrics(),
+      this.metricsService.fetchCompletionMetrics(),
       this.metricsService.fetchQuizMetrics()
-    ]).subscribe(([passageResults, quizResults]) => {
-      const metrics = this.metricsService.mergeMetrics(
-          passageResults,
+    ]).subscribe(([completionResults, quizResults]) => {
+      const metrics = this.metricsService.mergeMetricsV2(
+          completionResults,
           quizResults
         );
       this.rows = metrics.map(metric => {

@@ -21,5 +21,9 @@ export class SessionServiceMock extends SessionService {
 
   completeCurrentPair() {
   }
+
+  get sessionId(): string {
+    return 'fakeUser';
+  }
 }
 

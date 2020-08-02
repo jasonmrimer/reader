@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { PassageMetric } from './PassageMetric';
 import { QuizMetric } from './QuizMetric';
 import { AllInterfaces, InterfaceName } from '../session/InterfaceName';
+import { CompletionCount } from './CompletionCount';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,13 @@ export class MetricsService {
   constructor(private _http: HttpClient) {
   }
 
-  fetchPassageMetrics(): Observable<PassageMetric[]> {
-    return this._http.get<PassageMetric[]>(`${environment.apiUrl}/metrics-passage`);
+  fetchCompletionMetrics(): Observable<CompletionCount[]> {
+    return this._http.get<CompletionCount[]>(`${environment.apiUrl}/metrics-passage`)
+      .pipe(
+        map(metrics => {
+          return MetricsService.deserializeCompletionCount(metrics);
+        })
+      );
   }
 
   fetchQuizMetrics(): Observable<QuizMetric[]> {
@@ -38,6 +44,12 @@ export class MetricsService {
       matchingMetric.quizCount = metric.quizCount;
     })
     return quizMetrics;
+  }
+
+  private static presetAllInterfacesForCompletion() {
+    return AllInterfaces.map((interfaceName: InterfaceName) => {
+      return new CompletionCount(interfaceName, 0);
+    });
   }
 
   postPassageCompletion(metricInterface: InterfaceName, user: string) {
@@ -68,5 +80,47 @@ export class MetricsService {
     })
 
     return displayMetrics;
+  }
+
+  mergeMetricsV2(
+    completionCounts: CompletionCount[],
+    quizMetrics: QuizMetric[]
+  ): DisplayMetric[] {
+    let displayMetrics = MetricsService.presetDisplayMetrics();
+
+    displayMetrics.map((displayMetric) => {
+      let matchingCompletionMetric = MetricsService.getMatchingMetric(completionCounts, displayMetric);
+      let matchingQuizMetric = MetricsService.getMatchingMetric(quizMetrics, displayMetric);
+
+      displayMetric.completionCount = matchingCompletionMetric ? matchingCompletionMetric.count : 0;
+      displayMetric.quizCount = matchingQuizMetric ? matchingQuizMetric.quizCount : 0;
+    })
+
+    return displayMetrics;
+  }
+
+  private static getMatchingMetric(metricsWithInterfaceName: any[], displayMetric: DisplayMetric) {
+    return metricsWithInterfaceName.find(metric => metric.interfaceName === displayMetric.interfaceName);
+  }
+
+  private static presetDisplayMetrics() {
+    return AllInterfaces.map((interfaceName: InterfaceName) => {
+      return new DisplayMetric(interfaceName, 0, 0);
+    });
+  }
+
+  private static deserializeCompletionCount(metrics: any[]): CompletionCount[] {
+    let fetchedCounts = metrics.map(metric => {
+      return new CompletionCount(metric._id, metric.count);
+    });
+
+    let allCounts = this.presetAllInterfacesForCompletion();
+    allCounts.map(count => {
+      let match = fetchedCounts.find(m => m.interfaceName === count.interfaceName);
+      if (match) {
+        count.count = match.count;
+      }
+    });
+    return allCounts;
   }
 }
