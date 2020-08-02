@@ -80,7 +80,9 @@ export class QuizComponent implements OnInit {
     const quizSubmission = new QuizSubmission(
       this.quiz.passage,
       surveyModel.data,
-      this.interfaceName
+      this.interfaceName,
+      this.sessionService.sessionId,
+      new Date()
     )
     this.sessionService.completeCurrentPair();
     this.quizService.postAnswers(quizSubmission)

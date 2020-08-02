@@ -43,7 +43,9 @@ describe('QuizService', () => {
         question2: 'answer2',
         question3: 'answer3',
       },
-      'interface name'
+      'interface name',
+      'fakeUser',
+      new Date()
     );
 
     service
@@ -53,15 +55,15 @@ describe('QuizService', () => {
 
     const request = httpMock.expectOne('http://localhost:4000/api/quizzes');
     expect(request.request.method).toBe('POST');
-    expect(request.request.body).toEqual(jasmine.objectContaining({
-      passage: 'quizId',
-      answers: [
-        {question: 'question1', answer: 'answer1'},
-        {question: 'question2', answer: 'answer2'},
-        {question: 'question3', answer: 'answer3'},
-      ],
-      interfaceName: 'interface name'
-    }));
+    expect(request.request.body.passage).toEqual('quizId');
+    expect(request.request.body.answers).toEqual([
+      {question: 'question1', answer: 'answer1'},
+      {question: 'question2', answer: 'answer2'},
+      {question: 'question3', answer: 'answer3'},
+    ]);
+    expect(request.request.body.interfaceName).toEqual('interface name');
+    expect(request.request.body.user).toEqual('fakeUser');
+    expect(request.request.body.date).toBeDefined();
     request.flush({});
   }));
 });

@@ -30,7 +30,9 @@ router.post('/quizzes', (request, response, next) => {
   let newSubmission = new submission({
       quizId: request.body.passage,
       answers: request.body.answers,
-      interface: request.body.interfaceName
+      interface: request.body.interfaceName,
+      user: request.body.user,
+      date: request.body.date
     }
   )
   newSubmission.save((err, sub) => {
@@ -75,15 +77,6 @@ router.post('/metrics-passage', (request, response, next) => {
       response.send(sub)
     }
   })
-  // passageMetric.findOneAndUpdate(
-  //   {interfaceName: interfaceName},
-  //   {$inc: {'completionCount': 1}},
-  //   {upsert: true, new: true},
-  //   function (err, doc) {
-  //     if (err) return response.send(500, {error: err});
-  //     return response.send({message: 'Successfully saved.'});
-  //   }
-  // )
 });
 
 router.get('/metrics-quiz', (request, response, next) => {
