@@ -1,7 +1,7 @@
 <div>{{sessionService.sessionId}}</div>
 <div id="surveyContainer"></div>
 <button
-  *ngIf="didSubmit"
+  *ngIf="didSubmit && !sessionService.completedSession"
   class="button--try-again btn-primary btn"
   (click)="tryNew()"
   >
