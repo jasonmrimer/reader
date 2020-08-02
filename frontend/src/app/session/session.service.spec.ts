@@ -5,12 +5,9 @@ import { AllInterfaces, InterfaceName } from './InterfaceName';
 import { AllPassages, PassageName } from './PassageName';
 import { SessionPair } from './SessionPair';
 import { MetricsServiceStub } from '../metrics/metrics-stub.service';
-import { HttpTestingController } from '@angular/common/http/testing';
 
 describe('SessionService', () => {
   let service: SessionService;
-  let httpMock: HttpTestingController;
-
 
   beforeEach(() => {
     TestBed.configureTestingModule({});

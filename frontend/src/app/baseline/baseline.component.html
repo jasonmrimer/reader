@@ -1,19 +1,18 @@
 <div
   class="container--passage"
 >
-  <div class="passage-title">{{rsvpService.title}}</div>
+  <div class="passage-title">
+    {{rsvpService.title}}
+  </div>
   <div
-    *ngIf="!didStart" class="container--instructions"
+    *ngIf="!didStart"
+    class="container--instructions"
   >
-  <span
-    class="instructions"
-  >
-    <span>Take about 2 minutes to read the following passage.</span>
-    <span>It is timed: if you finish before the timer, please wait...</span>
-    <span>Complete the quiz after reading, thanks!</span>
-  </span>
+    <div class="instructions">
+      If you finish reading the following passage before the timer (~2 minutes), please wait for the next instruction.
+    </div>
     <button
-      class="button--play btn btn-primary"
+      class="button--play"
       (click)="playReader()"
     >
       Press to Start
@@ -29,5 +28,5 @@
 <app-passage-completion
   *ngIf="rsvpService.isCompleteSubject"
   [quizRoute]="rsvpService.quizRoute"
-  [completionMessage]="'Your time expired.'"
+  [completionMessage]="'Passage complete.'"
 ></app-passage-completion>

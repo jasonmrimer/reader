@@ -1,9 +1,20 @@
-<div>{{sessionService.sessionId}}</div>
-<div id="surveyContainer"></div>
-<button
-  *ngIf="didSubmit"
-  class="button--try-again btn-primary btn"
-  (click)="tryNew()"
+<div class="container--quiz">
+  <div
+    *ngIf="!didSubmit"
+    id="surveyContainer"
+  ></div>
+  <div
+    class="container--try-another"
+    *ngIf="didSubmit && !sessionService.completedSession"
   >
-  Try a different interface
-</button>
+    <div class="message--try-another">
+      Thank you!
+    </div>
+    <button
+      class="button--try-another"
+      (click)="tryNew()"
+    >
+      Try Another?
+    </button>
+  </div>
+</div>

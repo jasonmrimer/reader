@@ -8,6 +8,7 @@ import { RsvpSectionMarksComponent } from './rsvp-section-marks/rsvp-section-mar
 import { QuizComponent } from './quiz/quiz.component';
 import { MetricsComponent } from './metrics/metrics.component';
 import { RsvpSubwayComponent } from './rsvp-subway/rsvp-subway.component';
+import { OutroComponent } from './outro/outro.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path: 'quiz', component: QuizComponent},
   {path: 'quiz/:interfaceName', component: QuizComponent},
   {path: 'metrics', component: MetricsComponent},
+  {path: 'outro', component: OutroComponent},
 ];
 
 @NgModule({

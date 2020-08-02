@@ -1,15 +1,20 @@
 <app-reader
   [rsvpService]="rsvpService"
 >
+  <!--  <div-->
+  <mv-slider
+    class="completion-meter"
+    data-slider-id="data-slider"
+    [id]="'data-slider'"
+    *ngIf="rsvpService.sectionMarkerIndexes"
+    [value]="rsvpService.index + 1"
+    [min]="0"
+    [max]="rsvpService.contentLength"
+    [ticks]="rsvpService.sectionMarkerIndexes"
+    [ticksPositions]="100"
+    step="1"
+    [ticksSnapBounds]="200"
+  >
+  </mv-slider>
+  <!--  </div>-->
 </app-reader>
-<mv-slider
-  *ngIf="rsvpService.sectionMarkerIndexes"
-  [value]="rsvpService.index + 1"
-  [min]="0"
-  [max]="rsvpService.contentLength"
-  [ticks]="rsvpService.sectionMarkerIndexes"
-  [ticksPositions]="100"
-  step="1"
-  [ticksSnapBounds]="200"
->
-</mv-slider>

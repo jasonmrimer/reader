@@ -35,7 +35,7 @@ export class OrpService {
 
   private static getPaddingLeft(textJoinerWidth: number, textElementWidths) {
     return (
-        ~~((textJoinerWidth / 2)
+        ~~((textJoinerWidth * 0.31666666)
           - (textElementWidths.leftWithoutCenter + textElementWidths.halfCenter)))
       + 'px';
   }

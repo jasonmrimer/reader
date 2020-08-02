@@ -1,19 +1,22 @@
-<div>{{sessionService.sessionId}}</div>
 <div
   *ngIf="!sessionService.completedSession"
   class="container--introduction"
 >
   <div class="introduction">
-    <span>Welcome! By clicking START you agree to be an anonymous member of my research.</span>
-    <span>Each reading trial takes about 5 minutes to complete.</span>
-    <span>The site will direct you to a unique reading interface, click when ready...</span>
+    Read a passage, take a quiz—that’s it!
   </div>
   <button
-    class="button--start btn btn-primary"
+    class="button--start"
     (click)="start()"
   >
-    START
+    Start
   </button>
+  <div class="fine-print">
+    Thank you for being an <strong>anonymous</strong> participator in this research. I will not collect personal data.
+    <br>
+    <br>
+    You can complete up to 5 quizzes but may only participate in the survey once. Each passage/quiz takes about 5 minutes to complete.
+  </div>
 </div>
 <div
   *ngIf="sessionService.completedSession"

@@ -2,44 +2,69 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 8px;
 }
 
 .instructions {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-bottom: 8px;
+  min-width: 200px;
+  width: 300px;
+  margin-top: 8px;
 
-  font-family: Arial, sans-serif;
+  font-family: Roboto, sans-serif;
   font-size: 16px;
-  color: white;
+  color: black;
 }
 
 .container--passage {
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100%;
 }
 
 .passage-title {
   font-family: Roboto, sans-serif;
   font-size: 24px;
   font-weight: 500;
-  color: #fafafa;
-  padding-top: 16px;
-  margin-bottom: 16px;
+  color: #1D002E;
+  margin-top: 16px;
+  max-width: 300px;
 }
 
 .passage-content {
+  min-height: fit-content;
+  max-height: 100%;
+  margin-top: 8px;
+  margin-bottom: 32px;
   background: #ebebeb;
-  min-width: 200px;
-  max-width: 600px;
+  overflow-y: auto;
+  width: 300px;
   font-family: Roboto, sans-serif;
   font-size: 16px;
   font-weight: 300;
   color: #000000;
-  padding: 8px;
+  padding: 8px 18px 8px 8px;
   white-space: pre-line;
-  margin-left: 16px;
+  border-radius: 2px;
+  text-align: justify;
+}
+
+.button--play {
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 16px;
+  border: none;
+  margin-top: 8px;
+  background: #80FFDB;
+  border-radius: 64px;
+  width: 160px;
+  height: 64px;
+  color: #000000;
+}
+
+.button--play:hover {
+  background: #64DFDF;
 }

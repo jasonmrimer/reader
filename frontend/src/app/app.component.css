@@ -1,4 +1,8 @@
 #app-container {
   height: 100vh;
-  background: #222222;
+  /*background: #222222;*/
+  /*background: conic-gradient(from -49.69deg at 42.8% 50%, #80FFDB -79.34deg, rgba(235, 235, 235, 0) 54.38deg, #80FFDB 148.23deg, #5390D9 193.89deg, #5E60CE 221.65deg, #6930C3 236.15deg, #7400B8 248.42deg, #6930C3 260.6deg, #5390D9 269.39deg, #80FFDB 280.66deg, rgba(235, 235, 235, 0) 414.37deg);*/
+  /* background angular */
+
+  background: conic-gradient(from -46.2deg at 45.47% 28.39%, #80FFDB -43.17deg, rgba(235, 235, 235, 0) 54.38deg, #80FFDB 155.65deg, #5390D9 189.54deg, #5E60CE 205.21deg, #6930C3 218.94deg, #7400B8 240.63deg, #6930C3 253.99deg, #5390D9 280.89deg, #80FFDB 316.83deg, rgba(235, 235, 235, 0) 414.37deg);
 }

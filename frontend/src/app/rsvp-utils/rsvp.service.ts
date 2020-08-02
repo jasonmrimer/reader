@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Passage } from './passage';
 import { isNotNullOrUndefined } from 'codelyzer/util/isNotNullOrUndefined';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Section } from './Section';
 import { InterfaceName } from '../session/InterfaceName';
 
@@ -250,6 +250,12 @@ export class RSVPService {
   }
 
   prettyPassage() {
-    return this.removeSectionMarkers(this._passage.content);
+    return this.removeLeadingLineBreak(
+      this.removeSectionMarkers(this._passage.content)
+    );
+  }
+
+  private removeLeadingLineBreak(content: string) {
+    return content.replace('\n', '');
   }
 }

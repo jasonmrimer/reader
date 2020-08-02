@@ -1,3 +1,44 @@
 * {
   color: white;
 }
+
+.container--try-another {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.message--try-another {
+  color: #000000;
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  margin-top: 16px;
+}
+
+.button--try-another {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  margin-top: 8px;
+
+  width: 160px;
+  height: 64px;
+  background: #FCF300;
+  border-radius: 64px;
+  border: none;
+
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 16px;
+  color: #000000;
+
+}
+
+.button--try-another:hover {
+  background: #FFC600;
+  border-radius: 64px;
+}

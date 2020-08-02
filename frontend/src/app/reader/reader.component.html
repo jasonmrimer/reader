@@ -1,36 +1,41 @@
-<div class="container--progress-bar">
+<div
+  class="container--reader"
+  id="container--reader"
+>
   <div class="passage-title">{{rsvpService.title}}</div>
   <div class="passage-content">
     <span id="text-measurer"></span>
-    <div id="border-wrapper">
-      <div id="crosshairs"></div>
+    <div id="container--styled-reader">
+      <div class="reader-border">&nbsp;</div>
+      <div class="crosshairs crosshairs-top">
+        <span class="crosshairs-left">&nbsp;</span>
+        <span class="crosshairs-middle">&nbsp;</span>
+        <span class="crosshairs-right">&nbsp;</span>
+      </div>
       <div id="text-joiner">
         <span id="text-left">&nbsp;</span>
         <span id="text-center"></span>
         <span id="text-right"></span>
       </div>
+      <div class="crosshairs crosshairs-bottom">
+        <span class="crosshairs-left">&nbsp;</span>
+        <span class="crosshairs-middle">&nbsp;</span>
+        <span class="crosshairs-right">&nbsp;</span>
+      </div>
+      <div class="reader-border">&nbsp;</div>
     </div>
   </div>
-  <div
+  <ng-content class="completion-meter"></ng-content>
+  <button
     *ngIf="!didStart"
-    class="container--instructions"
+    class="button--play"
+    (click)="playReader()"
   >
-    <span
-      class="instructions"
-    >
-      <span>Take about 2 minutes to read the following passage.</span>
-      <span>The words will come one at a time with no pausing.</span>
-      <span>Complete the quiz after reading, thanks!</span>
-    </span>
-    <button
-      class="button--play btn btn-primary"
-      (click)="playReader()"
-    >
-      Press to Start
-    </button>
-  </div>
-  <app-passage-completion
-    *ngIf="rsvpService.isCompleteSubject"
-    [quizRoute]="rsvpService.quizRoute"
-  ></app-passage-completion>
+    Press to Start
+  </button>
 </div>
+<app-passage-completion
+  *ngIf="rsvpService.isCompleteSubject"
+  [quizRoute]="rsvpService.quizRoute"
+  [completionMessage]="'Passage complete.'"
+></app-passage-completion>

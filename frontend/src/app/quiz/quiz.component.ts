@@ -5,6 +5,7 @@ import { Choice, Question, Quiz } from './Quiz';
 import { QuizSubmission } from './QuizSubmission';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../session/session.service';
+import { log } from 'util';
 
 
 SurveyNG.apply({theme: 'modern'});
@@ -53,30 +54,29 @@ export class QuizComponent implements OnInit {
 
   private convertToSurveyQuestions(questions: Question[]) {
     return questions.map((question: Question) => {
-      const choicesText = this.extractChoiceTextFrom(question);
-      return this.questionJSON(question, choicesText)
+      const choicesText = QuizComponent.extractChoiceTextFrom(question);
+      return QuizComponent.questionJSON(question, choicesText)
     });
   }
 
-  private questionJSON(question: Question, choices: string[]) {
+  private static questionJSON(question: Question, choices: string[]) {
     return {
       type: 'radiogroup',
       name: question.question,
       title: question.question,
       isRequired: true,
-      colCount: 4,
+      colCount: 1,
       choices: choices
     };
   }
 
-  private extractChoiceTextFrom(question: Question) {
+  private static extractChoiceTextFrom(question: Question) {
     return question.choices.map((choice: Choice) => {
       return choice.text
     });
   }
 
   private submitAnswers = (surveyModel: SurveyModel) => {
-    this.didSubmit = true;
     const quizSubmission = new QuizSubmission(
       this.quiz.passage,
       surveyModel.data,
@@ -84,11 +84,22 @@ export class QuizComponent implements OnInit {
       this.sessionService.sessionId,
       new Date()
     )
-    this.sessionService.completeCurrentPair();
+
     this.quizService.postAnswers(quizSubmission)
-      .subscribe();
+      .subscribe(() => {
+        this.didSubmit = true;
+        this.sessionService.completeCurrentPair();
+        this.continueOrComplete();
+      });
   }
+
   tryNew = () => {
-    this.router.navigate([`/home`]);
+    this.router.navigate([`/home`]).then();
+  }
+
+  private continueOrComplete() {
+    if (this.sessionService.completedSession) {
+      this.router.navigate(['/outro']).then();
+    }
   }
 }

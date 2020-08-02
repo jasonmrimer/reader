@@ -16,6 +16,7 @@ export class ReaderComponent implements OnInit {
   textJoiner;
   textMeasurer;
   textElements;
+  displayReader: boolean = true;
 
   constructor(
     private ngZone: NgZone,
@@ -76,6 +77,7 @@ export class ReaderComponent implements OnInit {
 
   private checkComplete() {
     if (this.rsvpService.isCompleteSubject) {
+      document.getElementById('container--reader').remove();
       this.intervalService.clearInterval();
       this.intervalService.setInterval(0, () => {
       });

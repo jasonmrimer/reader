@@ -20,6 +20,7 @@ import { CytoscapeComponent } from './rsvp-subway/cytoscape.component';
 import { SubwayComponent } from './rsvp-subway/subway/subway.component';
 import { PassageCompletionComponent } from './quiz/passage-completion/passage-completion.component';
 import { InstructionsComponent } from './instructions/instructions.component';
+import { OutroComponent } from './outro/outro.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { InstructionsComponent } from './instructions/instructions.component';
     CytoscapeComponent,
     SubwayComponent,
     PassageCompletionComponent,
-    InstructionsComponent
+    InstructionsComponent,
+    OutroComponent
   ],
   imports: [
     BrowserModule,

@@ -11,8 +11,13 @@ import { InterfaceName } from '../session/InterfaceName';
   providers: [PassageService, RSVPService]
 })
 export class RsvpSectionMarksComponent extends RsvpComponent {
+  style =
+    ".slider-track {background: pink}"
+    ;
+
   ngOnInit(): void {
     super.ngOnInit();
     this.rsvpType = InterfaceName.RSVP_SECTION_MARK;
   }
+
 }
