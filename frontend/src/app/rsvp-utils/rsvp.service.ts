@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Passage } from './passage';
 import { isNotNullOrUndefined } from 'codelyzer/util/isNotNullOrUndefined';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Section } from './Section';
 import { InterfaceName } from '../session/InterfaceName';
 

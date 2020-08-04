@@ -12,7 +12,7 @@ export class CytoscapeComponent implements OnChanges {
   @Input() public currentSection: Section;
   @Input() public elements: any;
   @Input() public currentSectionCompletion;
-  @Input() public sections = [];
+  @Input() public sections: Section[] = [];
   style: any;
   layout: any;
 
@@ -25,18 +25,15 @@ export class CytoscapeComponent implements OnChanges {
       {
         selector: 'node',
         style: {
-          height: 32,
-          width: 32,
+          height: 12,
+          width: 12,
           'text-valign': 'center',
           'text-halign': 'center',
-          'background-color': 'gray',
+          'background-color': 'white',
+          'border-width': 0.5,
+          'border-color': 'black',
           shape: 'ellipse',
           content: 'data(name)',
-          'text-outline-width': 0.15,
-          'text-outline-color': 'black',
-          'color': '#fff',
-          'font-size': 16,
-          'font-family': 'Courier'
         }
       },
       {
@@ -44,9 +41,11 @@ export class CytoscapeComponent implements OnChanges {
         style: {
           'line-color': '#ffffff',
           'line-fill': 'linear-gradient',
-          'line-gradient-stop-colors': '#63ee2a #63ee2a white',
+          'line-gradient-stop-colors': '#FFC600 #FFC600 #FBF97F',
           'line-gradient-stop-positions': `0% 0% 0%`,
-          'opacity': '0.4'
+          'opacity': '1',
+          'line-cap': 'round',
+          width: 16
         },
       }
     ]
@@ -63,12 +62,66 @@ export class CytoscapeComponent implements OnChanges {
   }
 
   private animateEdges(cy) {
-    this.sections.map((section) => {
+    this.sections.map((section: Section, index) => {
       let edge = cy.$(`#edge-${section.rank}`);
       CytoscapeComponent.play(edge.animation({
         style: this.makeGradient(section)
       }));
+      if (CytoscapeComponent.isFirst(index)) {
+        CytoscapeComponent.colorNodeComplete(cy, section);
+      } else if (this.isLast(section)) {
+        this.checkPreviousCompletionAndColor(index, cy, section);
+        CytoscapeComponent.colorFinalIfComplete(section, cy);
+      } else {
+        this.checkPreviousCompletionAndColor(index, cy, section);
+      }
     });
+  }
+
+  private static isFirst(index: number) {
+    return index === 0;
+  }
+
+  private static colorFinalIfComplete(section: Section, cy) {
+    if (CytoscapeComponent.isComplete(section)) {
+      CytoscapeComponent.colorFinalComplete(cy, section);
+    }
+  }
+
+  private static isComplete(section: Section) {
+    return section.percentRead === 100;
+  }
+
+  private isLast(section: Section) {
+    return section.rank === this.sections.length - 1;
+  }
+
+  private static colorFinalComplete(cy, section: Section) {
+    let node = cy.$(`#section-0${section.rank + 1}`);
+    CytoscapeComponent.colorComplete(node);
+  }
+
+  private static colorComplete(node) {
+    CytoscapeComponent.play(node.animation({
+      style: {
+        'background-color': 'black'
+      }
+    }))
+  }
+
+  private checkPreviousCompletionAndColor(index: number, cy, section: Section) {
+    if (this.previousSectionComplete(index)) {
+      CytoscapeComponent.colorNodeComplete(cy, section);
+    }
+  }
+
+  private previousSectionComplete(index: number) {
+    return this.sections[index - 1].percentRead === 100;
+  }
+
+  private static colorNodeComplete(cy, section: Section) {
+    let node = cy.$(`#section-0${section.rank}`);
+    CytoscapeComponent.colorComplete(node);
   }
 
   private createCytoscape(cy_container) {
@@ -100,11 +153,10 @@ export class CytoscapeComponent implements OnChanges {
 
   private makeGradient(section) {
     return {
-      'line-color': 'white',
+      'line-color': '#FBF97F',
       'line-fill': 'linear-gradient',
-      'line-gradient-stop-colors': '#63ee2a #63ee2a white',
+      'line-gradient-stop-colors': '#FFC600 #FFC600 #FBF97F',
       'line-gradient-stop-positions': `0% ${section.percentRead}% ${section.percentRead}%`,
-      'opacity': this.isCurrentSection(section) ? '0.8' : '0.4'
     };
   }
 }
