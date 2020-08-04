@@ -1,21 +1,26 @@
-.container--progress-bar {
+.container--reader {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .passage-title {
+  margin-top: 16px;
   font-family: Roboto, sans-serif;
-  font-size: 24px;
+  font-style: normal;
   font-weight: 500;
-  color: #fafafa;
-  padding-top: 16px;
+  font-size: 24px;
+  line-height: 28px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  color: #000000;
 }
 
 .passage-content {
   display: flex;
   margin-top: 16px;
-  background: #ebebeb;
 }
 
 .container--instructions {
@@ -39,17 +44,15 @@
 .button--play {
   border: none;
   margin-top: 8px;
-  background: #A1E8AF;
-  height: 64px;
-  width: 160px;
-  color: #000000;
+  background: #80FFDB;
   border-radius: 64px;
+  width: 160px;
+  height: 64px;
+  color: #000000;
 }
 
-#button--play:hover {
-  border: 2px solid #fafafa;
-  color: #fafafa;
-  font-weight: bold;
+.button--play:hover {
+  background: #64DFDF;
 }
 
 .completion-message {
@@ -70,29 +73,46 @@
   line-height: 1;
 }
 #text-left { color: #000000; }
-#text-center { color: #f00; }
+#text-center { color: #F71735; }
 #text-right { color: #000000; }
 
-#border-wrapper {
+#container--styled-reader {
   position: relative;
-  width: 220px;
-  height: 50px;
-  border-top: 2px solid #f00;
-  border-bottom: 2px solid #f00;
+  width: 180px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
 }
 
-#crosshairs {
-  width: 110px;
-  height: 48px;
-  border-right: 2px solid #ff0000;
-  float:left;
+.reader-border {
+  background: linear-gradient(90deg, #72EFDD 2.98%, #5E60CE 12.59%, #6540C7 19.9%, #6930C3 25.86%, #7400B8 31.65%, #6930C3 43.48%, #6540C7 57.57%, #5E60CE 74.61%, #72EFDD 95.56%);;
+  height: 2px;
+}
+
+.crosshairs {
+  height: 4px;
+  background: none;
+  display: flex;
+  flex-direction: row;
+}
+
+.crosshairs-left {
+  width: 56px;
+}
+
+.crosshairs-middle {
+  background: linear-gradient(180deg, #7400B8 0%, #F71735 64.58%), #C4C4C4;
+  width: 2px;
+}
+
+.crosshairs-bottom {
+  transform: matrix(1, 0, 0, -1, 0, 0);
 }
 
 #text-joiner {
-  position: absolute;
-  width: 220px;
-  top: 10px;
-  background: #ebebeb;
+  width: 180px;
+  height: 28px;
+  background: none;
   padding: 5px 0;
   line-height: 1;
   vertical-align: middle;
