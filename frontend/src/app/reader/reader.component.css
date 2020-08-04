@@ -42,6 +42,10 @@
 }
 
 .button--play {
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 16px;
   border: none;
   margin-top: 8px;
   background: #80FFDB;
@@ -64,17 +68,26 @@
   visibility: hidden;
   white-space: nowrap;
 }
+
 #text-measurer,
 #text-left,
 #text-center,
-#text-right
-{
+#text-right {
   font: 16px Roboto, sans-serif;
   line-height: 1;
 }
-#text-left { color: #000000; }
-#text-center { color: #F71735; }
-#text-right { color: #000000; }
+
+#text-left {
+  color: #000000;
+}
+
+#text-center {
+  color: #F71735;
+}
+
+#text-right {
+  color: #000000;
+}
 
 #container--styled-reader {
   position: relative;

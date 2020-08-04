@@ -250,6 +250,12 @@ export class RSVPService {
   }
 
   prettyPassage() {
-    return this.removeSectionMarkers(this._passage.content);
+    return this.removeLeadingLineBreak(
+      this.removeSectionMarkers(this._passage.content)
+    );
+  }
+
+  private removeLeadingLineBreak(content: string) {
+    return content.replace('\n', '');
   }
 }
