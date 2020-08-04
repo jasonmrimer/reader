@@ -65,7 +65,7 @@ export class QuizComponent implements OnInit {
       name: question.question,
       title: question.question,
       isRequired: true,
-      colCount: 4,
+      colCount: 1,
       choices: choices
     };
   }

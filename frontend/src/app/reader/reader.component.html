@@ -1,4 +1,7 @@
-<div class="container--reader">
+<div
+  class="container--reader"
+  id="container--reader"
+>
   <div class="passage-title">{{rsvpService.title}}</div>
   <div class="passage-content">
     <span id="text-measurer"></span>
@@ -24,14 +27,14 @@
   </div>
   <button
     *ngIf="!didStart"
-
     class="button--play"
     (click)="playReader()"
   >
     Press to Start
   </button>
-  <app-passage-completion
-    *ngIf="rsvpService.isCompleteSubject"
-    [quizRoute]="rsvpService.quizRoute"
-  ></app-passage-completion>
 </div>
+<app-passage-completion
+  *ngIf="rsvpService.isCompleteSubject"
+  [quizRoute]="rsvpService.quizRoute"
+  [completionMessage]="'Passage complete.'"
+></app-passage-completion>

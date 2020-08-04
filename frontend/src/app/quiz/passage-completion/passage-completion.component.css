@@ -5,5 +5,32 @@
 }
 
 .completion-message {
-  color: #ebebeb;
+  margin-top: 16px;
+  color: #000000;
 }
+
+.button--quiz {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  margin-top: 8px;
+
+  width: 160px;
+  height: 64px;
+  background: #FCF300;
+  border-radius: 64px;
+  border: none;
+
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 16px;
+  color: #000000;
+}
+
+.button--quiz:hover{
+  background: #FFC600;
+}
+
+
