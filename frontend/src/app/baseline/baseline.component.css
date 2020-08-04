@@ -30,6 +30,7 @@
   font-weight: 500;
   color: #1D002E;
   margin-top: 16px;
+  max-width: 300px;
 }
 
 .passage-content {

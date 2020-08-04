@@ -3,3 +3,36 @@
   flex-direction: column;
   align-items: center;
 }
+
+.completion-meter {
+  margin-top: 8px;
+}
+
+/*::ng-deep .slider > * {*/
+/*  background-image: none;*/
+/*}*/
+
+::ng-deep .slider-track {
+  border: solid 1px #7400B8;
+  background: none;
+}
+
+:host-context .slider-selection .tick-slider-selection {
+  background: #7400B8 none !important;
+}
+
+::ng-deep .slider-selection .tick-slider-selection .slider-track-low {
+  border: solid 1px #7400B8;
+  background: #7400B8 !important;
+}
+
+::ng-deep .slider-tick {
+  border: solid 1px #7400B8;
+  background: #C4C4C4;
+  opacity: 100%;
+}
+
+::ng-deep .slider-handle {
+  border: solid 1px #7400B8;
+  /*background: #7400B8;*/
+}

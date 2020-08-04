@@ -2,11 +2,11 @@
   <app-reader
     [rsvpService]="rsvpService"
   >
+    <mat-progress-bar
+      class="progress-bar"
+      mode="determinate"
+      value="{{rsvpService.percentRead()}}"
+    >
+    </mat-progress-bar>
   </app-reader>
-  <mat-progress-bar
-    class="progress-bar"
-    mode="determinate"
-    value="{{rsvpService.percentRead()}}"
-  >
-  </mat-progress-bar>
 </div>
