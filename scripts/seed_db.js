@@ -6,80 +6,14 @@ filePathPassageTest3 = pwd() + '/models/passageTest3';
 filePathPassageTest4 = pwd() + '/models/passageTest4';
 filePathPassageTest5 = pwd() + '/models/passageTest5';
 filePathPassage1 = pwd() + '/models/passage1';
-db.passages.insert(
-  {
-    _id: '-1',
-    title: 'Test Passage',
-    content: cat(filePathPassageTest1),
-    coordinates: [
-      {x: 0, y: 0},
-      {x: -121.7, y: 39.6},
-      {x: -302.8, y: 220.6},
-      {x: -47.4, y: 202.7},
-      {x: -172.6, y: 176.1},
-    ]
-  }
-);
-db.passages.insert(
-  {
-    _id: '-2',
-    title: 'Test Passage',
-    content: cat(filePathPassageTest2),
-    coordinates: [
-      {x: 0, y: 0},
-      {x: -121.7, y: 39.6},
-      {x: -302.8, y: 220.6},
-      {x: -47.4, y: 202.7},
-      {x: -172.6, y: 176.1},
-    ]
-  }
-);
-db.passages.insert(
-  {
-    _id: '-3',
-    title: 'Test Passage',
-    content: cat(filePathPassageTest3),
-    coordinates: [
-      {x: 0, y: 0},
-      {x: -121.7, y: 39.6},
-      {x: -302.8, y: 220.6},
-      {x: -47.4, y: 202.7},
-      {x: -172.6, y: 176.1},
-    ]
-  }
-);
-db.passages.insert(
-  {
-    _id: '-4',
-    title: 'Test Passage',
-    content: cat(filePathPassageTest4),
-    coordinates: [
-      {x: 0, y: 0},
-      {x: -121.7, y: 39.6},
-      {x: -302.8, y: 220.6},
-      {x: -47.4, y: 202.7},
-      {x: -172.6, y: 176.1},
-    ]
-  }
-);
-db.passages.insert(
-  {
-    _id: '-5',
-    title: 'Test Passage',
-    content: cat(filePathPassageTest5),
-    coordinates: [
-      {x: 0, y: 0},
-      {x: -121.7, y: 39.6},
-      {x: -302.8, y: 220.6},
-      {x: -47.4, y: 202.7},
-      {x: -172.6, y: 176.1},
-    ]
-  }
-);
+filePathPassage2 = pwd() + '/models/passage2';
+filePathPassage3 = pwd() + '/models/passage3';
+filePathPassage4 = pwd() + '/models/passage4';
+filePathPassage5 = pwd() + '/models/passage5';
 db.passages.insert(
   {
     _id: '1',
-    title: 'For SpaceX, Third Launch is Charm',
+    title: 'Noisy Humans Drown Out Sounds of Nature in Protected Areas',
     content: cat(filePathPassage1),
     coordinates: [
       {x: 0, y: 0},
@@ -87,6 +21,62 @@ db.passages.insert(
       {x: -559.7, y: 367.1},
       {x: 138.6, y: 318.2},
       {x: 64.3, y: 302.4},
+    ]
+  }
+);
+db.passages.insert(
+  {
+    _id: '2',
+    title: 'The Great Reset',
+    content: cat(filePathPassage2),
+    coordinates: [
+      {x: 0, y: 0},
+      {x: -121.7, y: 39.6},
+      {x: -302.8, y: 220.6},
+      {x: -47.4, y: 202.7},
+      {x: -172.6, y: 176.1},
+    ]
+  }
+);
+db.passages.insert(
+  {
+    _id: '3',
+    title: 'Turtles Use the Earth\'s Magnetic Field as Global GPS',
+    content: cat(filePathPassage3),
+    coordinates: [
+      {x: 0, y: 0},
+      {x: -121.7, y: 39.6},
+      {x: -302.8, y: 220.6},
+      {x: -47.4, y: 202.7},
+      {x: -172.6, y: 176.1},
+    ]
+  }
+);
+db.passages.insert(
+  {
+    _id: '4',
+    title: 'Congresswoman Barbara Jordan on Impeachment',
+    content: cat(filePathPassage4),
+    coordinates: [
+      {x: 0, y: 0},
+      {x: -121.7, y: 39.6},
+      {x: -302.8, y: 220.6},
+      {x: -47.4, y: 202.7},
+      {x: -172.6, y: 176.1},
+    ]
+  }
+);
+db.passages.insert(
+  {
+    _id: '5',
+    title: 'Ethan Frome\'s Household Employee',
+    content: cat(filePathPassageTest5),
+    coordinates: [
+      {x: 0, y: 0},
+      {x: -121.7, y: 39.6},
+      {x: -302.8, y: 220.6},
+      {x: -47.4, y: 202.7},
+      {x: -172.6, y: 176.1},
     ]
   }
 );
