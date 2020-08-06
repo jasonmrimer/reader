@@ -5,7 +5,7 @@ filePathPassageTest2 = pwd() + '/models/passageTest2';
 filePathPassageTest3 = pwd() + '/models/passageTest3';
 filePathPassageTest4 = pwd() + '/models/passageTest4';
 filePathPassageTest5 = pwd() + '/models/passageTest5';
-filePathPassage1 = pwd() + '/models/passage1';
+filePathPassage1 = pwd() + '/models/passage5';
 db.passages.insert(
   {
     _id: '1',
