@@ -19,7 +19,10 @@ export class SubwayService {
 
     const nodes = translatedPoints.map((point, index) => {
       return {
-        data: {id: `section-0${index + 1}`},
+        data: {
+          id: `section-0${index + 1}`,
+          name: ``,
+        },
         position: {x: point.x, y: point.y},
       }
     });
