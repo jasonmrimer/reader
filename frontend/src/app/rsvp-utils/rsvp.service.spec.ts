@@ -24,7 +24,7 @@ describe('RSVPService', () => {
   it('should prepare all the reading shapes and data on hydrate', () => {
     expect(service.readableContent).toEqual([
       'One', 'two.', 'Three.', 'Four,', 'five;', 'six!', 'Seven...', 'eight?'
-    ])
+    ]);
     expect(service.percentRead()).toBe(0);
     expect(service.index).toBe(-1);
     expect(service.isCompleteSubject).toBeFalsy();

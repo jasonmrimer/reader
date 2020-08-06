@@ -21,7 +21,7 @@ export class Choice {
   }
 }
 
-let question1 = new Question(
+const question1 = new Question(
   'question1',
   [
     new Choice('answer1.1', true),
@@ -31,7 +31,7 @@ let question1 = new Question(
   ]
 );
 
-let question2 = new Question(
+const question2 = new Question(
   'question2',
   [
     new Choice('answer2.1', false),
@@ -44,6 +44,6 @@ let question2 = new Question(
 export const quizStub = new Quiz(
   'id1',
   [question1, question2]
-)
+);
 
 export const quizzesStub = [quizStub];

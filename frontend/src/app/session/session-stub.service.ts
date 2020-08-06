@@ -9,7 +9,7 @@ import { PassageName } from './PassageName';
   providedIn: 'root'
 })
 export class SessionServiceMock extends SessionService {
-  public isComplete: boolean = false;
+  public isComplete = false;
 
   get completedSession() {
     return this.isComplete;

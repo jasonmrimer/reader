@@ -17,8 +17,8 @@ export class SubwayComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let nodes = this.subwayService.convertCoordinatesToNodes(this.passage.coordinates);
-    let edges = this.subwayService.createEdgesFromNodes(nodes);
+    const nodes = this.subwayService.convertCoordinatesToNodes(this.passage.coordinates);
+    const edges = this.subwayService.createEdgesFromNodes(nodes);
     this.graphData = {
       nodes: nodes,
       edges: edges

@@ -8,9 +8,9 @@ describe('Reader App', () => {
       'rsvp-progress-bar',
       'rsvp-section-mark',
       'rsvp-subway'
-    ]
+    ];
 
-    let expectedUrls = new Set([
+    const expectedUrls = new Set([
       'http://localhost:4200/baseline/1',
       'http://localhost:4200/rsvp-basic/1',
       'http://localhost:4200/rsvp-progress-bar/1',

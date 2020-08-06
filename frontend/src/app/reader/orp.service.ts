@@ -4,6 +4,13 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class OrpService {
+
+  private static getPaddingLeft(textJoinerWidth: number, textElementWidths) {
+    return (
+        ~~((textJoinerWidth * 0.31666666)
+          - (textElementWidths.leftWithoutCenter + textElementWidths.halfCenter)))
+      + 'px';
+  }
   public separateAndAlign = (word, textMeasurer, textElements, textJoiner) => {
     this.setAlignmentPadding(word, textJoiner, textMeasurer);
     this.setContentOnTextElements(word, textElements);
@@ -14,17 +21,17 @@ export class OrpService {
   }
 
   private setContentOnTextElements(word, textElements) {
-    let centerIndex = this.calculateOptimalRecognitionPoint(word);
+    const centerIndex = this.calculateOptimalRecognitionPoint(word);
     textElements.left.textContent = word.substr(0, centerIndex - 1);
     textElements.center.textContent = word.substr(centerIndex - 1, 1);
     textElements.right.textContent = word.substr(centerIndex);
   }
 
   private setAlignmentPadding(word, textJoiner: HTMLElement, textMeasurer) {
-    let centerIndex = this.calculateOptimalRecognitionPoint(word);
-    let textJoinerWidth = textJoiner.offsetWidth;
+    const centerIndex = this.calculateOptimalRecognitionPoint(word);
+    const textJoinerWidth = textJoiner.offsetWidth;
 
-    let textElementWidths = {leftWithoutCenter: 0, leftWithCenter: 0, halfCenter: 0};
+    const textElementWidths = {leftWithoutCenter: 0, leftWithCenter: 0, halfCenter: 0};
 
     textElementWidths.leftWithoutCenter = this.widthOf(word.substr(0, centerIndex - 1), textMeasurer);
     textElementWidths.leftWithCenter = this.widthOf(word.substr(0, centerIndex), textMeasurer);
@@ -33,15 +40,8 @@ export class OrpService {
     textJoiner.style.paddingLeft = OrpService.getPaddingLeft(textJoinerWidth, textElementWidths);
   }
 
-  private static getPaddingLeft(textJoinerWidth: number, textElementWidths) {
-    return (
-        ~~((textJoinerWidth * 0.31666666)
-          - (textElementWidths.leftWithoutCenter + textElementWidths.halfCenter)))
-      + 'px';
-  }
-
   private calculateOptimalRecognitionPoint(word) {
-    let length = word.length;
+    const length = word.length;
     if (length === 1) {
       return 1;
     } else if (length <= 5) {

@@ -8,9 +8,6 @@ import { Router } from '@angular/router';
 })
 export class PassageCompletionComponent implements OnInit {
   @Input()
-  quizRoute;
-
-  @Input()
   completionMessage: string;
 
   constructor(
@@ -21,6 +18,6 @@ export class PassageCompletionComponent implements OnInit {
   }
 
   takeQuiz() {
-    this.router.navigate(['/quiz', this.quizRoute]);
+    this.router.navigate(['/quiz']);
   }
 }

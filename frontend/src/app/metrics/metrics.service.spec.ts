@@ -18,7 +18,7 @@ describe('MetricsService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule]
-    })
+    });
     service = TestBed.inject(MetricsService);
     httpMock = TestBed.inject(HttpTestingController);
   });
@@ -41,7 +41,7 @@ describe('MetricsService', () => {
   it('should get passage completion metrics', () => {
     service.fetchCompletionMetrics().subscribe((response: CompletionCount[]) => {
       expect(response).toEqual(completionCountsStub);
-    })
+    });
 
     passageGETStub();
   });
@@ -54,7 +54,7 @@ describe('MetricsService', () => {
   });
 
   it('should fetch the quiz metrics and zeroize all non-used interfaces', () => {
-    let expectedQuizMetrics = [
+    const expectedQuizMetrics = [
       new QuizMetric(InterfaceName.BASELINE, 11),
       new QuizMetric(InterfaceName.RSVP_BASIC, 11),
       new QuizMetric(InterfaceName.RSVP_SUBWAY, 33),

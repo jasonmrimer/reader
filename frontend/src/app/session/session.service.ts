@@ -11,19 +11,6 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root'
 })
 export class SessionService {
-  private _currentPair: SessionPair;
-  private _sessionId: string;
-  private _availableInterfaces: InterfaceName[];
-  private _availablePassages: PassageName[];
-
-  private _metricsService: MetricsService;
-
-  hydrate(metricsService: MetricsService) {
-    this._sessionId = `${Date.now()}${Math.random()}`
-    this._availableInterfaces = [...AllInterfaces];
-    this._availablePassages = [...AllPassages];
-    this._metricsService = metricsService;
-  }
 
   get sessionId(): string {
     return this._sessionId;
@@ -37,6 +24,48 @@ export class SessionService {
     return this._availablePassages;
   }
 
+  get completedSession(): boolean {
+    return this._availableInterfaces.length === 0;
+  }
+
+  get currentPair() {
+    return this._currentPair;
+  }
+  private _currentPair: SessionPair;
+  private _sessionId: string;
+  private _availableInterfaces: InterfaceName[];
+  private _availablePassages: PassageName[];
+
+  private _metricsService: MetricsService;
+
+  private static noMoreLeastAvailable(leastUsedAvailable: InterfaceName[]) {
+    return leastUsedAvailable.length === 0;
+  }
+
+  private static convertToInterfaceNames(leastUsedAvailable: QuizMetric[]) {
+    return leastUsedAvailable.map(({interfaceName}) => interfaceName);
+  }
+
+  private static leastUsed(quizMetrics: QuizMetric[]): QuizMetric[] {
+    const minQuizCount = SessionService.findMin(quizMetrics);
+    return quizMetrics.filter(metric => metric.quizCount === minQuizCount);
+  }
+
+  private static findMin = (metrics: QuizMetric[]) => {
+    let min = Number.MAX_SAFE_INTEGER;
+    metrics.map(metric => {
+      min = Math.min(metric.quizCount, min);
+    });
+    return min;
+  }
+
+  hydrate(metricsService: MetricsService) {
+    this._sessionId = `${Date.now()}${Math.random()}`;
+    this._availableInterfaces = [...AllInterfaces];
+    this._availablePassages = [...AllPassages];
+    this._metricsService = metricsService;
+  }
+
   generateSessionPair = (): Observable<SessionPair> => {
     return this._metricsService.fetchQuizMetrics().pipe(
       flatMap(quizMetrics => {
@@ -46,11 +75,11 @@ export class SessionService {
         );
         return of(this._currentPair);
       })
-    )
-  };
+    );
+  }
 
   getRandomLeastUsedAvailableInterface = (quizMetrics: QuizMetric[]) => {
-    let leastUsedAvailable = SessionService.convertToInterfaceNames(
+    const leastUsedAvailable = SessionService.convertToInterfaceNames(
       this.filterFromAvailable(
         SessionService.leastUsed(quizMetrics)
       )
@@ -61,39 +90,17 @@ export class SessionService {
       : this.randomNameFrom(leastUsedAvailable);
   }
 
-  private static noMoreLeastAvailable(leastUsedAvailable: InterfaceName[]) {
-    return leastUsedAvailable.length == 0;
-  }
-
-  private static convertToInterfaceNames(leastUsedAvailable: QuizMetric[]) {
-    let names = leastUsedAvailable.map(({interfaceName}) => interfaceName);
-    return names;
-  }
-
   private filterFromAvailable(leastUsed: QuizMetric[]) {
     leastUsed = leastUsed.filter(qm => this._availableInterfaces.includes(qm.interfaceName));
     return leastUsed;
   }
 
-  private static leastUsed(quizMetrics: QuizMetric[]): QuizMetric[] {
-    let minQuizCount = SessionService.findMin(quizMetrics);
-    return quizMetrics.filter(metric => metric.quizCount === minQuizCount);
-  }
-
-  private static findMin = (metrics: QuizMetric[]) => {
-    let min = Number.MAX_SAFE_INTEGER;
-    metrics.map(metric => {
-      min = Math.min(metric.quizCount, min);
-    });
-    return min;
-  };
-
   private randomNameFrom = (interfaceNames: InterfaceName[]): InterfaceName => {
-    return interfaceNames[this.randomIndex(interfaceNames)]
+    return interfaceNames[this.randomIndex(interfaceNames)];
   }
 
   private randomIndex = (array) => {
-    return Math.floor((Math.random() * array.length) + 1) - 1
+    return Math.floor((Math.random() * array.length) + 1) - 1;
   }
 
   private getRandomAvailablePassage(availablePassages: PassageName[]) {
@@ -103,19 +110,11 @@ export class SessionService {
   makeSessionPairUnavailable(sessionPair: SessionPair) {
     this._availableInterfaces = this._availableInterfaces.filter((interfaceName) => {
       return interfaceName !== sessionPair.interfaceName;
-    })
+    });
 
     this._availablePassages = this._availablePassages.filter((passageName) => {
       return passageName !== sessionPair.passageName;
-    })
-  }
-
-  get completedSession(): boolean {
-    return this._availableInterfaces.length === 0;
-  }
-
-  get currentPair() {
-    return this._currentPair;
+    });
   }
 
   completeCurrentPair() {

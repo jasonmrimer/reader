@@ -1,8 +1,8 @@
 import { Point } from './Point';
 
 export const centerOf: any = (points: any[]) => {
-  let sumX: number = 0;
-  let sumY: number = 0;
+  let sumX = 0;
+  let sumY = 0;
   if (points) {
 
     points.map((point) => {
@@ -12,12 +12,12 @@ export const centerOf: any = (points: any[]) => {
     });
     return {x: sumX / points.length, y: sumY / points.length};
   }
-  return {x: 0, y: 0}
+  return {x: 0, y: 0};
 
 };
 
 export const translatePointsToNewCenter = (points: any[], newCenter: any) => {
-  let center = centerOf(points);
+  const center = centerOf(points);
   if (points) {
     points.map((point) => {
       point.x = point.x - center.x + newCenter.x;
@@ -30,9 +30,9 @@ export const translatePointsToNewCenter = (points: any[], newCenter: any) => {
 
 export const rotate180AroundCenterOf: any = (points: any[]) => {
   const center = centerOf(points);
-  let radians = Math.PI;
-  let cos = Math.cos(radians);
-  let sin = Math.sin(radians);
+  const radians = Math.PI;
+  const cos = Math.cos(radians);
+  const sin = Math.sin(radians);
   points.map((point) => {
     point.x = Math.round(
       (cos * (point.x - center.x))

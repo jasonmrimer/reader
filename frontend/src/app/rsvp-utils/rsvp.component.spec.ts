@@ -26,7 +26,7 @@ describe('RsvpComponent', () => {
     rsvpService = new RSVPService();
     metricsService = new MetricsServiceStub();
     spyOn(rsvpService, 'hydrate').and.callThrough();
-    spyOn(metricsService, 'postPassageCompletion')
+    spyOn(metricsService, 'postPassageCompletion');
 
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],

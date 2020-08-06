@@ -38,8 +38,8 @@ export class MetricsComponent implements OnInit {
           metric.interfaceName,
           metric.completionCount,
           metric.quizCount
-        )
-      })
+        );
+      });
     });
   }
 

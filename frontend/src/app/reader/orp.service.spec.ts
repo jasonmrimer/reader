@@ -33,19 +33,19 @@ describe('OrpService', () => {
   function testSeparationAndAlignment(
     word: string,
     expectedWordChunks: string[]
-  ){
-    let textMeasurer = document.createElement('div');
-    let textJoiner = document.createElement('div');
-    let textElementLeft = document.createElement('div');
-    let textElementCenter = document.createElement('div');
-    let textElementRight = document.createElement('div');
-    let textElements = {
+  ) {
+    const textMeasurer = document.createElement('div');
+    const textJoiner = document.createElement('div');
+    const textElementLeft = document.createElement('div');
+    const textElementCenter = document.createElement('div');
+    const textElementRight = document.createElement('div');
+    const textElements = {
       left: textElementLeft,
       center: textElementCenter,
       right: textElementRight
     };
 
-    let newElements = service.separateAndAlign(word, textMeasurer, textElements, textJoiner);
+    const newElements = service.separateAndAlign(word, textMeasurer, textElements, textJoiner);
 
     expect(newElements.textElements.left.textContent).toEqual(expectedWordChunks[0]);
     expect(newElements.textElements.center.textContent).toEqual(expectedWordChunks[1]);

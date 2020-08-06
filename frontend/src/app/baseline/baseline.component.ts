@@ -14,7 +14,7 @@ import { SessionService } from '../session/session.service';
   styleUrls: ['./baseline.component.css'],
 })
 export class BaselineComponent extends RsvpComponent {
-  didStart: boolean = false;
+  didStart = false;
   wpm = 250;
 
   constructor(
@@ -64,8 +64,8 @@ export class BaselineComponent extends RsvpComponent {
       this.rsvpService.moveAhead();
       this.pauseReaderByPunctuation();
       this.checkComplete();
-    })
-  };
+    });
+  }
 
   private checkComplete() {
     if (this.rsvpService.isCompleteSubject) {

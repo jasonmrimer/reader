@@ -21,7 +21,7 @@ describe('PassageCompletionComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PassageCompletionComponent);
     component = fixture.componentInstance;
-    component.quizRoute = 'fake-route'
+    component.quizRoute = 'fake-route';
     fixture.detectChanges();
 
     router = TestBed.inject(Router);
