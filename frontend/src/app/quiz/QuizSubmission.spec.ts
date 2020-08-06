@@ -2,13 +2,12 @@ import { QuizSubmission } from './QuizSubmission';
 
 describe('QuizSubmission', () => {
   it('should receive survey data and transform into choices for db', () => {
-    const surveyData =
-      {
+    const surveyData = {
         q1: 'a1',
         q2: 'a2'
-      }
+      };
 
-    const quizSubmission = new QuizSubmission('qId', surveyData, "", "fakeUser", new Date());
+    const quizSubmission = new QuizSubmission('qId', surveyData, '', 'fakeUser', new Date());
 
     expect(quizSubmission.passage).toEqual('qId');
     expect(quizSubmission.answers).toEqual([

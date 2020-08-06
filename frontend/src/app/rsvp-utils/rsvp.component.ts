@@ -42,7 +42,7 @@ export class RsvpComponent implements OnInit {
           .subscribe(() => {
             this.postMetric();
           });
-      })
+      });
 
   }
 

@@ -24,7 +24,7 @@ describe('PassageService', () => {
   it('should fetch via passage ID', () => {
     service.getPassage(1).subscribe((response: Passage) => {
       expect(response).toEqual(passageStub);
-    })
+    });
 
     const request = httpMock.expectOne('http://localhost:4000/api/passage?id=1');
     expect(request.request.method).toBe('GET');

@@ -9,12 +9,6 @@ declare var cytoscape: any;
   styleUrls: ['./cytoscape.component.css'],
 })
 export class CytoscapeComponent implements OnChanges {
-  @Input() public currentSection: Section;
-  @Input() public elements: any;
-  @Input() public currentSectionCompletion;
-  @Input() public sections: Section[] = [];
-  style: any;
-  layout: any;
 
   public constructor(private renderer: Renderer2) {
     this.layout = {
@@ -48,35 +42,14 @@ export class CytoscapeComponent implements OnChanges {
           width: 16
         },
       }
-    ]
+    ];
   }
-
-  public ngOnChanges(): any {
-    this.render();
-  }
-
-  public render() {
-    let cy_container = this.renderer.selectRootElement("#cy");
-    let cy = this.createCytoscape(cy_container);
-    this.animateEdges(cy);
-  }
-
-  private animateEdges(cy) {
-    this.sections.map((section: Section, index) => {
-      let edge = cy.$(`#edge-${section.rank}`);
-      CytoscapeComponent.play(edge.animation({
-        style: this.makeGradient(section)
-      }));
-      if (CytoscapeComponent.isFirst(index)) {
-        CytoscapeComponent.colorNodeComplete(cy, section);
-      } else if (this.isLast(section)) {
-        this.checkPreviousCompletionAndColor(index, cy, section);
-        CytoscapeComponent.colorFinalIfComplete(section, cy);
-      } else {
-        this.checkPreviousCompletionAndColor(index, cy, section);
-      }
-    });
-  }
+  @Input() public currentSection: Section;
+  @Input() public elements: any;
+  @Input() public currentSectionCompletion;
+  @Input() public sections: Section[] = [];
+  style: any;
+  layout: any;
 
   private static isFirst(index: number) {
     return index === 0;
@@ -92,12 +65,8 @@ export class CytoscapeComponent implements OnChanges {
     return section.percentRead === 100;
   }
 
-  private isLast(section: Section) {
-    return section.rank === this.sections.length - 1;
-  }
-
   private static colorFinalComplete(cy, section: Section) {
-    let node = cy.$(`#section-0${section.rank + 1}`);
+    const node = cy.$(`#section-0${section.rank + 1}`);
     CytoscapeComponent.colorComplete(node);
   }
 
@@ -106,7 +75,52 @@ export class CytoscapeComponent implements OnChanges {
       style: {
         'background-color': 'black'
       }
-    }))
+    }));
+  }
+
+  private static colorNodeComplete(cy, section: Section) {
+    const node = cy.$(`#section-0${section.rank}`);
+    CytoscapeComponent.colorComplete(node);
+  }
+
+  private static play(elementAnimation) {
+    elementAnimation
+      .progress(1)
+      .apply()
+      .promise('frame')
+      .then(() => {
+      });
+  }
+
+  public ngOnChanges(): any {
+    this.render();
+  }
+
+  public render() {
+    const cy_container = this.renderer.selectRootElement('#cy');
+    const cy = this.createCytoscape(cy_container);
+    this.animateEdges(cy);
+  }
+
+  private animateEdges(cy) {
+    this.sections.map((section: Section, index) => {
+      const edge = cy.$(`#edge-${section.rank}`);
+      CytoscapeComponent.play(edge.animation({
+        style: this.makeGradient(section)
+      }));
+      if (CytoscapeComponent.isFirst(index)) {
+        CytoscapeComponent.colorNodeComplete(cy, section);
+      } else if (this.isLast(section)) {
+        this.checkPreviousCompletionAndColor(index, cy, section);
+        CytoscapeComponent.colorFinalIfComplete(section, cy);
+      } else {
+        this.checkPreviousCompletionAndColor(index, cy, section);
+      }
+    });
+  }
+
+  private isLast(section: Section) {
+    return section.rank === this.sections.length - 1;
   }
 
   private checkPreviousCompletionAndColor(index: number, cy, section: Section) {
@@ -119,13 +133,8 @@ export class CytoscapeComponent implements OnChanges {
     return this.sections[index - 1].percentRead === 100;
   }
 
-  private static colorNodeComplete(cy, section: Section) {
-    let node = cy.$(`#section-0${section.rank}`);
-    CytoscapeComponent.colorComplete(node);
-  }
-
   private createCytoscape(cy_container) {
-    let cy = cytoscape({
+    const cy = cytoscape({
       container: cy_container,
       layout: this.layout,
       style: this.style,
@@ -136,15 +145,6 @@ export class CytoscapeComponent implements OnChanges {
     cy.autoungrabify(true);
     cy.autounselectify(true);
     return cy;
-  }
-
-  private static play(elementAnimation) {
-    elementAnimation
-      .progress(1)
-      .apply()
-      .promise('frame')
-      .then(() => {
-      });
   }
 
   private isCurrentSection(section: any) {

@@ -20,6 +20,20 @@ router.get('/passage', (request, response, next) => {
   );
 });
 
+router.get('/quiz', (request, response, next) => {
+  const id = request.query.id;
+  quiz.find(
+    {passage: id},
+    (err, quiz) => {
+      if (err) {
+        console.error('Error retrieving quiz by id');
+      } else {
+        response.json(quiz);
+      }
+    }
+  )
+
+});
 router.get('/quizzes', (request, response, next) => {
   quiz.find((err, quizzes) => {
     response.json(quizzes);

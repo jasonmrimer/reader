@@ -24,13 +24,13 @@ export class SubwayService {
           name: ``,
         },
         position: {x: point.x, y: point.y},
-      }
+      };
     });
     return nodes;
   }
 
   createEdgesFromNodes(nodes: any[]) {
-    let edges = nodes.map((node, index) => {
+    const edges = nodes.map((node, index) => {
       if (index === nodes.length - 1) {
         return;
       }

@@ -10,7 +10,7 @@ describe('Reader App', () => {
     'rsvp-progress-bar',
     'rsvp-section-mark',
     'rsvp-subway'
-  ]
+  ];
 
   beforeEach(() => {
     page = new FrontendPage();

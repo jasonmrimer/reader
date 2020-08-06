@@ -85,15 +85,15 @@ describe('QuizComponent', () => {
   });
 
   function completeQuiz() {
-    let choices = fixture.debugElement.queryAll(By.css('input[type=radio]'));
+    const choices = fixture.debugElement.queryAll(By.css('input[type=radio]'));
     choices.map((choice) => {
       if (
         choice.nativeElement.value === 'answer1.1'
         || choice.nativeElement.value === 'answer2.2') {
         choice.nativeElement.click();
       }
-    })
-    let completeButton = fixture.debugElement.query(By.css("input[type=button][value='Complete']"));
+    });
+    const completeButton = fixture.debugElement.query(By.css('input[type=button][value=\'Complete\']'));
     expect(completeButton).toBeTruthy();
     completeButton.nativeElement.click();
   }

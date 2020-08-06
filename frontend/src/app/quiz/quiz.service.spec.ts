@@ -1,9 +1,9 @@
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { fakeAsync, TestBed } from '@angular/core/testing';
 
 import { QuizService } from './quiz.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { QuizSubmission } from './QuizSubmission';
-import { Quiz, quizzesStub } from './Quiz';
+import { Quiz, quizStub, quizzesStub } from './Quiz';
 
 describe('QuizService', () => {
   let service: QuizService;
@@ -12,14 +12,14 @@ describe('QuizService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule]
-    })
+    });
     service = TestBed.inject(QuizService);
     httpMock = TestBed.inject(HttpTestingController);
   });
 
   afterEach(() => {
     httpMock.verify();
-  })
+  });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
@@ -28,11 +28,21 @@ describe('QuizService', () => {
   it('should get quizzes', () => {
     service.getQuizzes().subscribe((response: Quiz[]) => {
       expect(response).toEqual(quizzesStub);
-    })
+    });
 
     const request = httpMock.expectOne('http://localhost:4000/api/quizzes');
     expect(request.request.method).toBe('GET');
     request.flush(quizzesStub);
+  });
+
+  it('should get a quiz matching the passage provided', () => {
+    service.getQuiz(1).subscribe((response: Quiz) => {
+      expect(response).toEqual(quizStub);
+    });
+
+    const request = httpMock.expectOne('http://localhost:4000/api/quizzes/1');
+    expect(request.request.method).toBe('GET');
+    request.flush(quizStub);
   });
 
   it('should post choices from a survey', fakeAsync(() => {

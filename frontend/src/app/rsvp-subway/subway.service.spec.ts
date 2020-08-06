@@ -16,7 +16,7 @@ describe('SubwayService', () => {
   });
 
   it('should convert coordinates from a passage into cytoscape nodes', () => {
-    let nodes = service.convertCoordinatesToNodes(passageStub.coordinates);
+    const nodes = service.convertCoordinatesToNodes(passageStub.coordinates);
     expect(nodes).toEqual([
       {
         data: {id: 'section-01', name: '01'},
@@ -30,8 +30,8 @@ describe('SubwayService', () => {
   });
 
   it('should create edges', () => {
-    let nodes = service.convertCoordinatesToNodes(passageStub.coordinates);
-    let edges = service.createEdgesFromNodes(nodes);
+    const nodes = service.convertCoordinatesToNodes(passageStub.coordinates);
+    const edges = service.createEdgesFromNodes(nodes);
     expect(edges).toEqual([
       {data: {id: 'edge-1', source: 'section-01', target: 'section-02'}},
     ]);

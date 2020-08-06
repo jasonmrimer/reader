@@ -58,7 +58,7 @@ describe('ReaderComponent', () => {
   });
 
   it('should display instructions before start', () => {
-    let instructions = fixture.debugElement.query(By.css('.container--instructions'));
+    const instructions = fixture.debugElement.query(By.css('.container--instructions'));
     expect(instructions).toBeTruthy();
   });
 
@@ -67,7 +67,7 @@ describe('ReaderComponent', () => {
     const playButton = fixture.debugElement.query(By.css('.button--play'));
     playButton.nativeElement.click();
     fixture.detectChanges();
-    let instructions = fixture.debugElement.query(By.css('.container--instructions'));
+    const instructions = fixture.debugElement.query(By.css('.container--instructions'));
     expect(instructions).toBeFalsy();
     expect(contentBox.nativeElement.textContent).toBe('One');
   });

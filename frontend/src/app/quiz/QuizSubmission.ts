@@ -10,12 +10,12 @@ export class QuizSubmission {
   }
 
   private convertDataToAnswers(surveyData: any) {
-    let keys = Object.keys(surveyData);
+    const keys = Object.keys(surveyData);
     return keys.map((key: string) => {
       return {
         question: key,
         answer: surveyData[key]
-      }
-    })
+      };
+    });
   }
 }

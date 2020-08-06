@@ -11,15 +11,15 @@ export const completionCountsStub = [
 
 export const completionCountsJson = [
   {
-    "_id": "baseline",
-    "count": 1
+    '_id': 'baseline',
+    'count': 1
   },
   {
-    "_id": "rsvp-basic",
-    "count": 2
+    '_id': 'rsvp-basic',
+    'count': 2
   },
   {
-    "_id": "rsvp-subway",
-    "count": 3
+    '_id': 'rsvp-subway',
+    'count': 3
   }
-]
+];

@@ -11,7 +11,7 @@ describe('RSVPBasicComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule],
-      declarations: [ReaderComponent,],
+      declarations: [ReaderComponent, ],
     })
       .compileComponents();
   }));

@@ -17,6 +17,48 @@ export class MetricsService {
   constructor(private _http: HttpClient) {
   }
 
+  private static presetAllInterfacesForQuiz(fetchedMetrics: QuizMetric[]) {
+    const quizMetrics: QuizMetric[] = AllInterfaces.map((interfaceName: InterfaceName) => {
+      return new QuizMetric(interfaceName, 0);
+    });
+    fetchedMetrics.map(metric => {
+      const matchingMetric = quizMetrics.find(m => m.interfaceName === metric.interfaceName);
+      matchingMetric.quizCount = metric.quizCount;
+    });
+    return quizMetrics;
+  }
+
+  private static presetAllInterfacesForCompletion() {
+    return AllInterfaces.map((interfaceName: InterfaceName) => {
+      return new CompletionCount(interfaceName, 0);
+    });
+  }
+
+  private static getMatchingMetric(metricsWithInterfaceName: any[], displayMetric: DisplayMetric) {
+    return metricsWithInterfaceName.find(metric => metric.interfaceName === displayMetric.interfaceName);
+  }
+
+  private static presetDisplayMetrics() {
+    return AllInterfaces.map((interfaceName: InterfaceName) => {
+      return new DisplayMetric(interfaceName, 0, 0);
+    });
+  }
+
+  private static deserializeCompletionCount(metrics: any[]): CompletionCount[] {
+    const fetchedCounts = metrics.map(metric => {
+      return new CompletionCount(metric._id, metric.count);
+    });
+
+    const allCounts = this.presetAllInterfacesForCompletion();
+    allCounts.map(count => {
+      const match = fetchedCounts.find(m => m.interfaceName === count.interfaceName);
+      if (match) {
+        count.count = match.count;
+      }
+    });
+    return allCounts;
+  }
+
   fetchCompletionMetrics(): Observable<CompletionCount[]> {
     return this._http.get<CompletionCount[]>(`${environment.apiUrl}/metrics-passage`)
       .pipe(
@@ -32,24 +74,7 @@ export class MetricsService {
         map(metrics => {
           return MetricsService.presetAllInterfacesForQuiz(metrics);
         })
-      )
-  }
-
-  private static presetAllInterfacesForQuiz(fetchedMetrics: QuizMetric[]) {
-    let quizMetrics: QuizMetric[] = AllInterfaces.map((interfaceName: InterfaceName) => {
-      return new QuizMetric(interfaceName, 0);
-    });
-    fetchedMetrics.map(metric => {
-      let matchingMetric = quizMetrics.find(m => m.interfaceName === metric.interfaceName);
-      matchingMetric.quizCount = metric.quizCount;
-    })
-    return quizMetrics;
-  }
-
-  private static presetAllInterfacesForCompletion() {
-    return AllInterfaces.map((interfaceName: InterfaceName) => {
-      return new CompletionCount(interfaceName, 0);
-    });
+      );
   }
 
   postPassageCompletion(metricInterface: InterfaceName, user: string) {
@@ -61,23 +86,23 @@ export class MetricsService {
         date: new Date(),
         user: user
       }
-    )
+    );
   }
 
   mergeMetrics(passageMetrics: PassageMetric[], quizMetrics: QuizMetric[]): DisplayMetric[] {
-    let displayMetrics: DisplayMetric[] = AllInterfaces.map((interfaceName: InterfaceName) => {
+    const displayMetrics: DisplayMetric[] = AllInterfaces.map((interfaceName: InterfaceName) => {
       return new DisplayMetric(interfaceName, 0, 0);
     });
 
     displayMetrics.map((displayMetric) => {
-      let matchingMetric = passageMetrics.find(metric => metric.interfaceName === displayMetric.interfaceName);
+      const matchingMetric = passageMetrics.find(metric => metric.interfaceName === displayMetric.interfaceName);
       displayMetric.completionCount = matchingMetric ? matchingMetric.completionCount : 0;
-    })
+    });
 
     displayMetrics.map((displayMetric) => {
-      let matchingMetric = quizMetrics.find(metric => metric.interfaceName === displayMetric.interfaceName);
+      const matchingMetric = quizMetrics.find(metric => metric.interfaceName === displayMetric.interfaceName);
       displayMetric.quizCount = matchingMetric ? matchingMetric.quizCount : 0;
-    })
+    });
 
     return displayMetrics;
   }
@@ -86,41 +111,16 @@ export class MetricsService {
     completionCounts: CompletionCount[],
     quizMetrics: QuizMetric[]
   ): DisplayMetric[] {
-    let displayMetrics = MetricsService.presetDisplayMetrics();
+    const displayMetrics = MetricsService.presetDisplayMetrics();
 
     displayMetrics.map((displayMetric) => {
-      let matchingCompletionMetric = MetricsService.getMatchingMetric(completionCounts, displayMetric);
-      let matchingQuizMetric = MetricsService.getMatchingMetric(quizMetrics, displayMetric);
+      const matchingCompletionMetric = MetricsService.getMatchingMetric(completionCounts, displayMetric);
+      const matchingQuizMetric = MetricsService.getMatchingMetric(quizMetrics, displayMetric);
 
       displayMetric.completionCount = matchingCompletionMetric ? matchingCompletionMetric.count : 0;
       displayMetric.quizCount = matchingQuizMetric ? matchingQuizMetric.quizCount : 0;
-    })
+    });
 
     return displayMetrics;
-  }
-
-  private static getMatchingMetric(metricsWithInterfaceName: any[], displayMetric: DisplayMetric) {
-    return metricsWithInterfaceName.find(metric => metric.interfaceName === displayMetric.interfaceName);
-  }
-
-  private static presetDisplayMetrics() {
-    return AllInterfaces.map((interfaceName: InterfaceName) => {
-      return new DisplayMetric(interfaceName, 0, 0);
-    });
-  }
-
-  private static deserializeCompletionCount(metrics: any[]): CompletionCount[] {
-    let fetchedCounts = metrics.map(metric => {
-      return new CompletionCount(metric._id, metric.count);
-    });
-
-    let allCounts = this.presetAllInterfacesForCompletion();
-    allCounts.map(count => {
-      let match = fetchedCounts.find(m => m.interfaceName === count.interfaceName);
-      if (match) {
-        count.count = match.count;
-      }
-    });
-    return allCounts;
   }
 }

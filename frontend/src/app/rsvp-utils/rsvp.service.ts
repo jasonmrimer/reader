@@ -13,7 +13,7 @@ export class RSVPService {
   private _index = -1;
   private _interfaceType: InterfaceName;
   private _isCompleteSubject;
-  private _isComplete: boolean = false;
+  private _isComplete = false;
   isComplete$;
   private _passage: Passage;
   private _readableContent: string[];
@@ -72,7 +72,7 @@ export class RSVPService {
   }
 
   calculateRelativePositionsOfIndexes(indexes: number[], contentLength: number): number[] {
-    let positions = indexes.map((value: number) => {
+    const positions = indexes.map((value: number) => {
       return value * 100 / contentLength;
     });
     positions.push(100);
@@ -98,7 +98,7 @@ export class RSVPService {
   }
 
   get currentSectionRank(): number {
-    let section = this.currentSection;
+    const section = this.currentSection;
     return section ? section.rank : -1;
   }
 
@@ -107,7 +107,7 @@ export class RSVPService {
       return null;
     }
 
-    let section = this._sections.find((section) => {
+    const section = this._sections.find((section) => {
       return section.start <= this._index && this._index <= section.end;
     });
     return section;
@@ -120,7 +120,7 @@ export class RSVPService {
   }
 
   get index() {
-    return this._index
+    return this._index;
   }
 
   get isCompleteSubject(): boolean {
@@ -191,18 +191,18 @@ export class RSVPService {
         return contentLength - position;
       }
       return sectionMarkerIndexes[index + 1] - position;
-    })
+    });
   }
 
   private extractSections(sectionMarkerIndexes: number[], contentLength: number) {
-    let lengths = this.calculateSectionLengths(sectionMarkerIndexes, contentLength);
+    const lengths = this.calculateSectionLengths(sectionMarkerIndexes, contentLength);
     return sectionMarkerIndexes.map((position, index) => {
       return new Section(index + 1, position, position + lengths[index] - 1, 0);
     });
   }
 
   get currentSectionCompletion() {
-    let section = this.currentSection;
+    const section = this.currentSection;
     if (!section) {
       return -1;
     }
@@ -210,12 +210,12 @@ export class RSVPService {
   }
 
   private calculateCompletionPercentage(section: Section) {
-    let complete = this._index - section.start + 1;
+    const complete = this._index - section.start + 1;
     return complete / section.length * 100;
   }
 
   private updateSections() {
-    let section = this.currentSection;
+    const section = this.currentSection;
     if (!section) {
       return;
     }
@@ -225,11 +225,11 @@ export class RSVPService {
 
   calculatePauseAmount() {
 
-    let lastLetter = this.currentWord[this.currentWord.length - 1];
+    const lastLetter = this.currentWord[this.currentWord.length - 1];
 
-    let isSectionBreak = () => {
+    const isSectionBreak = () => {
       return this._sectionMarkerIndexes.includes(this._index + 1);
-    }
+    };
 
     function isEndingPunctuation() {
       return lastLetter === '.' || lastLetter === '!' || lastLetter === '?' || lastLetter === '...';

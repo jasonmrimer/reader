@@ -12,7 +12,7 @@ import { InterfaceName } from '../session/InterfaceName';
 })
 export class RsvpSectionMarksComponent extends RsvpComponent {
   style =
-    ".slider-track {background: pink}"
+    '.slider-track {background: pink}'
     ;
 
   ngOnInit(): void {
