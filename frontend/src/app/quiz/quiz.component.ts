@@ -3,7 +3,7 @@ import { ReactSurveyModel, SurveyModel, SurveyNG } from 'survey-angular';
 import { QuizService } from './quiz.service';
 import { Choice, Question, Quiz } from './Quiz';
 import { QuizSubmission } from './QuizSubmission';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { SessionService } from '../session/session.service';
 
 SurveyNG.apply({theme: 'modern'});
@@ -16,11 +16,10 @@ SurveyNG.apply({theme: 'modern'});
 export class QuizComponent implements OnInit {
   quiz: Quiz;
   private quizService: QuizService;
-  interfaceName: string;
   didSubmit = false;
+
   constructor(
     private _quizService: QuizService,
-    private route: ActivatedRoute,
     public sessionService: SessionService,
     private router: Router
   ) {
@@ -45,25 +44,16 @@ export class QuizComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      this.interfaceName = params.get('interfaceName');
-    });
     this.quizService.getQuiz(this.sessionService.currentPair.passageName)
       .subscribe(quiz => {
-        this.quiz = quiz;
+        console.log('subscribe');
+        this.quiz = quiz[0];
+        console.log(this.quiz);
         const surveyJSON = {
           questions: this.convertToSurveyQuestions(this.quiz.questions)
         };
         this.createSurveyComponent(surveyJSON);
       });
-    // this.quizService.getQuizzes()
-    //   .subscribe(quizzes => {
-    //     this.quiz = quizzes[0];
-    //     const surveyJSON = {
-    //       questions: this.convertToSurveyQuestions(this.quiz.questions)
-    //     };
-    //     this.createSurveyComponent(surveyJSON);
-    //   });
   }
 
   private createSurveyComponent(surveyJSON: any) {
@@ -83,7 +73,7 @@ export class QuizComponent implements OnInit {
     const quizSubmission = new QuizSubmission(
       this.quiz.passage,
       surveyModel.data,
-      this.interfaceName,
+      this.sessionService.currentPair.interfaceName,
       this.sessionService.sessionId,
       new Date()
     );

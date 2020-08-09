@@ -1,11 +1,10 @@
-conn = new Mongo();
-db = conn.getDB('reader');
-filePathPassageTest1 = pwd() + '/models/passageTest1';
-filePathPassageTest2 = pwd() + '/models/passageTest2';
-filePathPassageTest3 = pwd() + '/models/passageTest3';
-filePathPassageTest4 = pwd() + '/models/passageTest4';
-filePathPassageTest5 = pwd() + '/models/passageTest5';
-filePathPassage1 = pwd() + '/models/passage5';
+const conn = new Mongo();
+const db = conn.getDB('reader');
+const filePathPassageTest1 = pwd() + '/models/passageTest1';
+const filePathPassageTest2 = pwd() + '/models/passageTest2';
+const filePathPassageTest3 = pwd() + '/models/passageTest3';
+const filePathPassageTest4 = pwd() + '/models/passageTest4';
+const filePathPassageTest5 = pwd() + '/models/passageTest5';
 db.passages.insert(
   {
     _id: '1',
@@ -81,7 +80,7 @@ db.quizzes.insert(
     passage: 1,
     questions: [
       {
-        question: 'what is a red mammal?',
+        question: 'quiz 1 what is a red mammal?',
         choices: [
           {correct: true, text: 'fox'},
           {correct: false, text: 'skunk'},
@@ -106,7 +105,7 @@ db.quizzes.insert(
     passage: 2,
     questions: [
       {
-        question: 'what is a red mammal?',
+        question: 'quiz 2 what is a red mammal?',
         choices: [
           {correct: true, text: 'fox'},
           {correct: false, text: 'skunk'},
@@ -131,7 +130,7 @@ db.quizzes.insert(
     passage: 3,
     questions: [
       {
-        question: 'what is a red mammal?',
+        question: 'quiz 3 what is a red mammal?',
         choices: [
           {correct: true, text: 'fox'},
           {correct: false, text: 'skunk'},
@@ -156,7 +155,7 @@ db.quizzes.insert(
     passage: 4,
     questions: [
       {
-        question: 'what is a red mammal?',
+        question: 'quiz 4 what is a red mammal?',
         choices: [
           {correct: true, text: 'fox'},
           {correct: false, text: 'skunk'},
@@ -181,7 +180,7 @@ db.quizzes.insert(
     passage: 5,
     questions: [
       {
-        question: 'what is a red mammal?',
+        question: 'quiz 5 what is a red mammal?',
         choices: [
           {correct: true, text: 'fox'},
           {correct: false, text: 'skunk'},

@@ -19,7 +19,6 @@ const routes: Routes = [
   {path: 'rsvp-section-mark/:passageId', component: RsvpSectionMarksComponent},
   {path: 'rsvp-subway/:passageId', component: RsvpSubwayComponent},
   {path: 'quiz', component: QuizComponent},
-  {path: 'quiz/:interfaceName', component: QuizComponent},
   {path: 'metrics', component: MetricsComponent},
   {path: 'outro', component: OutroComponent},
 ];
