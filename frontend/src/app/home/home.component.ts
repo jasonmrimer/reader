@@ -22,6 +22,6 @@ export class HomeComponent implements OnInit {
   start() {
     this.sessionService.generateSessionPair().subscribe((pair) => {
       this.router.navigate([`/${pair.interfaceName}/1`]);
-    })
+    });
   }
 }

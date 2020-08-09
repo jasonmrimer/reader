@@ -11,12 +11,12 @@ import { OrpService } from './orp.service';
 export class ReaderComponent implements OnInit {
   @Input()
   rsvpService: RSVPService;
-  didStart: boolean = false;
+  didStart = false;
   wpm = 25000;
   textJoiner;
   textMeasurer;
   textElements;
-  displayReader: boolean = true;
+  displayReader = true;
 
   constructor(
     private ngZone: NgZone,

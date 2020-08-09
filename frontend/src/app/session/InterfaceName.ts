@@ -12,4 +12,4 @@ export const AllInterfaces: InterfaceName[] = [
   InterfaceName.RSVP_PROGRESS_BAR,
   InterfaceName.RSVP_SECTION_MARK,
   InterfaceName.RSVP_SUBWAY,
-]
+];

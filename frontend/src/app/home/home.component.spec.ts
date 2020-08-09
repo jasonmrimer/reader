@@ -21,7 +21,7 @@ describe('HomeComponent', () => {
   let sessionService: SessionServiceMock;
 
   beforeEach(async(() => {
-    quizMetricsStub = QuizMetricsPartialStub()
+    quizMetricsStub = QuizMetricsPartialStub();
     metricsService = new MetricsServiceStub();
     sessionService = new SessionServiceMock();
 
@@ -44,9 +44,9 @@ describe('HomeComponent', () => {
     router = TestBed.inject(Router);
   });
 
-  let calledAllTiedInterfaces = (calls) => {
+  const calledAllTiedInterfaces = (calls) => {
     return calls.has(`/${InterfaceName.BASELINE}/1`) && calls.has(`/${InterfaceName.RSVP_BASIC}/1`);
-  }
+  };
 
   it('should create', () => {
     expect(component).toBeTruthy();

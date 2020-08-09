@@ -29,7 +29,7 @@ export const visitAllPages = async (
     .then(() => element(by.className('button--start')).click())
     .then(() => {
       browser.waitForAngularEnabled(false);
-      return browser.getCurrentUrl()
+      return browser.getCurrentUrl();
     })
     .then((randomizedUrl) => {
 
@@ -42,14 +42,14 @@ export const visitAllPages = async (
         return visitAllPages(allInterfaces, actualUrls, expectedUrls);
       });
     });
-}
+};
 
 export const journey = async (subjectInterface: string, allInterfaces: string[]) => {
   console.log('subject: ' + subjectInterface);
-  let otherInterfaceNames = allInterfaces.filter(intName => intName !== subjectInterface);
+  const otherInterfaceNames = allInterfaces.filter(intName => intName !== subjectInterface);
 
   await journeyReadAndQuiz(subjectInterface, otherInterfaceNames);
-}
+};
 
 function isAngular(primaryInterface: string) {
   return primaryInterface != 'rsvp-subway';
@@ -93,14 +93,14 @@ export async function getMetricsFor(
   interfaces: string[]
 ) {
   return browser.get('/metrics').then(() => {
-    let counts = [];
+    const counts = [];
     for (let i = 0; i < interfaces.length; i++) {
       getMetricCountFor(interfaces[i], metricTitle)
         .then((count) => counts.push(count))
         .catch((err) => {
-          console.error('____getting metrics for ' + interfaces[i])
-          console.error(err)
-          console.error('____get metrics error end_______________')
+          console.error('____getting metrics for ' + interfaces[i]);
+          console.error(err);
+          console.error('____get metrics error end_______________');
         });
     }
 
@@ -132,7 +132,7 @@ export function verifyRSVPWorks(primaryInterface: string) {
     );
     if (!isAngular(primaryInterface)) {
       browser.sleep(3000).then(() => {
-        console.log('waited for non angular completion metric post')
+        console.log('waited for non angular completion metric post');
       });
     }
   });
@@ -168,16 +168,16 @@ function compareMetrics(
 }
 
 function getMetricRowByInterfaceName(rows, interfaceName: string) {
-  let metricRow = rows.filter((row) => {
-    let interfaceNameCell = row.element(by.className('interface-name'));
+  const metricRow = rows.filter((row) => {
+    const interfaceNameCell = row.element(by.className('interface-name'));
     return interfaceNameCell.getText().then(text => text === interfaceName);
   });
   return metricRow;
 }
 
 export function getMetricCountFor(interfaceName: string, metricHeader: string): Promise<number> {
-  let rows = element.all(by.className('metrics-row'));
-  let metricRow = getMetricRowByInterfaceName(rows, interfaceName);
+  const rows = element.all(by.className('metrics-row'));
+  const metricRow = getMetricRowByInterfaceName(rows, interfaceName);
   return getMetricCountFromRow(metricRow, metricHeader);
 }
 
@@ -192,13 +192,13 @@ async function getMetricCountFromRow(metricRow, metricHeader: string): Promise<n
         .element(by.className(metricHeader))
         .getText()
         .then(text => {
-          return Number.parseInt(text)
+          return Number.parseInt(text);
         })
         .catch((err) => {
           console.error('____error getting metric count from row for ' + metricHeader);
-          console.error(err)
+          console.error(err);
           console.error('____end error getting metric count from row__________ ');
-        })
+        });
     }
-  })
+  });
 }

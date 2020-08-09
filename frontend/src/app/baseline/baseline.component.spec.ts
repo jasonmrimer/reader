@@ -22,7 +22,7 @@ describe('BaselineComponent', () => {
   beforeEach(async(() => {
     intervalService = new IntervalServiceMock();
     rsvpService = new RSVPService();
-    rsvpService.hydrate(passageStub, InterfaceName.BASELINE)
+    rsvpService.hydrate(passageStub, InterfaceName.BASELINE);
     spyOn(intervalService, 'runInterval').and.callThrough();
 
 

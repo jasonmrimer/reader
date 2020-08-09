@@ -3,6 +3,7 @@ import { Quiz } from './Quiz';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { QuizSubmission } from './QuizSubmission';
+import { PassageName } from '../session/PassageName';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,10 @@ export class QuizService {
     return this._http.post(
       `${environment.apiUrl}/quizzes`,
       quizSubmission
-    )
+    );
+  }
+
+  getQuiz(passageId: PassageName) {
+    return this._http.get<Quiz>(`${environment.apiUrl}/quizzes/${passageId}`);
   }
 }

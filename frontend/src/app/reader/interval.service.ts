@@ -4,12 +4,17 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class IntervalService {
+
+  constructor() {
+    clearInterval(this.interval);
+  }
   interval;
   private _callback: () => void;
   private time: number;
 
-  constructor() {
-    clearInterval(this.interval);
+  private static calculatePace(wpm: number) {
+    const millisecondsPerMinute = 60000;
+    return millisecondsPerMinute / wpm;
   }
 
 
@@ -34,17 +39,12 @@ export class IntervalService {
     this._callback();
   }
 
-  private static calculatePace(wpm: number) {
-    let millisecondsPerMinute = 60000;
-    return millisecondsPerMinute / wpm;
-  }
-
   pause(time) {
     if (time > 0) {
       clearInterval(this.interval);
       setTimeout(() => {
         this.runInterval();
-      }, time)
+      }, time);
     }
   }
 }

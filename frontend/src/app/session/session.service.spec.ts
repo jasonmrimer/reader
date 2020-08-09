@@ -48,7 +48,7 @@ describe('SessionService', () => {
   });
 
   it('should process a pairing and remove from available', () => {
-    let sessionPair = new SessionPair(InterfaceName.RSVP_SUBWAY, PassageName.FOUR);
+    const sessionPair = new SessionPair(InterfaceName.RSVP_SUBWAY, PassageName.FOUR);
     service.makeSessionPairUnavailable(sessionPair);
     expect(service.availableInterfaces).toEqual(jasmine.arrayWithExactContents([
       InterfaceName.BASELINE,
@@ -61,45 +61,45 @@ describe('SessionService', () => {
       PassageName.TWO,
       PassageName.THREE,
       PassageName.FIVE,
-    ]))
+    ]));
   });
 
   it('should generate a random, least-used starting from session availability', () => {
-    let sessionPair = new SessionPair(InterfaceName.RSVP_SUBWAY, PassageName.FOUR);
+    const sessionPair = new SessionPair(InterfaceName.RSVP_SUBWAY, PassageName.FOUR);
     service.makeSessionPairUnavailable(sessionPair);
     for (let i = 0; i < 100; i++) {
       service.generateSessionPair().subscribe((pair) => {
         expect(pair.interfaceName).toBe(InterfaceName.RSVP_SECTION_MARK);
-      })
+      });
     }
   });
 
   it('should allow user to take non-least used if only remaining interfaces for session', () => {
-    let sessionPairsToRemove = [
+    const sessionPairsToRemove = [
      new SessionPair(InterfaceName.BASELINE, PassageName.ONE),
      new SessionPair(InterfaceName.RSVP_BASIC, PassageName.TWO),
      new SessionPair(InterfaceName.RSVP_SECTION_MARK, PassageName.THREE),
      new SessionPair(InterfaceName.RSVP_SUBWAY, PassageName.FIVE),
-    ]
+    ];
     sessionPairsToRemove.map((pair) => service.makeSessionPairUnavailable(pair));
 
     service.generateSessionPair().subscribe((pair) => {
-      let expectedPair = new SessionPair(InterfaceName.RSVP_PROGRESS_BAR, PassageName.FOUR);
+      const expectedPair = new SessionPair(InterfaceName.RSVP_PROGRESS_BAR, PassageName.FOUR);
       expect(pair).toEqual(expectedPair);
       expect(service.currentPair).toEqual(expectedPair);
-    })
+    });
   });
 
   it('should stop the user from continuing if completed all interfaces/passages', () => {
     expect(service.completedSession).toBeFalsy();
-    let sessionPairsToRemove = [
+    const sessionPairsToRemove = [
       new SessionPair(InterfaceName.BASELINE, PassageName.ONE),
       new SessionPair(InterfaceName.RSVP_BASIC, PassageName.TWO),
       new SessionPair(InterfaceName.RSVP_SECTION_MARK, PassageName.THREE),
       new SessionPair(InterfaceName.RSVP_PROGRESS_BAR, PassageName.FOUR),
       new SessionPair(InterfaceName.RSVP_SUBWAY, PassageName.FIVE),
-    ]
-    sessionPairsToRemove.map((pair) => service.makeSessionPairUnavailable(pair))
+    ];
+    sessionPairsToRemove.map((pair) => service.makeSessionPairUnavailable(pair));
     expect(service.completedSession).toBeTruthy();
   });
 
@@ -108,6 +108,6 @@ describe('SessionService', () => {
       service.completeCurrentPair();
       expect(service.availableInterfaces).not.toContain(pair.interfaceName);
       expect(service.availablePassages).not.toContain(pair.passageName);
-    })
+    });
   });
 });

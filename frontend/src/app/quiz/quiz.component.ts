@@ -5,8 +5,6 @@ import { Choice, Question, Quiz } from './Quiz';
 import { QuizSubmission } from './QuizSubmission';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../session/session.service';
-import { log } from 'util';
-
 
 SurveyNG.apply({theme: 'modern'});
 
@@ -19,9 +17,7 @@ export class QuizComponent implements OnInit {
   quiz: Quiz;
   private quizService: QuizService;
   interfaceName: string;
-  didSubmit: boolean = false;
-
-
+  didSubmit = false;
   constructor(
     private _quizService: QuizService,
     private route: ActivatedRoute,
@@ -29,34 +25,6 @@ export class QuizComponent implements OnInit {
     private router: Router
   ) {
     this.quizService = _quizService;
-  }
-
-  ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      this.interfaceName = params.get('interfaceName');
-    });
-
-    this.quizService.getQuizzes()
-      .subscribe(quizzes => {
-        this.quiz = quizzes[0];
-        const surveyJSON = {
-          questions: this.convertToSurveyQuestions(this.quiz.questions)
-        };
-        this.createSurveyComponent(surveyJSON);
-      });
-  }
-
-  private createSurveyComponent(surveyJSON: any) {
-    const surveyModel = new ReactSurveyModel(surveyJSON);
-    surveyModel.onComplete.add(this.submitAnswers);
-    SurveyNG.render('surveyContainer', {model: surveyModel});
-  }
-
-  private convertToSurveyQuestions(questions: Question[]) {
-    return questions.map((question: Question) => {
-      const choicesText = QuizComponent.extractChoiceTextFrom(question);
-      return QuizComponent.questionJSON(question, choicesText)
-    });
   }
 
   private static questionJSON(question: Question, choices: string[]) {
@@ -72,7 +40,42 @@ export class QuizComponent implements OnInit {
 
   private static extractChoiceTextFrom(question: Question) {
     return question.choices.map((choice: Choice) => {
-      return choice.text
+      return choice.text;
+    });
+  }
+
+  ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      this.interfaceName = params.get('interfaceName');
+    });
+    this.quizService.getQuiz(this.sessionService.currentPair.passageName)
+      .subscribe(quiz => {
+        this.quiz = quiz;
+        const surveyJSON = {
+          questions: this.convertToSurveyQuestions(this.quiz.questions)
+        };
+        this.createSurveyComponent(surveyJSON);
+      });
+    // this.quizService.getQuizzes()
+    //   .subscribe(quizzes => {
+    //     this.quiz = quizzes[0];
+    //     const surveyJSON = {
+    //       questions: this.convertToSurveyQuestions(this.quiz.questions)
+    //     };
+    //     this.createSurveyComponent(surveyJSON);
+    //   });
+  }
+
+  private createSurveyComponent(surveyJSON: any) {
+    const surveyModel = new ReactSurveyModel(surveyJSON);
+    surveyModel.onComplete.add(this.submitAnswers);
+    SurveyNG.render('surveyContainer', {model: surveyModel});
+  }
+
+  private convertToSurveyQuestions(questions: Question[]) {
+    return questions.map((question: Question) => {
+      const choicesText = QuizComponent.extractChoiceTextFrom(question);
+      return QuizComponent.questionJSON(question, choicesText);
     });
   }
 
@@ -83,7 +86,7 @@ export class QuizComponent implements OnInit {
       this.interfaceName,
       this.sessionService.sessionId,
       new Date()
-    )
+    );
 
     this.quizService.postAnswers(quizSubmission)
       .subscribe(() => {

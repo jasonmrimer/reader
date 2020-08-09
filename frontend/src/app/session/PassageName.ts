@@ -12,5 +12,5 @@ export const AllPassages: PassageName[] = [
   PassageName.THREE,
   PassageName.FOUR,
   PassageName.FIVE,
-]
+];
 
