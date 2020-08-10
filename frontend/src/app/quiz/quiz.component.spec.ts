@@ -118,11 +118,6 @@ describe('QuizComponent', () => {
     );
   });
 
-  it('should set its interface type based on its routing', async () => {
-    await fixture.detectChanges();
-    expect(component.interfaceName).toBe('rsvp-basic');
-  });
-
   it('should trigger a completion to the session on submission', () => {
     spyOn(sessionService, 'completeCurrentPair');
     fixture.detectChanges();

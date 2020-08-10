@@ -1,7 +1,5 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MetricsService } from '../metrics/metrics.service';
-import { QuizMetric } from '../metrics/QuizMetric';
 import { SessionService } from '../session/session.service';
 
 @Component({
