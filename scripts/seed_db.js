@@ -55,11 +55,11 @@ db.passages.insert(
     content: cat(filePathPassage4),
     coordinates: [
       {x: 100, y: -100},
-      {x: -128.5, y:	-59.7},
-      {x: 263.7, y:	567.8},
-      {x: -245.5, y:	1077.0},
-      {x: -677.5, y:	714.4},
-      {x: -764.0, y:	980.7},
+      {x: -128.5, y: -59.7},
+      {x: 263.7, y: 567.8},
+      {x: -245.5, y: 1077.0},
+      {x: -677.5, y: 714.4},
+      {x: -764.0, y: 980.7},
     ]
   }
 );
@@ -69,13 +69,13 @@ db.passages.insert(
     title: 'Noisy Humans Drown Out Sounds of Nature in Protected Areas',
     content: cat(filePathPassage5),
     coordinates: [
-      {x: -150, y:	15},
-      {x: 462.0, y:	15.0},
-      {x: 356.8, y:	212.8},
-      {x: 892.9, y:	98.8},
-      {x: 800.4, y:	-169.7},
-      {x: 518.5, y:	-359.8},
-      {x: -205.5, y:	-283.7},
+      {x: -150, y: 15},
+      {x: 462.0, y: 15.0},
+      {x: 356.8, y: 212.8},
+      {x: 892.9, y: 98.8},
+      {x: 800.4, y: -169.7},
+      {x: 518.5, y: -359.8},
+      {x: -205.5, y: -283.7},
     ]
   }
 );
@@ -106,7 +106,15 @@ db.quizzes.insert(
         ]
       },
       {
-        question: 'In the context of the passage, the author’s use of the phrase “her light step flying to keep time with his long stride” is primarily meant to convey the idea that', //todo write location question
+        question: 'In what section of the passage was the phrase, “her light step flying to keep time with his long stride”?',
+        choices: [
+          {correct: true, text: 'Section 1'},
+          {correct: false, text: 'Section 2'},
+          {correct: false, text: 'Section 3'},
+        ]
+      },
+      {
+        question: 'In the context of the passage, the author’s use of the phrase “her light step flying to keep time with his long stride” is primarily meant to convey the idea that',
         choices: [
           {correct: true, text: 'Ethan and Mattie share a powerful enthusiasm.'},
           {correct: false, text: 'Matte strives to match the speed at which Ethan works.'},
@@ -122,16 +130,24 @@ db.quizzes.insert(
           {correct: true, text: 'receptive nature.'},
           {correct: false, text: 'freedom from worry.'},
         ]
-      }, //todo location
+      },
       {
-        question: 'The author includes the descriptions of the sunset, the clouds, and the hemlock shadows primarily to', // todo write location question
+        question: 'The author includes the descriptions of the sunset, the clouds, and the hemlock shadows primarily to',
         choices: [
           {correct: false, text: 'suggest the peacefulness of the natural world.'},
           {correct: true, text: 'emphasize the acuteness of two characters’ sensations.'},
           {correct: false, text: 'foreshadow the declining fortunes of two characters.'},
           {correct: false, text: 'offer a sense of how fleeting time can be.'},
         ]
-      }
+      },
+      {
+        question: 'In what section is the description of the sunset, the clouds, and the hemlock shadows?',
+        choices: [
+          {correct: false, text: 'Section 1'},
+          {correct: true, text: 'Section 2'},
+          {correct: false, text: 'Section 3'},
+        ]
+      },
     ]
   }
 );
@@ -161,12 +177,22 @@ db.quizzes.insert(
         ]
       },
       {
-        question: 'As used in the first sentence of paragraph 5, “intense” most nearly means', //todo location question
+        question: 'As used in the sentence, "The coming decades will likely see more intense clustering of jobs, innovation, and productivity in a smaller number of bigger cities and cityregions...", the word "intense" most nearly means',
         choices: [
           {correct: false, text: 'emotional.'},
           {correct: true, text: 'concentrated.'},
           {correct: false, text: 'brilliant.'},
           {correct: false, text: 'determined.'},
+        ]
+      },
+      {
+        question: 'In what section is the sentence from the previous question?',
+        choices: [
+          {correct: false, text: 'Section 1'},
+          {correct: false, text: 'Section 2'},
+          {correct: false, text: 'Section 3'},
+          {correct: false, text: 'Section 4'},
+          {correct: true, text: 'Section 5'},
         ]
       },
     ]
@@ -177,7 +203,7 @@ db.quizzes.insert(
     passage: 3,
     questions: [
       {
-        question: 'The passage most strongly suggests that Adelita used which of the following to navigate her 9,000mile journey?',
+        question: 'The passage most strongly suggests that Adelita used which of the following to navigate her 9,000-mile journey?',
         choices: [
           {correct: false, text: 'The current of the North Atlantic gyre'},
           {correct: false, text: 'Cues from electromagnetic coils designed by Putman and Lohmann'},
@@ -186,7 +212,7 @@ db.quizzes.insert(
         ]
       },
       {
-        question: 'Which choice provides the best evidence for the answer to question 9?', //todo write location based on this
+        question: 'Which choice provides the best evidence for the answer to the previous question about Adelita\'s 9,000-mile journey?',
         choices: [
           {
             correct: false,
@@ -204,6 +230,15 @@ db.quizzes.insert(
             correct: true,
             text: '“Neither corresponds directly to either latitude or longitude, but together, they provide a ‘magnetic signature’ that tells the turtle where it is”'
           },
+        ]
+      },
+      {
+        question: 'What section included the best evidence to answer the question about Adelita\'s 9,000-mile journey?',
+        choices: [
+          {correct: false, text: 'Section 1'},
+          {correct: false, text: 'Section 2'},
+          {correct: false, text: 'Section 3'},
+          {correct: true, text: 'Section 4'},
         ]
       },
       {
@@ -225,7 +260,7 @@ db.quizzes.insert(
         ]
       },
       {
-        question: 'The author refers to reed warblers and sparrows (follow link to the first sentence of paragraph 7) primarily to', //todo
+        question: 'The author refers to reed warblers and sparrows primarily to', //todo
         choices: [
           {correct: false, text: 'contrast the loggerhead turtle’s migration patterns with those of other species.'},
           {correct: true, text: 'provide examples of species that share one of the loggerhead turtle’s abilities.'},
@@ -234,6 +269,15 @@ db.quizzes.insert(
             correct: false,
             text: 'illustrate some ways in which the ability to navigate long distances can help a species.'
           },
+        ]
+      },
+      {
+        question: 'What section describes warblers and sparrows?',
+        choices: [
+          {correct: false, text: 'Section 1'},
+          {correct: false, text: 'Section 2'},
+          {correct: false, text: 'Section 3'},
+          {correct: true, text: 'Section 4'},
         ]
       },
     ]
@@ -253,7 +297,7 @@ db.quizzes.insert(
         ]
       },
       {
-        question: 'The main rhetorical effect of the series of three phrases in the fourth sentence of paragraph 1 is to', //todo location question
+        question: 'The main rhetorical effect of the series of three phrases in, "And I am not going to sit here and be an idle spectator to the diminution, the subversion, the destruction, of the Constitution" is to',
         choices: [
           {
             correct: true,
@@ -271,7 +315,17 @@ db.quizzes.insert(
         ]
       },
       {
-        question: 'As used in the first sentence of paragraph 5, “channeled” most nearly means', // todo location   uestion
+        question: 'In what section is the phrase including "the diminution, the subversion, the destruction"? ',
+        choices: [
+          {correct: true, text: 'Section 1'},
+          {correct: false, text: 'Section 2'},
+          {correct: false, text: 'Section 3'},
+          {correct: false, text: 'Section 4'},
+          {correct: false, text: 'Section 5'},
+        ]
+      },
+      {
+        question: 'As used the sentence, "The nature of impeachment: a narrowly channeled exception to the separation of powers maxim.", “channeled” most nearly means',
         choices: [
           {correct: false, text: 'worn.'},
           {correct: false, text: 'sent.'},
@@ -280,7 +334,17 @@ db.quizzes.insert(
         ]
       },
       {
-        question: 'In the second through fourth sentences of paragraph 6, what is the most likely reason Jordan draws a distinction between two types of “parties”?', //todo location
+        question: 'What section contains the "channeled" sentence from the previous question?',
+        choices: [
+          {correct: false, text: 'Section 1'},
+          {correct: false, text: 'Section 2'},
+          {correct: true, text: 'Section 3'},
+          {correct: false, text: 'Section 4'},
+          {correct: false, text: 'Section 5'},
+        ]
+      },
+      {
+        question: 'In the second through fourth sentences of paragraph 6, what is the most likely reason Jordan draws a distinction between two types of “parties”?',
         choices: [
           {correct: true, text: 'To counter the suggestion that impeachment is or should be about partisan politics'},
           {correct: false, text: 'To disagree with Hamilton’s claim that impeachment proceedings excite passions'},
@@ -295,7 +359,7 @@ db.quizzes.insert(
         ]
       },
       {
-        question: 'Which choice provides the best evidence for the answer to the previous question?', //todo
+        question: 'Which choice provides the best evidence for the answer to the previous question?',
         choices: [
           {
             correct: false,
@@ -315,6 +379,16 @@ db.quizzes.insert(
           },
         ]
       },
+      {
+        question: 'In what section can you find that evidence for party distinction?',
+        choices: [
+          {correct: false, text: 'Section 1'},
+          {correct: false, text: 'Section 2'},
+          {correct: false, text: 'Section 3'},
+          {correct: true, text: 'Section 4'},
+          {correct: false, text: 'Section 5'},
+        ]
+      }
     ]
   }
 );
@@ -395,12 +469,23 @@ db.quizzes.insert(
         question: 'Please read these sentences from the text.\n' +
           '"They calculated that the sounds people make[...] have raised the levels above natural background noise in two-thirds of U.S. protected areas, with adverse consequences for wildlife and for the 300 million or so people who seek the tranquil hush of park lands every year. \'The din of modern life extends into protected areas,\' said acoustic biologist Megan McKenna[.]"\n' +
           '\n' +
-          'Based on these sentences, what does the word din mean? ', //todo location to see if remember this section
+          'Based on these sentences, what does the word din mean? ',
         choices: [
           {correct: false, text: 'stress'},
           {correct: false, text: 'nature'},
           {correct: false, text: 'quiet hush'},
           {correct: true, text: 'loud noise'},
+        ]
+      },
+      {
+        question: 'What section includes the sentences about U.S. Protect Areas from the previous question?',
+        choices: [
+          {correct: true, text: 'Section 1'},
+          {correct: false, text: 'Section 2'},
+          {correct: false, text: 'Section 3'},
+          {correct: false, text: 'Section 4'},
+          {correct: false, text: 'Section 5'},
+          {correct: false, text: 'Section 6'},
         ]
       },
       {
@@ -411,6 +496,17 @@ db.quizzes.insert(
           {correct: true, text: 'such as'},
           {correct: false, text: 'however'},
           {correct: false, text: 'consequently'},
+        ]
+      },
+      {
+        question: 'What section describes psychologists discoveries about benefits for humans?',
+        choices: [
+          {correct: false, text: 'Section 1'},
+          {correct: false, text: 'Section 2'},
+          {correct: false, text: 'Section 3'},
+          {correct: false, text: 'Section 4'},
+          {correct: false, text: 'Section 5'},
+          {correct: true, text: 'Section 6'},
         ]
       }
     ]

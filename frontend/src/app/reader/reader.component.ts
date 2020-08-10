@@ -12,7 +12,7 @@ export class ReaderComponent implements OnInit {
   @Input()
   rsvpService: RSVPService;
   didStart = false;
-  wpm = 25000;
+  wpm = 250;
   textJoiner;
   textMeasurer;
   textElements;
