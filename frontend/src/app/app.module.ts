@@ -21,6 +21,8 @@ import { SubwayComponent } from './rsvp-subway/subway/subway.component';
 import { PassageCompletionComponent } from './quiz/passage-completion/passage-completion.component';
 import { InstructionsComponent } from './instructions/instructions.component';
 import { OutroComponent } from './outro/outro.component';
+import {MatSliderModule} from "@angular/material/slider";
+import {Ng5SliderModule} from "ng5-slider";
 
 @NgModule({
   declarations: [
@@ -48,6 +50,8 @@ import { OutroComponent } from './outro/outro.component';
     BrowserAnimationsModule,
     MatProgressBarModule,
     NgxBootstrapSliderModule,
+    MatSliderModule,
+    Ng5SliderModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

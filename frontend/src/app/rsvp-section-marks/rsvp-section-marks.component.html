@@ -16,5 +16,13 @@
     [ticksSnapBounds]="200"
   >
   </mv-slider>
+  <ng5-slider
+    [value]="rsvpService.index+1"
+    [options]="{
+    floor: 0,
+    ceil: rsvpService.contentLength,
+      ticksArray: rsvpService.sectionMarkerIndexes
+    }"
+  ></ng5-slider>
   <!--  </div>-->
 </app-reader>
