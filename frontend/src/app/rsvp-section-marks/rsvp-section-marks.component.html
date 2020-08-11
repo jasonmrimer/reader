@@ -1,20 +1,14 @@
 <app-reader
   [rsvpService]="rsvpService"
 >
-  <!--  <div-->
-  <mv-slider
-    class="completion-meter"
-    data-slider-id="data-slider"
-    [id]="'data-slider'"
-    *ngIf="rsvpService.sectionMarkerIndexes"
-    [value]="rsvpService.index + 1"
-    [min]="0"
-    [max]="rsvpService.contentLength"
-    [ticks]="rsvpService.sectionMarkerIndexes"
-    [ticksPositions]="100"
-    step="1"
-    [ticksSnapBounds]="200"
-  >
-  </mv-slider>
-  <!--  </div>-->
+  <div class="custom-slider">
+    <ng5-slider
+      [value]="rsvpService.index+1"
+      [options]="{
+        floor: 0,
+        ceil: rsvpService.contentLength,
+        ticksArray: rsvpService.sectionMarkerIndexes
+    }"
+    ></ng5-slider>
+  </div>
 </app-reader>

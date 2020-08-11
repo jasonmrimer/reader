@@ -9,6 +9,7 @@
   "author": "gowtham raj j",
   "license": "ISC",
   "dependencies": {
+    "angularjs-slider": "^7.0.0",
     "body-parser": "^1.17.2",
     "cors": "^2.8.4",
     "express": "^4.15.4",
