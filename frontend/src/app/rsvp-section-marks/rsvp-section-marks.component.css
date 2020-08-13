@@ -8,31 +8,74 @@
   margin-top: 8px;
 }
 
-/*::ng-deep .slider > * {*/
-/*  background-image: none;*/
-/*}*/
-
-::ng-deep .slider-track {
-  border: solid 1px #7400B8;
-  background: none;
+.custom-slider {
+  width: 100%;
 }
 
-:host-context .slider-selection .tick-slider-selection {
-  background: #7400B8 none !important;
+::ng-deep .custom-slider .ng5-slider .ng5-slider-bar {
+  background: pink;
+  height: 16px;
+  border: 1px solid #80ffdb;
 }
 
-::ng-deep .slider-selection .tick-slider-selection .slider-track-low {
-  border: solid 1px #7400B8;
-  background: #7400B8 !important;
+::ng-deep .custom-slider .ng5-slider
+.ng5-slider-span.ng5-slider-bubble.ng5-slider-limit.ng5-slider-ceil {
+  display: none;
 }
 
-::ng-deep .slider-tick {
-  border: solid 1px #7400B8;
-  background: #C4C4C4;
-  opacity: 100%;
+::ng-deep .custom-slider .ng5-slider
+.ng5-slider-span.ng5-slider-bubble.ng5-slider-model-value {
+  display: none;
 }
 
-::ng-deep .slider-handle {
-  border: solid 1px #7400B8;
-  /*background: #7400B8;*/
+::ng-deep .custom-slider .ng5-slider
+.ng5-slider-span.ng5-slider-bubble.ng5-slider-limit.ng5-slider-floor {
+  display: none;
+}
+
+::ng-deep .custom-slider .ng5-slider .ng5-slider-selection {
+  background: green;
+}
+
+::ng-deep .custom-slider .ng5-slider .ng5-slider-pointer {
+  width: 18px;
+  height: 18px;
+  top: auto;
+  background-color: red;
+}
+
+::ng-deep .custom-slider .ng5-slider .ng5-slider-pointer:after {
+  display: none;
+}
+
+::ng-deep .custom-slider .ng5-slider .ng5-slider-bubble {
+  /*bottom: 14px;*/
+}
+
+::ng-deep .custom-slider .ng5-slider .ng5-slider-limit {
+  font-weight: bold;
+  color: green;
+}
+
+::ng-deep .custom-slider .ng5-slider .ng5-slider-tick {
+  width: 18px;
+  height: 18px;
+  margin-left: 4px;
+  border-radius: 16px;
+  background: #ebebeb;
+  border: 1px solid #80ffdb;
+  top: auto;
+}
+
+::ng-deep .custom-slider .ng5-slider .ng5-slider-tick.ng5-slider-selected {
+  border: solid 1px #80ffdb;
+  background: #ebebeb;
+}
+
+::ng-deep .custom-slider .ng5-slider .ng5-slider-span.ng5-slider-bar-wrapper.ng5-slider-selection-bar {
+  visibility: visible !important;
+}
+
+::ng-deep .custom-slider .ng5-slider .ng5-slider-span.ng5-slider-bar-wrapper.ng5-slider-selection {
+  background: green;
 }
