@@ -13,9 +13,10 @@
 }
 
 ::ng-deep .custom-slider .ng5-slider .ng5-slider-bar {
-  background: pink;
+  background: #ebebeb;
   height: 16px;
-  border: 1px solid #80ffdb;
+  border: 2px solid #7400b8;
+  border-radius: 16px;
 }
 
 ::ng-deep .custom-slider .ng5-slider
@@ -34,14 +35,18 @@
 }
 
 ::ng-deep .custom-slider .ng5-slider .ng5-slider-selection {
-  background: green;
+  background: #7400b8;
+  border-radius: 16px;
 }
 
 ::ng-deep .custom-slider .ng5-slider .ng5-slider-pointer {
-  width: 18px;
-  height: 18px;
-  top: auto;
-  background-color: red;
+  width: 16px;
+  height: 16px;
+  top: 0px;
+  background-color: #7400b8;
+  border: 6px solid #7400b8;
+  border-radius: 16px;
+  margin-left: 2px;
 }
 
 ::ng-deep .custom-slider .ng5-slider .ng5-slider-pointer:after {
@@ -60,11 +65,11 @@
 ::ng-deep .custom-slider .ng5-slider .ng5-slider-tick {
   width: 18px;
   height: 18px;
-  margin-left: 4px;
-  border-radius: 16px;
-  background: #ebebeb;
-  border: 1px solid #80ffdb;
-  top: auto;
+  margin-left: 1px;
+  border-radius: 18px;
+  background: none;
+  border: 3px solid #80ffdb;
+  top: 2px;
 }
 
 ::ng-deep .custom-slider .ng5-slider .ng5-slider-tick.ng5-slider-selected {
