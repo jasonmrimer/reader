@@ -5,6 +5,24 @@ const passage = require('../models/passage.js');
 const quiz = require('../models/quiz.js');
 const submission = require('../models/submission.js');
 const passageMetric = require('../models/passageMetric.js');
+const user = require('../models/user.js');
+
+router.post('/user', (request, response, next) => {
+  let newUser = new user({
+    id: request.body.id,
+    experience: request.body.experience,
+    education: request.body.education,
+    age: request.body.age,
+  })
+
+  newUser.save((err, sub) => {
+    if (err) {
+      response.send(err);
+    } else {
+      response.send(sub)
+    }
+  })
+});
 
 router.get('/passage', (request, response, next) => {
   const id = request.query.id;
