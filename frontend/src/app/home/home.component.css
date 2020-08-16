@@ -62,3 +62,20 @@
 
   color: #000000;
 }
+
+.container--question {
+  width: 300px;
+}
+
+.question-1 {
+  background: #ebebeb;
+}
+
+.container--gif {
+  width: 300px;
+
+}
+
+img {
+  width: 300px;
+}

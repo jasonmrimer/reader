@@ -87,7 +87,7 @@ export class QuizComponent implements OnInit {
   }
 
   tryNew = () => {
-    this.router.navigate([`/home`]).then();
+    this.sessionService.navigateToPassage();
   }
 
   private continueOrComplete() {

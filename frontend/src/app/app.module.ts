@@ -23,6 +23,7 @@ import { InstructionsComponent } from './instructions/instructions.component';
 import { OutroComponent } from './outro/outro.component';
 import {MatSliderModule} from "@angular/material/slider";
 import {Ng5SliderModule} from "ng5-slider";
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import {Ng5SliderModule} from "ng5-slider";
     NgxBootstrapSliderModule,
     MatSliderModule,
     Ng5SliderModule,
+    MatButtonToggleModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
