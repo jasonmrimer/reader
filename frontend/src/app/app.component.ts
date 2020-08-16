@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SessionService } from './session/session.service';
 import { MetricsService } from './metrics/metrics.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,11 +13,12 @@ export class AppComponent implements OnInit {
 
   constructor(
     private sessionService: SessionService,
-    private metricsService: MetricsService
+    private metricsService: MetricsService,
+    private router: Router
   ) {
   }
 
   ngOnInit(): void {
-    this.sessionService.hydrate(this.metricsService);
+    this.sessionService.hydrate(this.metricsService, this.router);
   }
 }

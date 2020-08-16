@@ -6,15 +6,18 @@ import { MetricsService } from '../metrics/metrics.service';
 import { flatMap } from 'rxjs/operators';
 import { QuizMetric } from '../metrics/QuizMetric';
 import { Observable, of } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SessionService {
-
-  get sessionId(): string {
-    return this._sessionId;
-  }
+  private _router: Router;
+  private _currentPair: SessionPair;
+  private _sessionId: string;
+  private _availableInterfaces: InterfaceName[];
+  private _availablePassages: PassageName[];
+  private _metricsService: MetricsService;
 
   get availableInterfaces(): InterfaceName[] {
     return this._availableInterfaces;
@@ -31,12 +34,14 @@ export class SessionService {
   get currentPair() {
     return this._currentPair;
   }
-  private _currentPair: SessionPair;
-  private _sessionId: string;
-  private _availableInterfaces: InterfaceName[];
-  private _availablePassages: PassageName[];
 
-  private _metricsService: MetricsService;
+  get router() {
+    return this._router;
+  }
+
+  get sessionId(): string {
+    return this._sessionId;
+  }
 
   private static noMoreLeastAvailable(leastUsedAvailable: InterfaceName[]) {
     return leastUsedAvailable.length === 0;
@@ -59,11 +64,12 @@ export class SessionService {
     return min;
   }
 
-  hydrate(metricsService: MetricsService) {
+  hydrate(metricsService: MetricsService, router) {
     this._sessionId = `${Date.now()}${Math.random()}`;
     this._availableInterfaces = [...AllInterfaces];
     this._availablePassages = [...AllPassages];
     this._metricsService = metricsService;
+    this._router = router;
   }
 
   generateSessionPair = (): Observable<SessionPair> => {
@@ -119,6 +125,12 @@ export class SessionService {
 
   completeCurrentPair() {
     this.makeSessionPairUnavailable(this._currentPair);
+  }
+
+  navigateToPassage() {
+    this.generateSessionPair().subscribe((pair) => {
+      this.router.navigate([`/${pair.interfaceName}/${pair.passageName}`]);
+    });
   }
 }
 

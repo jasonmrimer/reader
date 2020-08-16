@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { SessionService } from '../session/session.service';
 
 @Component({
@@ -9,7 +8,6 @@ import { SessionService } from '../session/session.service';
 })
 export class HomeComponent implements OnInit {
   constructor(
-    private router: Router,
     public sessionService: SessionService
   ) {
   }
@@ -18,8 +16,6 @@ export class HomeComponent implements OnInit {
   }
 
   start() {
-    this.sessionService.generateSessionPair().subscribe((pair) => {
-      this.router.navigate([`/${pair.interfaceName}/${pair.passageName}`]);
-    });
+    this.sessionService.navigateToPassage();
   }
 }
