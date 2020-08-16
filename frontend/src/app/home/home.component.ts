@@ -16,6 +16,8 @@ export class HomeComponent implements OnInit {
   }
 
   start() {
+    console.log('=======');
+    console.log(this.sessionService.user);
     this.sessionService.navigateToPassage();
   }
 }

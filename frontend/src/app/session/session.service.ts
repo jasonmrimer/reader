@@ -7,6 +7,7 @@ import { flatMap } from 'rxjs/operators';
 import { QuizMetric } from '../metrics/QuizMetric';
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
+import { User } from './User';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,11 @@ export class SessionService {
   private _availableInterfaces: InterfaceName[];
   private _availablePassages: PassageName[];
   private _metricsService: MetricsService;
+  private _user: User;
+
+  get user(): User {
+    return this._user;
+  }
 
   get availableInterfaces(): InterfaceName[] {
     return this._availableInterfaces;
@@ -70,6 +76,11 @@ export class SessionService {
     this._availablePassages = [...AllPassages];
     this._metricsService = metricsService;
     this._router = router;
+    this._user = new User(this._sessionId);
+  }
+
+  setAge(age: string) {
+    this._user.age = age;
   }
 
   generateSessionPair = (): Observable<SessionPair> => {
@@ -131,6 +142,14 @@ export class SessionService {
     this.generateSessionPair().subscribe((pair) => {
       this.router.navigate([`/${pair.interfaceName}/${pair.passageName}`]);
     });
+  }
+
+  setEducation(education: string) {
+    this._user.education = education;
+  }
+
+  setExperience(experience: string) {
+    this._user.experience = experience;
   }
 }
 
