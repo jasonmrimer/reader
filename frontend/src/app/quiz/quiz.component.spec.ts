@@ -11,6 +11,7 @@ import { SessionServiceMock } from '../session/session-stub.service';
 import { SessionService } from '../session/session.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { QuizSubmission } from './QuizSubmission';
+import { User } from '../session/User';
 
 describe('QuizComponent', () => {
   let component: QuizComponent;
@@ -35,7 +36,7 @@ describe('QuizComponent', () => {
         },
       ],
       'rsvp-basic',
-      'fakeUser',
+      new User('fakeUser'),
       new Date()
     );
     quizServiceSpy = jasmine.createSpyObj('QuizService', ['getQuizzes', 'postAnswers']);

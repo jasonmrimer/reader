@@ -74,7 +74,7 @@ export class QuizComponent implements OnInit {
       this.quiz.passage,
       surveyModel.data,
       this.sessionService.currentPair.interfaceName,
-      this.sessionService.sessionId,
+      this.sessionService.user,
       new Date()
     );
 
@@ -87,7 +87,7 @@ export class QuizComponent implements OnInit {
   }
 
   tryNew = () => {
-    this.router.navigate([`/home`]).then();
+    this.sessionService.navigateToPassage();
   }
 
   private continueOrComplete() {

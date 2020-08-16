@@ -5,14 +5,18 @@ import { AllInterfaces, InterfaceName } from './InterfaceName';
 import { AllPassages, PassageName } from './PassageName';
 import { SessionPair } from './SessionPair';
 import { MetricsServiceStub } from '../metrics/metrics-stub.service';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
 
 describe('SessionService', () => {
   let service: SessionService;
+  let routerSpy;
 
   beforeEach(() => {
+    routerSpy = {navigate: jasmine.createSpy('navigate')};
     TestBed.configureTestingModule({});
     service = TestBed.inject(SessionService);
-    service.hydrate(new MetricsServiceStub());
+    service.hydrate(new MetricsServiceStub(), routerSpy);
   });
 
   it('should be created', () => {
@@ -74,14 +78,18 @@ describe('SessionService', () => {
     }
   });
 
-  it('should allow user to take non-least used if only remaining interfaces for session', () => {
+  function removeAllAvailableExceptOne() {
     const sessionPairsToRemove = [
-     new SessionPair(InterfaceName.BASELINE, PassageName.ONE),
-     new SessionPair(InterfaceName.RSVP_BASIC, PassageName.TWO),
-     new SessionPair(InterfaceName.RSVP_SECTION_MARK, PassageName.THREE),
-     new SessionPair(InterfaceName.RSVP_SUBWAY, PassageName.FIVE),
+      new SessionPair(InterfaceName.BASELINE, PassageName.ONE),
+      new SessionPair(InterfaceName.RSVP_BASIC, PassageName.TWO),
+      new SessionPair(InterfaceName.RSVP_SECTION_MARK, PassageName.THREE),
+      new SessionPair(InterfaceName.RSVP_SUBWAY, PassageName.FIVE),
     ];
     sessionPairsToRemove.map((pair) => service.makeSessionPairUnavailable(pair));
+  }
+
+  it('should allow user to take non-least used if only remaining interfaces for session', () => {
+    removeAllAvailableExceptOne();
 
     service.generateSessionPair().subscribe((pair) => {
       const expectedPair = new SessionPair(InterfaceName.RSVP_PROGRESS_BAR, PassageName.FOUR);
@@ -109,5 +117,14 @@ describe('SessionService', () => {
       expect(service.availableInterfaces).not.toContain(pair.interfaceName);
       expect(service.availablePassages).not.toContain(pair.passageName);
     });
+  });
+
+  it('should route to the next location', () => {
+    removeAllAvailableExceptOne();
+    service.navigateToPassage();
+
+    expect(routerSpy.navigate).toHaveBeenCalledWith(
+      [`/${InterfaceName.RSVP_PROGRESS_BAR}/${PassageName.FOUR}`]
+    );
   });
 });

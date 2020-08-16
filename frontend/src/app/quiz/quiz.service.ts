@@ -4,7 +4,6 @@ import { environment } from '../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { QuizSubmission } from './QuizSubmission';
 import { PassageName } from '../session/PassageName';
-import { Passage } from '../rsvp-utils/passage';
 
 @Injectable({
   providedIn: 'root'

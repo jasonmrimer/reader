@@ -21,8 +21,10 @@ import { SubwayComponent } from './rsvp-subway/subway/subway.component';
 import { PassageCompletionComponent } from './quiz/passage-completion/passage-completion.component';
 import { InstructionsComponent } from './instructions/instructions.component';
 import { OutroComponent } from './outro/outro.component';
-import {MatSliderModule} from "@angular/material/slider";
-import {Ng5SliderModule} from "ng5-slider";
+import {MatSliderModule} from '@angular/material/slider';
+import {Ng5SliderModule} from 'ng5-slider';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,8 @@ import {Ng5SliderModule} from "ng5-slider";
     NgxBootstrapSliderModule,
     MatSliderModule,
     Ng5SliderModule,
+    MatButtonToggleModule,
+    MatExpansionModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

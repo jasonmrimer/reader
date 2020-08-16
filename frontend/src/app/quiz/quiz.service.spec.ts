@@ -4,6 +4,8 @@ import { QuizService } from './quiz.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { QuizSubmission } from './QuizSubmission';
 import { Quiz, quizStub, quizzesStub } from './Quiz';
+import { PassageName } from '../session/PassageName';
+import { User } from '../session/User';
 
 describe('QuizService', () => {
   let service: QuizService;
@@ -36,7 +38,7 @@ describe('QuizService', () => {
   });
 
   it('should get a quiz matching the passage provided', () => {
-    service.getQuiz(1).subscribe((response: Quiz) => {
+    service.getQuiz(PassageName.ONE).subscribe((response: Quiz) => {
       expect(response).toEqual(quizStub);
     });
 
@@ -54,7 +56,7 @@ describe('QuizService', () => {
         question3: 'answer3',
       },
       'interface name',
-      'fakeUser',
+      new User('fakeUser'),
       new Date()
     );
 

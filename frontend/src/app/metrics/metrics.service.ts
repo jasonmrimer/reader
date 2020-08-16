@@ -8,6 +8,7 @@ import { PassageMetric } from './PassageMetric';
 import { QuizMetric } from './QuizMetric';
 import { AllInterfaces, InterfaceName } from '../session/InterfaceName';
 import { CompletionCount } from './CompletionCount';
+import { User } from '../session/User';
 
 @Injectable({
   providedIn: 'root'
@@ -77,8 +78,7 @@ export class MetricsService {
       );
   }
 
-  postPassageCompletion(metricInterface: InterfaceName, user: string) {
-
+  postPassageCompletion(metricInterface: InterfaceName, user: User) {
     return this._http.post(
       `${environment.apiUrl}/metrics-passage`,
       {
@@ -122,5 +122,12 @@ export class MetricsService {
     });
 
     return displayMetrics;
+  }
+
+  saveUser(user: User) {
+    return this._http.post(
+      `${environment.apiUrl}/user`,
+      user
+    );
   }
 }

@@ -6,14 +6,23 @@ import { MetricsService } from '../metrics/metrics.service';
 import { flatMap } from 'rxjs/operators';
 import { QuizMetric } from '../metrics/QuizMetric';
 import { Observable, of } from 'rxjs';
+import { Router } from '@angular/router';
+import { User } from './User';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SessionService {
+  private _router: Router;
+  private _currentPair: SessionPair;
+  private _sessionId: string;
+  private _availableInterfaces: InterfaceName[];
+  private _availablePassages: PassageName[];
+  private _metricsService: MetricsService;
+  private _user: User;
 
-  get sessionId(): string {
-    return this._sessionId;
+  get user(): User {
+    return this._user;
   }
 
   get availableInterfaces(): InterfaceName[] {
@@ -31,12 +40,14 @@ export class SessionService {
   get currentPair() {
     return this._currentPair;
   }
-  private _currentPair: SessionPair;
-  private _sessionId: string;
-  private _availableInterfaces: InterfaceName[];
-  private _availablePassages: PassageName[];
 
-  private _metricsService: MetricsService;
+  get router() {
+    return this._router;
+  }
+
+  get sessionId(): string {
+    return this._sessionId;
+  }
 
   private static noMoreLeastAvailable(leastUsedAvailable: InterfaceName[]) {
     return leastUsedAvailable.length === 0;
@@ -59,11 +70,17 @@ export class SessionService {
     return min;
   }
 
-  hydrate(metricsService: MetricsService) {
+  hydrate(metricsService: MetricsService, router) {
     this._sessionId = `${Date.now()}${Math.random()}`;
     this._availableInterfaces = [...AllInterfaces];
     this._availablePassages = [...AllPassages];
     this._metricsService = metricsService;
+    this._router = router;
+    this._user = new User(this._sessionId);
+  }
+
+  setAge(age: string) {
+    this._user.age = age;
   }
 
   generateSessionPair = (): Observable<SessionPair> => {
@@ -119,6 +136,20 @@ export class SessionService {
 
   completeCurrentPair() {
     this.makeSessionPairUnavailable(this._currentPair);
+  }
+
+  navigateToPassage() {
+    this.generateSessionPair().subscribe((pair) => {
+      this.router.navigate([`/${pair.interfaceName}/${pair.passageName}`]);
+    });
+  }
+
+  setEducation(education: string) {
+    this._user.education = education;
+  }
+
+  setExperience(experience: string) {
+    this._user.experience = experience;
   }
 }
 

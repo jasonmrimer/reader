@@ -53,10 +53,6 @@
   display: none;
 }
 
-::ng-deep .custom-slider .ng5-slider .ng5-slider-bubble {
-  /*bottom: 14px;*/
-}
-
 ::ng-deep .custom-slider .ng5-slider .ng5-slider-limit {
   font-weight: bold;
   color: green;

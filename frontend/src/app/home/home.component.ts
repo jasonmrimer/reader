@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { SessionService } from '../session/session.service';
+import { MetricsService } from '../metrics/metrics.service';
 
 @Component({
   selector: 'app-home',
@@ -8,9 +8,12 @@ import { SessionService } from '../session/session.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  toggled: number[] = [];
+  isExpanded = true;
+
   constructor(
-    private router: Router,
-    public sessionService: SessionService
+    public sessionService: SessionService,
+    public metricsService: MetricsService
   ) {
   }
 
@@ -18,8 +21,20 @@ export class HomeComponent implements OnInit {
   }
 
   start() {
-    this.sessionService.generateSessionPair().subscribe((pair) => {
-      this.router.navigate([`/${pair.interfaceName}/${pair.passageName}`]);
-    });
+    this.metricsService.saveUser(this.sessionService.user).subscribe();
+    this.sessionService.navigateToPassage();
+  }
+
+  toggle(questionNumber: number) {
+    this.toggled.push(questionNumber);
+    console.log(this.toggled);
+    console.log(this.unansweredQuestions());
+    this.isExpanded = this.unansweredQuestions();
+  }
+
+  unansweredQuestions = () => {
+    return !(this.toggled.includes(1)
+      && this.toggled.includes(2)
+      && this.toggled.includes(3));
   }
 }
