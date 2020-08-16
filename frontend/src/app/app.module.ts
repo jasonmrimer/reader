@@ -24,6 +24,7 @@ import { OutroComponent } from './outro/outro.component';
 import {MatSliderModule} from "@angular/material/slider";
 import {Ng5SliderModule} from "ng5-slider";
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatSliderModule,
     Ng5SliderModule,
     MatButtonToggleModule,
+    MatExpansionModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

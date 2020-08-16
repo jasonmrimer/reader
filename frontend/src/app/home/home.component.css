@@ -6,7 +6,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  /*padding-top: 8px;*/
 }
 
 .introduction {
@@ -63,19 +62,17 @@
   color: #000000;
 }
 
-.container--question {
-  width: 300px;
-}
+/*.container--question {*/
+/*  width: 300px;*/
+/*}*/
 
-.question-1 {
-  background: #ebebeb;
-}
+/*.question-1 {*/
+/*  background: #ebebeb;*/
+/*}*/
 
 .container--gif {
-  width: 300px;
-
 }
 
 img {
-  width: 300px;
+  width: available;
 }
