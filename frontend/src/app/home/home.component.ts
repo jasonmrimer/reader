@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SessionService } from '../session/session.service';
+import { MetricsService } from '../metrics/metrics.service';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +12,8 @@ export class HomeComponent implements OnInit {
   isExpanded = true;
 
   constructor(
-    public sessionService: SessionService
+    public sessionService: SessionService,
+    public metricsService: MetricsService
   ) {
   }
 
@@ -19,6 +21,7 @@ export class HomeComponent implements OnInit {
   }
 
   start() {
+    this.metricsService.saveUser(this.sessionService.user).subscribe();
     this.sessionService.navigateToPassage();
   }
 
