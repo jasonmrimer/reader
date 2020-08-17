@@ -1,111 +1,115 @@
-<div class="container--introduction">
-  <div class="introduction">
-    Read a passage, take a quiz—that’s it!
-  </div>
-  <mat-expansion-panel class="container--demographics"
-    [(expanded)]="isExpanded"
-    [hideToggle]="isExpanded"
-  >
-    <mat-expansion-panel-header>
-      <mat-panel-title>PANEL</mat-panel-title>
-    </mat-expansion-panel-header>
-    <div class="container--question question-1">
-      <div class="question">Experience?</div>
-      <div class="container--gif">
-        <img src="./assets/rsvp-sample.gif"/>
-      </div>
-      <mat-button-toggle-group
-        name="experience"
-        (change)="toggle(1)"
-      >
-        <mat-button-toggle
-          (change)="sessionService.setExperience('beginner')"
-          value="beginner"
-        >
-          never used
-        </mat-button-toggle>
-        <mat-button-toggle
-          (change)="sessionService.setExperience('novice')"
-          value="novice"
-        >
-          used before
-        </mat-button-toggle>
-        <mat-button-toggle
-          (change)="sessionService.setExperience('expert')"
-          value="expert"
-        >
-          expert user
-        </mat-button-toggle>
-      </mat-button-toggle-group>
-    </div>
-    <div class="container--question question-2">
-      <div class="question">Education?</div>
-      <mat-button-toggle-group
-        name="education"
-        (change)="toggle(2)"
-      >
-        <mat-button-toggle
-          (change)="sessionService.setEducation('highschool')"
-          value="highschool"
-        >
-          high school
-        </mat-button-toggle>
-        <mat-button-toggle
-          (change)="sessionService.setEducation('undergraduate')"
-          value="undergraduate"
-        >
-          undergrad
-        </mat-button-toggle>
-        <mat-button-toggle
-          (change)="sessionService.setEducation('graduate')"
-          value="graduate"
-        >
-          graduate
-        </mat-button-toggle>
-      </mat-button-toggle-group>
-    </div>
-    <div class="container--question question-3">
-      <div class="question">Age?</div>
-      <mat-button-toggle-group
-        name="age"
-        (change)="toggle(3)"
-      >
-        <mat-button-toggle
-          (change)="sessionService.setAge('lessthan26')"
-          value="lessthan26"
-        >
-          younger than 26
-        </mat-button-toggle>
-        <mat-button-toggle
-          (change)="sessionService.setAge('between26and40')"
-          value="between26and40"
-        >
-          26-40
-        </mat-button-toggle>
-        <mat-button-toggle
-          (change)="sessionService.setAge('olderthan40')"
-          value="olderthan40"
-        >
-          older than 40
-        </mat-button-toggle>
-      </mat-button-toggle-group>
-    </div>
-  </mat-expansion-panel>
-  <div class="container--start"
-    *ngIf="!unansweredQuestions()"
-  >
-    <button
-      class="button--start"
-      (click)="start()"
+<div class="container--home">
+  <div class="container--introduction">
+    <mat-expansion-panel class="container--demographics"
+      [(expanded)]="isExpanded"
+      [hideToggle]="isExpanded"
     >
-      Start
-    </button>
-    <div class="fine-print">
-      Thank you for being an <strong>anonymous</strong> participator in this research. I will not collect personal data.
-      <br>
-      <br>
-      You can complete up to 5 quizzes but may only participate in the survey once. Each passage/quiz takes about 5
-      minutes to complete.
+      <mat-expansion-panel-header>
+        <mat-panel-title>Welcome!</mat-panel-title>
+        <mat-panel-description *ngIf="!isExpanded">Edit demographics...</mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="container--question-set">
+        <div class="container--question question-1">
+          <div class="question">What is your experience using a reader like this:</div>
+          <div class="container--gif">
+            <img class="example-gif" src="./assets/rsvp-sample.gif"/>
+          </div>
+          <mat-button-toggle-group class="container--answers"
+            name="experience"
+            (change)="toggle(1)"
+          >
+            <mat-button-toggle
+              (change)="sessionService.setExperience('beginner')"
+              value="beginner"
+            >
+              never used
+            </mat-button-toggle>
+            <mat-button-toggle
+              (change)="sessionService.setExperience('novice')"
+              value="novice"
+            >
+              used before
+            </mat-button-toggle>
+            <mat-button-toggle
+              (change)="sessionService.setExperience('expert')"
+              value="expert"
+            >
+              expert user
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+        <div class="container--question question-2">
+          <div class="question">Which level of education describes you?</div>
+          <mat-button-toggle-group class="container--answers"
+            name="education"
+            (change)="toggle(2)"
+          >
+            <mat-button-toggle
+              (change)="sessionService.setEducation('highschool')"
+              value="highschool"
+            >
+              high school
+            </mat-button-toggle>
+            <mat-button-toggle
+              (change)="sessionService.setEducation('undergraduate')"
+              value="undergraduate"
+            >
+              undergrad
+            </mat-button-toggle>
+            <mat-button-toggle
+              (change)="sessionService.setEducation('graduate')"
+              value="graduate"
+            >
+              graduate
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+        <div class="container--question question-3">
+          <div class="question">What is your age range?</div>
+          <mat-button-toggle-group class="container--answers"
+            name="age"
+            (change)="toggle(3)"
+          >
+            <mat-button-toggle
+              (change)="sessionService.setAge('lessthan26')"
+              value="lessthan26"
+            >
+              younger than 26
+            </mat-button-toggle>
+            <mat-button-toggle
+              (change)="sessionService.setAge('between26and40')"
+              value="between26and40"
+            >
+              26-40
+            </mat-button-toggle>
+            <mat-button-toggle
+              (change)="sessionService.setAge('olderthan40')"
+              value="olderthan40"
+            >
+              older than 40
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+      </div>
+    </mat-expansion-panel>
+    <div class="container--start"
+      *ngIf="!unansweredQuestions()"
+    >
+      <div class="fine-print">
+        <span>
+          Thank you for being an <strong>anonymous</strong> participator in this research. I will not collect personal data.
+        </span>
+        <span class="message-2">
+        You can complete up to 5 quizzes but may only participate in the survey once. Each passage/quiz takes about 5
+        minutes to complete.
+        </span>
+      </div>
+      <button
+        class="button--start"
+        (click)="start()"
+      >
+        Start
+      </button>
     </div>
   </div>
 </div>
