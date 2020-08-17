@@ -47,17 +47,11 @@ describe('QuizService', () => {
   });
 
   it('should post choices from a survey', fakeAsync(() => {
-    const quizSubmission = new QuizSubmission(
-      'quizId',
-      {
-        question1: 'answer1',
-        question2: 'answer2',
-        question3: 'answer3',
-      },
-      'interface name',
-      'fakeUser',
-      new Date()
-    );
+    const quizSubmission = new QuizSubmission('quizId', {
+      question1: 'answer1',
+      question2: 'answer2',
+      question3: 'answer3',
+    }, 'interface name', 'fakeUser', new Date());
 
     service
       .postAnswers(quizSubmission)

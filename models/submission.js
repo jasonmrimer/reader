@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const submission = mongoose.Schema({
   user: {
-    type: String,
+    type: Object,
     require: true
   },
   date: {

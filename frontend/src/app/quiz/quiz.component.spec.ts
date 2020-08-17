@@ -22,22 +22,16 @@ describe('QuizComponent', () => {
 
   beforeEach(async(() => {
     sessionService = new SessionServiceMock();
-    submissionStub = new QuizSubmission(
-      'id1',
-      [
-        {
-          question: 'question1',
-          answer: 'answer1.1'
-        },
-        {
-          question: 'question2',
-          answer: 'answer2.2'
-        },
-      ],
-      'rsvp-basic',
-      'fakeUser',
-      new Date()
-    );
+    submissionStub = new QuizSubmission('id1', [
+      {
+        question: 'question1',
+        answer: 'answer1.1'
+      },
+      {
+        question: 'question2',
+        answer: 'answer2.2'
+      },
+    ], 'rsvp-basic', 'fakeUser', new Date());
     quizServiceSpy = jasmine.createSpyObj('QuizService', ['getQuizzes', 'postAnswers']);
     quizServiceSpy.getQuizzes.and.returnValue(of([quizStub]));
     quizServiceSpy.postAnswers.and.returnValue(of(submissionStub));

@@ -74,7 +74,7 @@ export class QuizComponent implements OnInit {
       this.quiz.passage,
       surveyModel.data,
       this.sessionService.currentPair.interfaceName,
-      this.sessionService.sessionId,
+      this.sessionService.user,
       new Date()
     );
 
