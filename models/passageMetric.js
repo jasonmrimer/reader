@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const passageMetric = mongoose.Schema({
   user: {
-    type: String,
+    type: Object,
     required: true
   },
   date: {

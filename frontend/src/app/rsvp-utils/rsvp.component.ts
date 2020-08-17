@@ -28,7 +28,7 @@ export class RsvpComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.passageId = parseInt(params.get('passageId'));
+      this.passageId = parseInt(params.get('passageId'), 10);
     });
 
     this.passageService
@@ -49,7 +49,7 @@ export class RsvpComponent implements OnInit {
   private postMetric = () => {
     this.metricsService.postPassageCompletion(
       this.rsvpType,
-      this.sessionService.sessionId
+      this.sessionService.user
     )
       .subscribe();
     this.subscription.unsubscribe();

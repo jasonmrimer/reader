@@ -78,7 +78,7 @@ export class MetricsService {
       );
   }
 
-  postPassageCompletion(metricInterface: InterfaceName, user: string) {
+  postPassageCompletion(metricInterface: InterfaceName, user: User) {
     return this._http.post(
       `${environment.apiUrl}/metrics-passage`,
       {
