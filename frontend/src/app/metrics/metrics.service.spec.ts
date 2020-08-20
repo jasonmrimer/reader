@@ -10,6 +10,7 @@ import { metricsStub } from './MetricStub';
 import { DisplayMetric } from './DisplayMetric';
 import { completionCountsJson, completionCountsStub } from './CompletionCountStub';
 import { CompletionCount } from './CompletionCount';
+import { User } from '../session/User';
 
 describe('MetricsService', () => {
   let service: MetricsService;
@@ -47,7 +48,7 @@ describe('MetricsService', () => {
   });
 
   it('should update a passage completion metric', () => {
-    service.postPassageCompletion(InterfaceName.RSVP_BASIC, 'fakeUser')
+    service.postPassageCompletion(InterfaceName.RSVP_BASIC, new User('fakeUser'))
       .subscribe(() => {
       });
     passagePOSTStub();

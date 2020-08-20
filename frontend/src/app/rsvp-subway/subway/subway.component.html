@@ -5,11 +5,11 @@
   <div
     class="container--cyto"
   >
-    <cytoscape-component
+    <app-cytoscape-component
       [elements]="graphData"
-      [currentSectionCompletion]="rsvpService.currentSectionCompletion"
+      [currentSectionCompletion]="rsvpService.currentSectionPercentComplete"
       [sections]="rsvpService.sections"
       [currentSection]="rsvpService.currentSection"
-    ></cytoscape-component>
+    ></app-cytoscape-component>
   </div>
 </div>

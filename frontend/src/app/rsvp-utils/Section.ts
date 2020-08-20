@@ -1,3 +1,5 @@
+export const SECTION_META_NON_CONTENT_LENGTH = ['Section_Number'].length;
+
 export class Section {
   constructor(
     public rank: number = -1,
@@ -8,6 +10,6 @@ export class Section {
   }
 
   get length() {
-    return this.end - this.start + 1;
+    return this.end - this.start - SECTION_META_NON_CONTENT_LENGTH;
   }
 }

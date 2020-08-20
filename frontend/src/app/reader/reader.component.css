@@ -9,7 +9,7 @@
   font-family: Roboto, sans-serif;
   font-style: normal;
   font-weight: 500;
-  font-size: 24px;
+  font-size: 40px;
   line-height: 28px;
   display: flex;
   align-items: center;
@@ -74,7 +74,7 @@
 #text-left,
 #text-center,
 #text-right {
-  font: 16px Roboto, sans-serif;
+  font: 24px Roboto, sans-serif;
   line-height: 1;
 }
 
@@ -92,8 +92,8 @@
 
 #container--styled-reader {
   position: relative;
-  width: 180px;
-  height: 40px;
+  width: 280px;
+  height: 48px;
   display: flex;
   flex-direction: column;
 }
@@ -111,7 +111,7 @@
 }
 
 .crosshairs-left {
-  width: 56px;
+  width: 88px;
 }
 
 .crosshairs-middle {
@@ -124,8 +124,8 @@
 }
 
 #text-joiner {
-  width: 180px;
-  height: 28px;
+  width: 280px;
+  height: 36px;
   background: none;
   padding: 5px 0;
   line-height: 1;
