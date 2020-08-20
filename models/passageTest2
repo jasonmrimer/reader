@@ -1,9 +1,9 @@
-#section-marker
+-Section_1- #section-marker
 First sentence.
-#section-marker
+-Section_2- #section-marker
 Second sentence. Second section.
-#section-marker
+-Section_3- #section-marker
 Third section.
 New paragraph.
-#section-marker
+-Section_4- #section-marker
 Last section.
