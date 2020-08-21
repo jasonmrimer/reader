@@ -70,6 +70,8 @@ export class QuizComponent implements OnInit {
   }
 
   private submitAnswers = (surveyModel: SurveyModel) => {
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
+
     const quizSubmission = new QuizSubmission(
       this.quiz.passage,
       surveyModel.data,
