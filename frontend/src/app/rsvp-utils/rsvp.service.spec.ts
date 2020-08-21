@@ -34,8 +34,8 @@ describe('RSVPService', () => {
     expect(service.sectionMarkerPositions).toEqual([0, 40, 100]);
     expect(service.quizRoute).toBe('rsvp-basic');
     expect(service.sections).toEqual([
-      new Section(1, 0, 3, 0),
-      new Section(2, 4, 9, 0)
+      new Section(1, 0, 1, 3, 0),
+      new Section(2, 4, 5, 9, 0)
     ]);
   });
 

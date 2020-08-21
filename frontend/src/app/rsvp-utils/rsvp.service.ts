@@ -23,6 +23,7 @@ export class RSVPService {
   private _sectionMarkerIndexes: number[];
   private _sectionMarkerPositions: number[];
   private _title: string;
+
   private static removeSectionMarkers(contentWithSectionMarkers: string) {
     return contentWithSectionMarkers.replace(/#section-marker/g, '');
   }
@@ -63,20 +64,21 @@ export class RSVPService {
   }
 
   private extractSections(sectionMarkerIndexes: number[], contentLength: number) {
-    const actualContentLengths = this.calculateSectionLengths(sectionMarkerIndexes, contentLength);
+    const contentLengths = this.calculateSectionLengths(sectionMarkerIndexes, contentLength);
     return sectionMarkerIndexes.map((positionInPassage, index) => {
       return new Section(
         index + 1,
         positionInPassage,
-        positionInPassage + actualContentLengths[index] + 1,
+        positionInPassage + SECTION_META_NON_CONTENT_LENGTH,
+        positionInPassage + contentLengths[index],
         0
       );
     });
   }
 
   private calculateCompletionPercentage(section: Section) {
-    const completedPortion = this._currentPassageIndex - section.start + 1 - SECTION_META_NON_CONTENT_LENGTH;
-    const percent = completedPortion / section.length * 100;
+    const completedPortion = this._currentPassageIndex - section.startIndex + 1 - SECTION_META_NON_CONTENT_LENGTH;
+    const percent = completedPortion / section.actualContentLength * 100;
     return percent > 100 ? 100 : percent;
   }
 
@@ -223,7 +225,7 @@ export class RSVPService {
     }
 
     return this._sections.find((sect) => {
-      return sect.start <= this._currentPassageIndex && this._currentPassageIndex <= sect.end;
+      return sect.startIndex <= this._currentPassageIndex && this._currentPassageIndex <= sect.endIndex;
     });
   }
 

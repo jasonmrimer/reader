@@ -42,6 +42,6 @@ export class SubwayService {
         }
       };
     });
-    return edges.filter((edge) => edge != undefined);
+    return edges.filter((edge) => edge !== undefined);
   }
 }
