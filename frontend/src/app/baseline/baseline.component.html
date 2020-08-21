@@ -1,27 +1,23 @@
-<div
+<div class="container--passage"
   *ngIf="!rsvpService.isCompleteSubject"
-  class="container--passage"
 >
   <div class="passage-title">
     {{rsvpService.title}}
   </div>
-  <div
+  <div class="container--instructions"
     *ngIf="!didStart"
-    class="container--instructions"
   >
     <div class="instructions">
       If you finish reading the following passage before the timer (~2 minutes), please wait for the next instruction.
     </div>
-    <button
-      class="button--play"
+    <button class="button--play"
       (click)="playReader()"
     >
       Press to Start
     </button>
   </div>
-  <div
+  <div class="passage-content"
     *ngIf="displayPassage()"
-    class="passage-content"
   >
     {{rsvpService.prettyPassage()}}
   </div>
