@@ -1,13 +1,4 @@
-import {
-  Component,
-  DoCheck,
-  Input,
-  IterableDiffer,
-  IterableDiffers, KeyValueDiffer, KeyValueDiffers,
-  OnChanges,
-  OnInit,
-  Renderer2
-} from '@angular/core';
+import { Component, DoCheck, Input, KeyValueDiffers, OnChanges, OnInit, Renderer2 } from '@angular/core';
 import { Section } from '../rsvp-utils/Section';
 
 declare var cytoscape: any;
@@ -17,7 +8,14 @@ declare var cytoscape: any;
   templateUrl: './cytoscape.component.html',
   styleUrls: ['./cytoscape.component.css'],
 })
-export class CytoscapeComponent implements OnInit, OnChanges {
+export class CytoscapeComponent implements OnInit, OnChanges, DoCheck {
+
+  public constructor(
+    private renderer: Renderer2,
+    private differs: KeyValueDiffers
+  ) {
+  }
+
   @Input() public currentSection: Section;
   @Input() public elements: any;
   @Input() public currentSectionCompletion;
@@ -56,12 +54,6 @@ export class CytoscapeComponent implements OnInit, OnChanges {
   cytoscapeObject: any;
   differ: any;
 
-  public constructor(
-    private renderer: Renderer2,
-    private differs: KeyValueDiffers
-  ) {
-  }
-
   private static isFirst(section: Section) {
     return section.rank === 1;
   }
@@ -93,6 +85,20 @@ export class CytoscapeComponent implements OnInit, OnChanges {
     CytoscapeComponent.colorComplete(node);
   }
 
+  private static makeGradient(section) {
+    return {
+      'line-color': '#FBF97F',
+      'line-fill': 'linear-gradient',
+      'line-gradient-stop-colors': '#FFC600 #FFC600 #FBF97F',
+      'line-gradient-stop-positions': `0% ${section.percentRead}% ${section.percentRead}%`,
+    };
+  }
+
+  private static animateEdges(cy, section: Section, index: number) {
+    const edge = cy.$(`#edge-${section.rank}`);
+    edge.style(CytoscapeComponent.makeGradient(section));
+  }
+
   public ngOnInit() {
     this.differ = {};
     this.sections.forEach((section, index) => {
@@ -108,42 +114,17 @@ export class CytoscapeComponent implements OnInit, OnChanges {
         const differ = this.differ[index];
         const changes = differ.diff(section);
         if (changes) {
-          this.animateEdges(this.cytoscapeObject, section, index);
+          CytoscapeComponent.animateEdges(this.cytoscapeObject, section, index);
+          // this.colorNode(this.cytoscapeObject, section);
         }
       }
     });
   }
 
-  private animateEdges(cy, section: Section, index: number) {
-    const edge = cy.$(`#edge-${section.rank}`);
-    edge.style(this.makeGradient(section));
-
-    this.colorNodes(cy, section, index);
-  }
-
-  private colorNodes(cy, section: Section, index: number) {
-    if (CytoscapeComponent.isFirst(section)) {
-      CytoscapeComponent.colorNodeComplete(cy, section);
-    } else if (this.isLast(section)) {
-      this.checkPreviousCompletionAndColor(index, cy, section);
-      CytoscapeComponent.colorFinalIfComplete(section, cy);
-    } else {
-      this.checkPreviousCompletionAndColor(index, cy, section);
+  public ngDoCheck() {
+    if (this.cytoscapeObject && this.currentSection) {
+      this.colorNode(this.cytoscapeObject, this.currentSection);
     }
-  }
-
-  private isLast(section: Section) {
-    return section.rank === this.sections.length - 1;
-  }
-
-  private checkPreviousCompletionAndColor(index: number, cy, section: Section) {
-    if (this.previousSectionComplete(index)) {
-      CytoscapeComponent.colorNodeComplete(cy, section);
-    }
-  }
-
-  private previousSectionComplete(index: number) {
-    return this.sections[index - 1].percentRead === 100;
   }
 
   private createCytoscape(cy_container) {
@@ -160,12 +141,9 @@ export class CytoscapeComponent implements OnInit, OnChanges {
     return cy;
   }
 
-  private makeGradient(section) {
-    return {
-      'line-color': '#FBF97F',
-      'line-fill': 'linear-gradient',
-      'line-gradient-stop-colors': '#FFC600 #FFC600 #FBF97F',
-      'line-gradient-stop-positions': `0% ${section.percentRead}% ${section.percentRead}%`,
-    };
+  private colorNode(cy: any, section: Section) {
+    if (section.rank <= this.currentSection.rank) {
+      cy.$(`#section-${section.rank}`).style({'background-color': 'black'});
+    }
   }
 }
