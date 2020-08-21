@@ -8,6 +8,7 @@ import { QuizMetric } from '../metrics/QuizMetric';
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from './User';
+import { Score } from '../quiz/Score';
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +21,14 @@ export class SessionService {
   private _availablePassages: PassageName[];
   private _metricsService: MetricsService;
   private _user: User;
+  private _scores: Score[];
 
   get user(): User {
     return this._user;
+  }
+
+  get scores(): Score[] {
+    return this._scores;
   }
 
   get availableInterfaces(): InterfaceName[] {
@@ -77,6 +83,7 @@ export class SessionService {
     this._metricsService = metricsService;
     this._router = router;
     this._user = new User(this._sessionId);
+    this._scores = [];
   }
 
   setAge(age: string) {
@@ -150,6 +157,10 @@ export class SessionService {
 
   setExperience(experience: string) {
     this._user.experience = experience;
+  }
+
+  addScore(score: Score) {
+    this._scores.push(score);
   }
 }
 

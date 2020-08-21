@@ -81,6 +81,7 @@ db.quizzes.insert(
     questions: [
       {
         question: 'quiz 1 what is a red mammal?',
+        isLocationBased: true,
         choices: [
           {correct: true, text: 'fox'},
           {correct: false, text: 'skunk'},
@@ -90,6 +91,7 @@ db.quizzes.insert(
       },
       {
         question: 'what is the capitol of Maine?',
+        isLocationBased: false,
         choices: [
           {correct: false, text: 'Montpelier'},
           {correct: false, text: 'Nova Scotia'},
@@ -106,6 +108,7 @@ db.quizzes.insert(
     questions: [
       {
         question: 'quiz 2 what is a red mammal?',
+        isLocationBased: true,
         choices: [
           {correct: true, text: 'fox'},
           {correct: false, text: 'skunk'},
@@ -115,6 +118,7 @@ db.quizzes.insert(
       },
       {
         question: 'what is the capitol of Maine?',
+        isLocationBased: false,
         choices: [
           {correct: false, text: 'Montpelier'},
           {correct: false, text: 'Nova Scotia'},
@@ -131,6 +135,7 @@ db.quizzes.insert(
     questions: [
       {
         question: 'quiz 3 what is a red mammal?',
+        isLocationBased: true,
         choices: [
           {correct: true, text: 'fox'},
           {correct: false, text: 'skunk'},
@@ -140,6 +145,7 @@ db.quizzes.insert(
       },
       {
         question: 'what is the capitol of Maine?',
+        isLocationBased: false,
         choices: [
           {correct: false, text: 'Montpelier'},
           {correct: false, text: 'Nova Scotia'},
@@ -156,6 +162,7 @@ db.quizzes.insert(
     questions: [
       {
         question: 'quiz 4 what is a red mammal?',
+        isLocationBased: true,
         choices: [
           {correct: true, text: 'fox'},
           {correct: false, text: 'skunk'},
@@ -165,6 +172,7 @@ db.quizzes.insert(
       },
       {
         question: 'what is the capitol of Maine?',
+        isLocationBased: false,
         choices: [
           {correct: false, text: 'Montpelier'},
           {correct: false, text: 'Nova Scotia'},
@@ -181,6 +189,7 @@ db.quizzes.insert(
     questions: [
       {
         question: 'quiz 5 what is a red mammal?',
+        isLocationBased: true,
         choices: [
           {correct: true, text: 'fox'},
           {correct: false, text: 'skunk'},
@@ -190,6 +199,7 @@ db.quizzes.insert(
       },
       {
         question: 'what is the capitol of Maine?',
+        isLocationBased: false,
         choices: [
           {correct: false, text: 'Montpelier'},
           {correct: false, text: 'Nova Scotia'},

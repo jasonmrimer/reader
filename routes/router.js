@@ -60,11 +60,11 @@ router.get('/quizzes', (request, response, next) => {
 
 router.post('/quizzes', (request, response, next) => {
   let newSubmission = new submission({
-      quizId: request.body.passage,
-      answers: request.body.answers,
-      interface: request.body.interfaceName,
       user: request.body.user,
-      date: request.body.date
+      interface: request.body.interfaceName,
+      quizId: request.body.passageId,
+      date: request.body.date,
+      answers: request.body.answers,
     }
   )
   newSubmission.save((err, sub) => {

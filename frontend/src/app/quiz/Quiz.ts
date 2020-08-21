@@ -1,13 +1,15 @@
 export class Quiz {
   constructor(
     public passage: string,
-    public questions: Question[]) {
+    public questions: Question[]
+  ) {
   }
 }
 
 export class Question {
   constructor(
     public question: string,
+    public isLocationBased: boolean,
     public choices: Choice[]
   ) {
   }
@@ -23,6 +25,7 @@ export class Choice {
 
 const question1 = new Question(
   'question1',
+  false,
   [
     new Choice('answer1.1', true),
     new Choice('answer1.2', false),
@@ -33,6 +36,7 @@ const question1 = new Question(
 
 const question2 = new Question(
   'question2',
+  false,
   [
     new Choice('answer2.1', false),
     new Choice('answer2.2', true),
