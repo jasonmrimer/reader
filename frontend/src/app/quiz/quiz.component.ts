@@ -72,15 +72,11 @@ export class QuizComponent implements OnInit {
   private submitAnswers = (surveyModel: SurveyModel) => {
     document.body.scrollTop = document.documentElement.scrollTop = 0;
 
-    const quizSubmission = new QuizSubmission(
-      this.quiz.passage,
-      surveyModel.data,
-      this.sessionService.currentPair.interfaceName,
-      this.sessionService.user,
-      new Date()
-    );
-
-    this.quizService.postAnswers(quizSubmission)
+    this.quizService.postAnswers(
+      this.sessionService,
+      this.quiz,
+      surveyModel.data
+    )
       .subscribe(() => {
         this.didSubmit = true;
         this.sessionService.completeCurrentPair();

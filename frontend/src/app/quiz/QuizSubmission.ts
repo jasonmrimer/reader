@@ -1,25 +1,13 @@
 import { User } from '../session/User';
+import { Question } from './Quiz';
 
 export class QuizSubmission {
-  public answers: any;
-
   constructor(
-    public passage: string,
-    surveyData: any,
+    public passageId: string,
     public interfaceName: string,
     public user: User,
-    public date: Date
+    public date: Date,
+    public answers: Question[]
   ) {
-    this.answers = this.convertDataToAnswers(surveyData);
-  }
-
-  private convertDataToAnswers(surveyData: any) {
-    const keys = Object.keys(surveyData);
-    return keys.map((key: string) => {
-      return {
-        question: key,
-        answer: surveyData[key]
-      };
-    });
   }
 }

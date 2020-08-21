@@ -60,7 +60,7 @@ router.get('/quizzes', (request, response, next) => {
 
 router.post('/quizzes', (request, response, next) => {
   let newSubmission = new submission({
-      quizId: request.body.passage,
+      quizId: request.body.passageId,
       answers: request.body.answers,
       interface: request.body.interfaceName,
       user: request.body.user,

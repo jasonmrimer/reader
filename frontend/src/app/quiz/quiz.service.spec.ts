@@ -3,9 +3,10 @@ import { fakeAsync, TestBed } from '@angular/core/testing';
 import { QuizService } from './quiz.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { QuizSubmission } from './QuizSubmission';
-import { Quiz, quizStub, quizzesStub } from './Quiz';
+import { Choice, Question, Quiz, quizStub, quizzesStub } from './Quiz';
 import { PassageName } from '../session/PassageName';
 import { User } from '../session/User';
+import { SessionServiceMock } from '../session/session-stub.service';
 
 describe('QuizService', () => {
   let service: QuizService;
@@ -42,7 +43,7 @@ describe('QuizService', () => {
       expect(response).toEqual(quizStub);
     });
 
-    const request = httpMock.expectOne('http://localhost:4000/api/quizzes/1');
+    const request = httpMock.expectOne('http://localhost:4000/api/quiz?id=1');
     expect(request.request.method).toBe('GET');
     request.flush(quizStub);
   });
@@ -50,18 +51,39 @@ describe('QuizService', () => {
   it('should post choices from a survey', fakeAsync(() => {
     const quizSubmission = new QuizSubmission(
       'quizId',
-      {
-        question1: 'answer1',
-        question2: 'answer2',
-        question3: 'answer3',
-      },
       'interface name',
       new User('fakeUser'),
-      new Date()
+      new Date(),
+      [
+        new Question(
+          'question1',
+          true,
+          [new Choice('answer1', true)]
+        ),
+        new Question(
+          'question2',
+          false,
+          [new Choice('answer2', false)]
+        ),
+        new Question(
+          'question3',
+          false,
+          [new Choice('answer3', false)]
+        ),
+      ]
     );
 
+    const surveyData = [
+      {
+        'question1': 'answer1'
+      },
+      {
+        'question2': 'answer2'
+      },
+    ];
+
     service
-      .postAnswers(quizSubmission)
+      .postAnswers(new SessionServiceMock(), quizStub, surveyData)
       .subscribe(() => {
       });
 
@@ -69,9 +91,30 @@ describe('QuizService', () => {
     expect(request.request.method).toBe('POST');
     expect(request.request.body.passage).toEqual('quizId');
     expect(request.request.body.answers).toEqual([
-      {question: 'question1', answer: 'answer1'},
-      {question: 'question2', answer: 'answer2'},
-      {question: 'question3', answer: 'answer3'},
+      {
+        question: 'question1',
+        isLocationBased: true,
+        answer: {
+          correct: true,
+          text: 'answer1'
+        }
+      },
+      {
+        question: 'question2',
+        isLocationBased: false,
+        answer: {
+          correct: false,
+          text: 'answer2'
+        }
+      },
+      {
+        question: 'question3',
+        isLocationBased: false,
+        answer: {
+          correct: false,
+          text: 'answer3'
+        }
+      },
     ]);
     expect(request.request.body.interfaceName).toEqual('interface name');
     expect(request.request.body.user).toEqual('fakeUser');
