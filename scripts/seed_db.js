@@ -9,7 +9,7 @@ const filePathPassage5 = pwd() + '/models/passage5';
 db.passages.insert(
   {
     _id: '1',
-    title: 'Ethan Frome\'s Household Employee',
+    title: 'A Passage from the Novel, "Ethan Frome"',
     content: cat(filePathPassage1),
     coordinates: [
       {x: -100, y: 0},
@@ -22,7 +22,7 @@ db.passages.insert(
 db.passages.insert(
   {
     _id: '2',
-    title: 'The Great Reset',
+    title: 'The Great Reset: True Costs of Commuting',
     content: cat(filePathPassage2),
     coordinates: [
       {x: -50, y: 50},
@@ -51,7 +51,7 @@ db.passages.insert(
 db.passages.insert(
   {
     _id: '4',
-    title: 'Congresswoman Barbara Jordan on Impeachment',
+    title: 'A Congresswoman\'s Speech about the Nixon Impeachment Hearings',
     content: cat(filePathPassage4),
     coordinates: [
       {x: 100, y: -100},

@@ -5,9 +5,6 @@
 }
 
 .instructions {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
   min-width: 200px;
   width: 300px;
   margin-top: 8px;
@@ -26,29 +23,30 @@
 
 .passage-title {
   font-family: Roboto, sans-serif;
-  font-size: 24px;
+  line-height: normal;
+  font-size: 32px;
   font-weight: 500;
   color: #1D002E;
   margin-top: 16px;
-  max-width: 300px;
+  max-width: 600px;
+  text-align: center;
 }
 
 .passage-content {
-  min-height: fit-content;
-  max-height: 100%;
   margin-top: 8px;
   margin-bottom: 32px;
   background: #ebebeb;
-  overflow-y: auto;
+  overflow: scroll;
+  white-space: pre-line;
+  -webkit-overflow-scrolling: touch;
   width: 300px;
   font-family: Roboto, sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 300;
   color: #000000;
   padding: 8px 18px 8px 8px;
-  white-space: pre-line;
   border-radius: 2px;
-  text-align: justify;
+  text-align: left;
 }
 
 .button--play {
