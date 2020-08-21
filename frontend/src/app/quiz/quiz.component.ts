@@ -58,6 +58,7 @@ export class QuizComponent implements OnInit {
 
   private createSurveyComponent(surveyJSON: any) {
     const surveyModel = new ReactSurveyModel(surveyJSON);
+    surveyModel.completeText = 'Submit';
     surveyModel.onComplete.add(this.submitAnswers);
     SurveyNG.render('surveyContainer', {model: surveyModel});
   }
