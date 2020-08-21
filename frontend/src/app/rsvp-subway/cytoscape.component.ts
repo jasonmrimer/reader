@@ -26,8 +26,8 @@ export class CytoscapeComponent implements OnInit, OnChanges {
     {
       selector: 'node',
       style: {
-        height: 12,
-        width: 12,
+        height: 30,
+        width: 30,
         'text-valign': 'center',
         'text-halign': 'center',
         'background-color': 'white',
@@ -46,7 +46,7 @@ export class CytoscapeComponent implements OnInit, OnChanges {
         'line-gradient-stop-positions': `0% 0% 0%`,
         'opacity': '1',
         'line-cap': 'round',
-        width: 16
+        width: 32
       },
     }
   ];
