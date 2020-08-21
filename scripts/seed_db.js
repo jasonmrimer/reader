@@ -85,6 +85,7 @@ db.quizzes.insert(
     questions: [
       {
         question: 'Over the course of the passage, the main focus of the narrative shifts from the',
+        isLocationBased: false,
         choices: [
           {
             correct: false,
@@ -107,6 +108,7 @@ db.quizzes.insert(
       },
       {
         question: 'In what section of the passage was the phrase, “her light step flying to keep time with his long stride”?',
+        isLocationBased: true,
         choices: [
           {correct: true, text: 'Section 1'},
           {correct: false, text: 'Section 2'},
@@ -115,6 +117,7 @@ db.quizzes.insert(
       },
       {
         question: 'In the context of the passage, the author’s use of the phrase “her light step flying to keep time with his long stride” is primarily meant to convey the idea that',
+        isLocationBased: false,
         choices: [
           {correct: true, text: 'Ethan and Mattie share a powerful enthusiasm.'},
           {correct: false, text: 'Matte strives to match the speed at which Ethan works.'},
@@ -124,6 +127,7 @@ db.quizzes.insert(
       },
       {
         question: 'The description in the first paragraph indicates that what Ethan values most about Mattie is her',
+        isLocationBased: false,
         choices: [
           {correct: false, text: 'fitness for farm labor.'},
           {correct: false, text: 'vivacious youth.'},
@@ -133,6 +137,7 @@ db.quizzes.insert(
       },
       {
         question: 'The author includes the descriptions of the sunset, the clouds, and the hemlock shadows primarily to',
+        isLocationBased: false,
         choices: [
           {correct: false, text: 'suggest the peacefulness of the natural world.'},
           {correct: true, text: 'emphasize the acuteness of two characters’ sensations.'},
@@ -142,6 +147,7 @@ db.quizzes.insert(
       },
       {
         question: 'In what section is the description of the sunset, the clouds, and the hemlock shadows?',
+        isLocationBased: true,
         choices: [
           {correct: false, text: 'Section 1'},
           {correct: true, text: 'Section 2'},
@@ -157,6 +163,7 @@ db.quizzes.insert(
     questions: [
       {
         question: 'The passage most strongly suggests that researchers at the Martin Prosperity Institute share which assumption?',
+        isLocationBased: false,
         choices: [
           {
             correct: false,
@@ -178,6 +185,7 @@ db.quizzes.insert(
       },
       {
         question: 'As used in the sentence, "The coming decades will likely see more intense clustering of jobs, innovation, and productivity in a smaller number of bigger cities and cityregions...", the word "intense" most nearly means',
+        isLocationBased: false,
         choices: [
           {correct: false, text: 'emotional.'},
           {correct: true, text: 'concentrated.'},
@@ -187,6 +195,7 @@ db.quizzes.insert(
       },
       {
         question: 'In what section is the sentence from the previous question?',
+        isLocationBased: true,
         choices: [
           {correct: false, text: 'Section 1'},
           {correct: false, text: 'Section 2'},
@@ -204,6 +213,7 @@ db.quizzes.insert(
     questions: [
       {
         question: 'The passage most strongly suggests that Adelita used which of the following to navigate her 9,000-mile journey?',
+        isLocationBased: false,
         choices: [
           {correct: false, text: 'The current of the North Atlantic gyre'},
           {correct: false, text: 'Cues from electromagnetic coils designed by Putman and Lohmann'},
@@ -213,6 +223,7 @@ db.quizzes.insert(
       },
       {
         question: 'Which choice provides the best evidence for the answer to the previous question about Adelita\'s 9,000-mile journey?',
+        isLocationBased: false,
         choices: [
           {
             correct: false,
@@ -234,6 +245,7 @@ db.quizzes.insert(
       },
       {
         question: 'What section included the best evidence to answer the question about Adelita\'s 9,000-mile journey?',
+        isLocationBased: true,
         choices: [
           {correct: false, text: 'Section 1'},
           {correct: false, text: 'Section 2'},
@@ -242,7 +254,8 @@ db.quizzes.insert(
         ]
       },
       {
-        question: 'As used in the second sentence of paragraph 1 (follow link), “tracked” most nearly means',
+        question: 'As used in the second sentence of paragraph 1, “tracked” most nearly means',
+        isLocationBased: false,
         choices: [
           {correct: false, text: 'searched for.'},
           {correct: false, text: 'traveled over.'},
@@ -252,6 +265,7 @@ db.quizzes.insert(
       },
       {
         question: 'Based on the passage, which choice best describes the relationship between Putman’s and Lohmann’s research?',
+        isLocationBased: false,
         choices: [
           {correct: false, text: 'Putman’s research contradicts Lohmann’s.'},
           {correct: true, text: 'Putman’s research builds on Lohmann’s.'},
@@ -260,7 +274,8 @@ db.quizzes.insert(
         ]
       },
       {
-        question: 'The author refers to reed warblers and sparrows primarily to', //todo
+        question: 'The author refers to reed warblers and sparrows primarily to',
+        isLocationBased: false,
         choices: [
           {correct: false, text: 'contrast the loggerhead turtle’s migration patterns with those of other species.'},
           {correct: true, text: 'provide examples of species that share one of the loggerhead turtle’s abilities.'},
@@ -272,7 +287,8 @@ db.quizzes.insert(
         ]
       },
       {
-        question: 'What section describes warblers and sparrows?',
+        question: 'What section describes reed warblers and sparrows?',
+        isLocationBased: true,
         choices: [
           {correct: false, text: 'Section 1'},
           {correct: false, text: 'Section 2'},
@@ -289,6 +305,7 @@ db.quizzes.insert(
     questions: [
       {
         question: 'The stance Jordan takes in the passage is best described as that of',
+        isLocationBased: false,
         choices: [
           {correct: true, text: 'an idealist setting forth principles.'},
           {correct: false, text: 'an advocate seeking a compromise position.'},
@@ -298,6 +315,7 @@ db.quizzes.insert(
       },
       {
         question: 'The main rhetorical effect of the series of three phrases in, "And I am not going to sit here and be an idle spectator to the diminution, the subversion, the destruction, of the Constitution" is to',
+        isLocationBased: false,
         choices: [
           {
             correct: true,
@@ -316,6 +334,7 @@ db.quizzes.insert(
       },
       {
         question: 'In what section is the phrase including "the diminution, the subversion, the destruction"? ',
+        isLocationBased: true,
         choices: [
           {correct: true, text: 'Section 1'},
           {correct: false, text: 'Section 2'},
@@ -326,6 +345,7 @@ db.quizzes.insert(
       },
       {
         question: 'As used the sentence, "The nature of impeachment: a narrowly channeled exception to the separation of powers maxim.", “channeled” most nearly means',
+        isLocationBased: false,
         choices: [
           {correct: false, text: 'worn.'},
           {correct: false, text: 'sent.'},
@@ -335,6 +355,7 @@ db.quizzes.insert(
       },
       {
         question: 'What section contains the "channeled" sentence from the previous question?',
+        isLocationBased: true,
         choices: [
           {correct: false, text: 'Section 1'},
           {correct: false, text: 'Section 2'},
@@ -345,6 +366,7 @@ db.quizzes.insert(
       },
       {
         question: 'In the second through fourth sentences of paragraph 6, what is the most likely reason Jordan draws a distinction between two types of “parties”?',
+        isLocationBased: false,
         choices: [
           {correct: true, text: 'To counter the suggestion that impeachment is or should be about partisan politics'},
           {correct: false, text: 'To disagree with Hamilton’s claim that impeachment proceedings excite passions'},
@@ -360,6 +382,7 @@ db.quizzes.insert(
       },
       {
         question: 'Which choice provides the best evidence for the answer to the previous question?',
+        isLocationBased: false,
         choices: [
           {
             correct: false,
@@ -381,6 +404,7 @@ db.quizzes.insert(
       },
       {
         question: 'In what section can you find that evidence for party distinction?',
+        isLocationBased: true,
         choices: [
           {correct: false, text: 'Section 1'},
           {correct: false, text: 'Section 2'},
@@ -398,6 +422,7 @@ db.quizzes.insert(
     questions: [
       {
         question: 'Where did scientists at Colorado State University and the U.S. National Park Service analyze noise levels for a study?',
+        isLocationBased: false,
         choices: [
           {correct: false, text: 'in cities across the U.S.'},
           {correct: false, text: 'in rural areas across the U.S.'},
@@ -407,6 +432,7 @@ db.quizzes.insert(
       },
       {
         question: 'The levels of noise in many protected areas has been raised above the level of background noise. What is one cause of this increased noise the text describes?',
+        isLocationBased: false,
         choices: [
           {correct: false, text: 'Some animals have become louder.'},
           {correct: true, text: 'There are aircraft and road traffic nearby.'},
@@ -416,6 +442,7 @@ db.quizzes.insert(
       },
       {
         question: 'Noise pollution can be harmful to wildlife in protected areas. What evidence from the text supports this conclusion?',
+        isLocationBased: false,
         choices: [
           {
             correct: false,
@@ -436,7 +463,20 @@ db.quizzes.insert(
         ]
       },
       {
+        question: 'In what section can you find the supporting evidence from the previous question?',
+        isLocationBased: true,
+        choices: [
+          {correct: false, text: 'Section 1'},
+          {correct: false, text: 'Section 2'},
+          {correct: false, text: 'Section 3'},
+          {correct: false, text: 'Section 4'},
+          {correct: true, text: 'Section 5'},
+          {correct: false, text: 'Section 6'},
+        ]
+      },
+      {
         question: 'How might the noise that humans make be affecting humans?',
+        isLocationBased: false,
         choices: [
           {correct: true, text: 'It may be negatively affecting our moods.'},
           {correct: false, text: 'It may be improving our cognitive abilities.'},
@@ -446,6 +486,7 @@ db.quizzes.insert(
       },
       {
         question: 'What is the main idea of this article?',
+        isLocationBased: false,
         choices: [
           {
             correct: false,
@@ -470,6 +511,7 @@ db.quizzes.insert(
           '"They calculated that the sounds people make[...] have raised the levels above natural background noise in two-thirds of U.S. protected areas, with adverse consequences for wildlife and for the 300 million or so people who seek the tranquil hush of park lands every year. \'The din of modern life extends into protected areas,\' said acoustic biologist Megan McKenna[.]"\n' +
           '\n' +
           'Based on these sentences, what does the word din mean? ',
+        isLocationBased: false,
         choices: [
           {correct: false, text: 'stress'},
           {correct: false, text: 'nature'},
@@ -479,6 +521,7 @@ db.quizzes.insert(
       },
       {
         question: 'What section includes the sentences about U.S. Protect Areas from the previous question?',
+        isLocationBased: true,
         choices: [
           {correct: true, text: 'Section 1'},
           {correct: false, text: 'Section 2'},
@@ -491,6 +534,7 @@ db.quizzes.insert(
       {
         question: 'Choose the answer that best completes the sentence.\n' +
           'Psychologists are discovering that natural sounds have benefits for humans, ______ lowering stress, elevating mood, and boosting cognitive abilities.',
+        isLocationBased: false,
         choices: [
           {correct: false, text: 'therefore'},
           {correct: true, text: 'such as'},
@@ -500,6 +544,7 @@ db.quizzes.insert(
       },
       {
         question: 'What section describes psychologists discoveries about benefits for humans?',
+        isLocationBased: true,
         choices: [
           {correct: false, text: 'Section 1'},
           {correct: false, text: 'Section 2'},
