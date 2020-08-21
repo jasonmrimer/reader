@@ -5,6 +5,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { QuizSubmission } from './QuizSubmission';
 import { PassageName } from '../session/PassageName';
 import { SessionService } from '../session/session.service';
+import { Score } from './Score';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,8 @@ export class QuizService {
       quiz,
       surveyData
     );
+
+    sessionService.addScore(this.calculateScore(quizSubmission));
 
     return this._http.post(
       `${environment.apiUrl}/quizzes`,
@@ -68,5 +71,13 @@ export class QuizService {
       questionObject.isLocationBased,
       [answerObject]
     );
+  }
+
+  private calculateScore(quizSubmission: QuizSubmission) {
+    const total = quizSubmission.answers.length;
+    const correct = quizSubmission.answers.filter(answer => {
+      return answer.choices[0].correct;
+    }).length;
+    return new Score(quizSubmission.passageId, quizSubmission.interfaceName, correct, total);
   }
 }

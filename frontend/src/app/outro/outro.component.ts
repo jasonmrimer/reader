@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SessionService } from '../session/session.service';
 
 @Component({
   selector: 'app-outro',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OutroComponent implements OnInit {
 
-  constructor() { }
+  constructor(public sessionService: SessionService) { }
 
   ngOnInit(): void {
   }
