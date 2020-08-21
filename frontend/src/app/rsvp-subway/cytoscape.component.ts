@@ -1,13 +1,4 @@
-import {
-  Component,
-  DoCheck,
-  Input,
-  IterableDiffer,
-  IterableDiffers, KeyValueDiffer, KeyValueDiffers,
-  OnChanges,
-  OnInit,
-  Renderer2
-} from '@angular/core';
+import { Component, DoCheck, Input, KeyValueDiffers, OnChanges, OnInit, Renderer2 } from '@angular/core';
 import { Section } from '../rsvp-utils/Section';
 
 declare var cytoscape: any;
@@ -17,7 +8,14 @@ declare var cytoscape: any;
   templateUrl: './cytoscape.component.html',
   styleUrls: ['./cytoscape.component.css'],
 })
-export class CytoscapeComponent implements OnInit, OnChanges {
+export class CytoscapeComponent implements OnInit, OnChanges, DoCheck {
+
+  public constructor(
+    private renderer: Renderer2,
+    private differs: KeyValueDiffers
+  ) {
+  }
+
   @Input() public currentSection: Section;
   @Input() public elements: any;
   @Input() public currentSectionCompletion;
@@ -56,41 +54,18 @@ export class CytoscapeComponent implements OnInit, OnChanges {
   cytoscapeObject: any;
   differ: any;
 
-  public constructor(
-    private renderer: Renderer2,
-    private differs: KeyValueDiffers
-  ) {
+  private static makeGradient(section) {
+    return {
+      'line-color': '#FBF97F',
+      'line-fill': 'linear-gradient',
+      'line-gradient-stop-colors': '#FFC600 #FFC600 #FBF97F',
+      'line-gradient-stop-positions': `0% ${section.percentRead}% ${section.percentRead}%`,
+    };
   }
 
-  private static isFirst(section: Section) {
-    return section.rank === 1;
-  }
-
-  private static colorFinalIfComplete(section: Section, cy) {
-    if (CytoscapeComponent.isComplete(section)) {
-      CytoscapeComponent.colorFinalComplete(cy, section);
-    }
-  }
-
-  private static isComplete(section: Section) {
-    return section.percentRead === 100;
-  }
-
-  private static colorFinalComplete(cy, section: Section) {
-    const node = cy.$(`#section-0${section.rank + 1}`);
-    CytoscapeComponent.colorComplete(node);
-  }
-
-  private static colorComplete(node) {
-    node.style({
-        'background-color': 'black'
-      }
-    );
-  }
-
-  private static colorNodeComplete(cy, section: Section) {
-    const node = cy.$(`#section-0${section.rank}`);
-    CytoscapeComponent.colorComplete(node);
+  private static animateEdges(cy, section: Section) {
+    const edge = cy.$(`#edge-${section.rank}`);
+    edge.style(CytoscapeComponent.makeGradient(section));
   }
 
   public ngOnInit() {
@@ -108,42 +83,16 @@ export class CytoscapeComponent implements OnInit, OnChanges {
         const differ = this.differ[index];
         const changes = differ.diff(section);
         if (changes) {
-          this.animateEdges(this.cytoscapeObject, section, index);
+          CytoscapeComponent.animateEdges(this.cytoscapeObject, section);
         }
       }
     });
   }
 
-  private animateEdges(cy, section: Section, index: number) {
-    const edge = cy.$(`#edge-${section.rank}`);
-    edge.style(this.makeGradient(section));
-
-    this.colorNodes(cy, section, index);
-  }
-
-  private colorNodes(cy, section: Section, index: number) {
-    if (CytoscapeComponent.isFirst(section)) {
-      CytoscapeComponent.colorNodeComplete(cy, section);
-    } else if (this.isLast(section)) {
-      this.checkPreviousCompletionAndColor(index, cy, section);
-      CytoscapeComponent.colorFinalIfComplete(section, cy);
-    } else {
-      this.checkPreviousCompletionAndColor(index, cy, section);
+  public ngDoCheck() {
+    if (this.cytoscapeObject && this.currentSection) {
+      this.colorNode(this.cytoscapeObject, this.currentSection);
     }
-  }
-
-  private isLast(section: Section) {
-    return section.rank === this.sections.length - 1;
-  }
-
-  private checkPreviousCompletionAndColor(index: number, cy, section: Section) {
-    if (this.previousSectionComplete(index)) {
-      CytoscapeComponent.colorNodeComplete(cy, section);
-    }
-  }
-
-  private previousSectionComplete(index: number) {
-    return this.sections[index - 1].percentRead === 100;
   }
 
   private createCytoscape(cy_container) {
@@ -160,12 +109,22 @@ export class CytoscapeComponent implements OnInit, OnChanges {
     return cy;
   }
 
-  private makeGradient(section) {
-    return {
-      'line-color': '#FBF97F',
-      'line-fill': 'linear-gradient',
-      'line-gradient-stop-colors': '#FFC600 #FFC600 #FBF97F',
-      'line-gradient-stop-positions': `0% ${section.percentRead}% ${section.percentRead}%`,
+  private colorNode(cy: any, section: Section) {
+    if (section.rank <= this.currentSection.rank) {
+      cy.$(`#section-${section.rank}`).style({'background-color': 'black'});
+    }
+
+    const isLastSection = (sect: Section) => {
+      return this.sections.findIndex(s => s === sect) === this.sections.length - 1;
     };
+
+    function isComplete(sect: Section) {
+      return sect.percentRead === 1000;
+    }
+
+    if (isLastSection(section) && isComplete(section)) {
+      cy.$(`#section-${section.rank + 1}`).style({'background-color': 'black'});
+    }
   }
+
 }
