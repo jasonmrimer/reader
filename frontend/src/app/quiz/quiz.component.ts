@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ReactSurveyModel, SurveyModel, SurveyNG } from 'survey-angular';
 import { QuizService } from './quiz.service';
 import { Choice, Question, Quiz } from './Quiz';
-import { QuizSubmission } from './QuizSubmission';
+import { Submission } from './Submission';
 import { Router } from '@angular/router';
 import { SessionService } from '../session/session.service';
 

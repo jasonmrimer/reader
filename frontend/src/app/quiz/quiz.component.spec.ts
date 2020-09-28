@@ -10,7 +10,7 @@ import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { SessionServiceMock } from '../session/session-stub.service';
 import { SessionService } from '../session/session.service';
 import { RouterTestingModule } from '@angular/router/testing';
-import { QuizSubmission } from './QuizSubmission';
+import { Submission } from './Submission';
 import { User } from '../session/User';
 
 describe('QuizComponent', () => {
@@ -23,7 +23,7 @@ describe('QuizComponent', () => {
 
   beforeEach(async(() => {
     sessionService = new SessionServiceMock();
-    submissionStub = new QuizSubmission('id1', 'rsvp-basic', new User('fakeUser'), new Date(), null);
+    submissionStub = new Submission('id1', 'rsvp-basic', new User('fakeUser'), new Date(), null);
     quizServiceSpy = jasmine.createSpyObj('QuizService', ['getQuizzes', 'postAnswers']);
     quizServiceSpy.getQuizzes.and.returnValue(of([quizStub]));
     quizServiceSpy.postAnswers.and.returnValue(of(submissionStub));

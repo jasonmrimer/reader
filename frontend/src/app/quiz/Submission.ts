@@ -1,7 +1,7 @@
 import { User } from '../session/User';
 import { Question } from './Quiz';
 
-export class QuizSubmission {
+export class Submission {
   constructor(
     public passageId: string,
     public interfaceName: string,

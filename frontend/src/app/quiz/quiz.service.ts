@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Question, Quiz } from './Quiz';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { QuizSubmission } from './QuizSubmission';
+import { Submission } from './Submission';
 import { PassageName } from '../session/PassageName';
 import { SessionService } from '../session/session.service';
 import { Score } from './Score';
@@ -45,7 +45,7 @@ export class QuizService {
   generateSubmission(sessionService: SessionService, quiz: Quiz, data: any) {
     const answers = this.convertDataToAnswers(data, quiz);
 
-    return new QuizSubmission(
+    return new Submission(
       quiz.passage,
       sessionService.currentPair.interfaceName,
       sessionService.user,
@@ -73,7 +73,7 @@ export class QuizService {
     );
   }
 
-  private calculateScore(quizSubmission: QuizSubmission) {
+  private calculateScore(quizSubmission: Submission) {
     const total = quizSubmission.answers.length;
     const correct = quizSubmission.answers.filter(answer => {
       return answer.choices[0].correct;

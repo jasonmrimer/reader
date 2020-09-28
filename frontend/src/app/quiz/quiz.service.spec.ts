@@ -2,7 +2,7 @@ import { fakeAsync, TestBed } from '@angular/core/testing';
 
 import { QuizService } from './quiz.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { QuizSubmission } from './QuizSubmission';
+import { Submission } from './Submission';
 import { Choice, Question, Quiz, quizStub, quizzesStub } from './Quiz';
 import { PassageName } from '../session/PassageName';
 import { User } from '../session/User';
@@ -49,7 +49,7 @@ describe('QuizService', () => {
   });
 
   it('should post choices from a survey', fakeAsync(() => {
-    const quizSubmission = new QuizSubmission(
+    const quizSubmission = new Submission(
       'quizId',
       'interface name',
       new User('fakeUser'),
